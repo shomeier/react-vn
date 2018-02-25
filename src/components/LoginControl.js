@@ -1,41 +1,60 @@
 import React, { Component } from 'react';
 import logo from '../assets/vietnam_round_icon_256.png';
 import cmis from 'cmis';
-import './login.css';
+import './LoginControl.css';
 
 class LoginControl extends Component {
     constructor(props) {
         super(props);
+        this.handleChangeUsername = this.handleChangeUsername.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
         this.handleLoginClick = this.handleLoginClick.bind(this);
-        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+        this.state = { isLoggedIn: false, username: '', password: '' };
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return false;
+    handleChangeUsername(event) {
+        this.setState({ username: event.target.value });
     }
 
-    componentWillUpdate() {
-        console.log("Component will update")
+    handleChangePassword(event) {
+        this.setState({ password: event.target.value });
     }
 
     handleLoginClick(event) {
-        event.preventDefault();
-        console.log("Test....");
-        // this.setState({ isLoggedIn: true });
-        cmisLogin();
-    }
+        // event.preventDefault();
 
-    handleLogoutClick() {
-        console.log("Test....");
-        this.setState({ isLoggedIn: false });
+        let cmisUrl = 'http://127.0.0.1:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
+        // let cmisUrl = 'https://cmis.alfresco.com/api/-default-/public/cmis/versions/1.1/browser';
+
+        let session = new cmis.CmisSession(cmisUrl);
+        session.setErrorHandler(err => console.log(err.stack));
+        session.setCredentials(this.state.username, this.state.password).loadRepositories().then(() => {
+            this.setState({ isLoggedIn: true });
+            console.log("Loaded repos");
+            console.log("Repos: " + JSON.stringify(session.defaultRepository));
+        }).catch(err => {
+            console.log("Error1: " + err)
+            console.log("Error2: " + JSON.stringify(err))
+            console.log("Error3: " + JSON.stringify(err.response))
+        });
     }
 
     render() {
-        console.log("Test....");
+        const isLoggedIn = this.state.isLoggedIn;
+
+        let body = null;
+        if (isLoggedIn) {
+            body = "Logged In";
+        } else {
+            body = <LoginForm 
+                onChangeUsername={this.handleChangeUsername}
+                onChangePassword={this.handleChangePassword}
+                onLoginClick={this.handleLoginClick} />;
+        }
 
         return (
             <div>
-                <LoginForm onClick={this.handleLoginClick} />;
+                {body}
             </div>
         );
     }
@@ -43,48 +62,19 @@ class LoginControl extends Component {
 
 function LoginForm(props) {
     return (
-        <div className="modal">
-            <form className="modal-content animate">
-                <div className="imgcontainer">
-                    <img src={logo} alt="Avatar" className="avatar" />
-                </div>
-                <div className="container">
-                    <label>
-                        <b>Name:</b>
-                        <input type="text" name="name" />
-                    </label>
-                    <label>
-                        <b>Password:</b>
-                        <input type="password" name="password" />
-                    </label>
-                    <button type="submit" onClick={props.onClick}>
-                        Login
-                        </button>
-                </div>
-            </form>
+        <div className="loginForm">
+            <div className="imgcontainer">
+                <img src={logo} alt="Avatar" className="avatar" />
+            </div>
+            <div>
+                <input type="text" name="username" placeholder="Username" onChange={props.onChangeUsername} />
+                <input type="password" name="password" placeholder="Password" onChange={props.onChangePassword} />
+                <button type="submit" onClick={props.onLoginClick}>
+                    Login
+                </button>
+            </div>
         </div>
     )
-}
-
-
-function cmisLogin() {
-    console.log("Logging in.1a.. ");
-    console.log("cmis: " + cmis);
-    // var session = new cmis.CmisSession('http://localhost:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser');
-    let session = new cmis.CmisSession('http://127.0.0.1:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser');
-    // var session = new cmis.CmisSession('https://cmis.alfresco.com/api/-default-/public/cmis/versions/1.1/browser');
-    console.log("Logging in.1.. ");
-    session.setErrorHandler(err => console.log(err.stack));
-    session.setCredentials('admin', 'admin').loadRepositories().then((res) => {
-        console.log("Res: " + res);
-        console.log("Loaded repos");
-        console.log("Repos: " + JSON.stringify(session.defaultRepository));
-    }).catch(err => {
-        console.log("Error1: " + err)
-        console.log("Error2: " + JSON.stringify(err))
-        console.log("Error3: " + JSON.stringify(err.response))
-    }
-    );
 }
 
 export default LoginControl;
