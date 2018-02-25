@@ -9,7 +9,7 @@ class LoginControl extends Component {
         this.handleChangeUsername = this.handleChangeUsername.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.handleLoginClick = this.handleLoginClick.bind(this);
-        this.state = { isLoggedIn: false, username: '', password: '' };
+        this.state = { username: '', password: '', cmisSession: null };
     }
 
     handleChangeUsername(event) {
@@ -29,10 +29,11 @@ class LoginControl extends Component {
         let session = new cmis.CmisSession(cmisUrl);
         session.setErrorHandler(err => console.log(err.stack));
         session.setCredentials(this.state.username, this.state.password).loadRepositories().then(() => {
-            this.setState({ isLoggedIn: true });
+            this.setState({ cmisSession: session });
             console.log("Loaded repos");
             console.log("Repos: " + JSON.stringify(session.defaultRepository));
         }).catch(err => {
+            alert("Invalid credentials");
             console.log("Error1: " + err)
             console.log("Error2: " + JSON.stringify(err))
             console.log("Error3: " + JSON.stringify(err.response))
@@ -40,7 +41,7 @@ class LoginControl extends Component {
     }
 
     render() {
-        const isLoggedIn = this.state.isLoggedIn;
+        const isLoggedIn = (this.state.cmisSession) ? this.state.cmisSession.defaultRepository : false; 
 
         let body = null;
         if (isLoggedIn) {
