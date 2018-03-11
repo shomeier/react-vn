@@ -1,0 +1,12 @@
+.searchPanel {
+    /* display: block;
+    width: 30%;
+    text-align: left;
+    float: left; */
+    height: 200px;
+    max-height: auto;
+    width:18%;
+    overflow:hidden;
+    overflow-y:auto;
+    /* margin: 100px auto; */
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from '../assets/vietnam_round_icon_256.png';
 import cmis from 'cmis';
 import './LoginControl.css';
+import AdminPanel from './AdminPanel';
 
 class LoginControl extends Component {
     constructor(props) {
@@ -45,7 +46,7 @@ class LoginControl extends Component {
 
         let body = null;
         if (isLoggedIn) {
-            body = "Logged In";
+            body = <AdminPanel cmisSession={this.state.cmisSession}/>;
         } else {
             body = <LoginForm 
                 onChangeUsername={this.handleChangeUsername}
