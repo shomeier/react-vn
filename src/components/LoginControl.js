@@ -34,7 +34,7 @@ class LoginControl extends Component {
             console.log("Loaded repos");
             console.log("Repos: " + JSON.stringify(session.defaultRepository));
         }).catch(err => {
-            alert("Invalid credentials");
+            alert("Invalid credentials for username: " + this.state.username);
             console.log("Error1: " + err)
             console.log("Error2: " + JSON.stringify(err))
             console.log("Error3: " + JSON.stringify(err.response))
@@ -42,13 +42,13 @@ class LoginControl extends Component {
     }
 
     render() {
-        const isLoggedIn = (this.state.cmisSession) ? this.state.cmisSession.defaultRepository : false; 
+        const isLoggedIn = (this.state.cmisSession) ? this.state.cmisSession.defaultRepository : false;
 
         let body = null;
         if (isLoggedIn) {
-            body = <AdminPanel cmisSession={this.state.cmisSession}/>;
+            body = <AdminPanel cmisSession={this.state.cmisSession} />;
         } else {
-            body = <LoginForm 
+            body = <LoginForm
                 onChangeUsername={this.handleChangeUsername}
                 onChangePassword={this.handleChangePassword}
                 onLoginClick={this.handleLoginClick} />;
@@ -68,13 +68,11 @@ function LoginForm(props) {
             <div className="imgcontainer">
                 <img src={logo} alt="Avatar" className="avatar" />
             </div>
-            <div>
-                <input type="text" name="username" placeholder="Username" onChange={props.onChangeUsername} />
-                <input type="password" name="password" placeholder="Password" onChange={props.onChangePassword} />
-                <button type="submit" onClick={props.onLoginClick}>
-                    Login
-                </button>
-            </div>
+            <input type="text" name="username" placeholder="Username" onChange={props.onChangeUsername} />
+            <input type="password" name="password" placeholder="Password" onChange={props.onChangePassword} />
+            <button type="submit" onClick={props.onLoginClick}>
+                Login
+            </button>
         </div>
     )
 }
