@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
-import cmis from 'cmis';
+// import cmis from 'cmis';
+import ReactList from 'react-list';
 
-class CmisSearchResultList extends Component {
+export class CmisQueryResultList extends Component {
     constructor(props) {
         super(props);
+        this.renderItem = this.renderItem.bind(this);
 
         this.state = {
             results: [],
-            isLoading: false,
+            isLoading: true,
         };
     };
 
-    componentDidMount() {
-        this.setState({ isLoading: true });
+    executeCmisQuery(skipCount) {
 
         this.props.cmisSession.query(this.props.query, false, {
             // includeAllowableActions: false,
             // includeRelationships: false,
-            // maxItems: 3,
+            maxItems: 1000,
             // orderBy: 'cmis:name',
             // renditionFilter: 'none',
             // skipCount: 0,
@@ -35,24 +36,50 @@ class CmisSearchResultList extends Component {
                 });
             }
         });
+    }
+
+    componentDidMount() {
+        this.setState({ isLoading: true });
+
+        this.executeCmisQuery(0);
+
         // fetch(API + DEFAULT_QUERY)
         //     .then(response => response.json())
         //     .then(data => this.setState({ hits: data.hits, isLoading: false }));
     }
 
+    renderItem(index, key) {
+        if (!this.state.isLoading) {
+
+            console.log("Loading object at index: " + index + "...");
+            const object = this.state.results[index];
+            if (!object)
+                return <div>{`Error loading cmis object at index ${index}`}</div>
+            else
+                return <div key={key}>{this.state.results[index].succinctProperties['cmis:name']}</div>;
+        } else {
+            return <div>Loading ...</div>
+        }
+    }
+
     render() {
         const results = this.state.results;
-        const listItems = results.map((cmisObject) => 
+        const listItems = results.map((cmisObject) =>
             <li key={cmisObject.succinctProperties['cmis:objectId']}>
                 {cmisObject.succinctProperties['cmis:name']}
             </li>
         );
         return (
             <div>
-                <ul>{listItems}</ul>
+                {/* <ul>{listItems}</ul> */}
+                <div style={{ overflow: 'auto', maxHeight: 400, width: '18%' }}>
+                    <ReactList
+                        itemRenderer={this.renderItem}
+                        length={results.length}
+                    // type='uniform'
+                    />
+                </div>
             </div>
         );
     };
 }
-
-export default CmisSearchResultList;
