@@ -2,7 +2,7 @@ import React from 'react';
 // import React, { Component } from 'react';
 // import cmis from 'cmis';
 import './AdminPanel.css';
-import { CmisQueryResultList } from './CmisQueryResultList.js';
+import { SearchPanel } from './SearchPanel.js';
 
 function AdminPanel(props) {
 
@@ -10,8 +10,8 @@ function AdminPanel(props) {
     return (
         <div className="searchPanel">
             Success. Logged in as {cmisSession.username}.
-
-            <CmisQueryResultList cmisSession={cmisSession} query="SELECT * FROM cmis:document"/>
+            <p/>
+            <SearchPanel cmisSession={cmisSession}/>
         </div>
     );
 }
