@@ -4,7 +4,7 @@
 - Restart Alfresco
 
 ## Enable Smartfolders
-- In tomcat/shared/alfresco-global.properties set property _smart.folders.enabled=true_ 
+- In tomcat/shared/classes/alfresco-global.properties set property _smart.folders.enabled=true_ 
 
 ## Start all services
 - _./alfresco.sh start_
