@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from '../assets/vietnam_round_icon_256.png';
 import cmis from 'cmis';
-import './LoginControl.css';
+// import { cmis } from '../lib/cmis';
+import './css/LoginControl.css';
 import AdminPanel from './AdminPanel';
 
 class LoginControl extends Component {

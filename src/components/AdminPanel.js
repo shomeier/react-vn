@@ -1,7 +1,7 @@
 import React from 'react';
 // import React, { Component } from 'react';
 // import cmis from 'cmis';
-import './AdminPanel.css';
+import './css/AdminPanel.css';
 import { SearchPanel } from './SearchPanel.js';
 
 function AdminPanel(props) {
