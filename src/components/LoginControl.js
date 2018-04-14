@@ -71,7 +71,7 @@ function LoginForm(props) {
             </div>
             <input type="text" name="username" placeholder="Username" onChange={props.onChangeUsername} />
             <input type="password" name="password" placeholder="Password" onChange={props.onChangePassword} />
-            <button class="loginButton" type="submit" onClick={props.onLoginClick}>
+            <button className="loginButton" type="submit" onClick={props.onLoginClick}>
                 Login
             </button>
         </div>

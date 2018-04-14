@@ -3,10 +3,12 @@ import logo from '../assets/vietnam_round_icon_64.png';
 import cmis from 'cmis';
 // import { cmis } from '../lib/cmis';
 import './css/MainNavBar.css';
-import {  Button, FormGroup, FormControl, MenuItem, Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
+import { Button, FormGroup, FormControl, MenuItem, Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 
 export function MainNavBar(props) {
 
+    const isAdmin = props.isAdmin;
+    console.log("isAdmin: " + isAdmin);
     const cmisSession = props.cmisSession;
 
     return (
@@ -17,18 +19,22 @@ export function MainNavBar(props) {
                 </Navbar.Brand>
             </Navbar.Header>
             <Nav>
-                <NavItem eventKey={1} href="#">
+                <NavItem eventKey={1} onClick={(e) => props.onMenuItemClick("learnDict", e)}>
                     Learn Dict
                 </NavItem>
-                <NavItem eventKey={2} href="#">
+                <NavItem eventKey={2} onClick={(e) => props.onMenuItemClick("learnSheets", e)}>
                     Learn Sheets
                 </NavItem>
-                <NavDropdown eventKey={3} title="Admin" id="basic-nav-dropdown">
-                    <MenuItem eventKey={3.1}>Add Words</MenuItem>
-                    <MenuItem eventKey={3.2}>Edit Words</MenuItem>
-                    <MenuItem divider />
-                    <MenuItem eventKey={3.4}>Separated link</MenuItem>
-                </NavDropdown>
+
+                {isAdmin && (
+                    <NavDropdown eventKey={3} title="Admin" id="basic-nav-dropdown">
+                        <MenuItem eventKey={3.1} onClick={(e) => props.onMenuItemClick("addWord", e)}>Add Word</MenuItem>
+                        <MenuItem eventKey={3.2} onClick={(e) => props.onMenuItemClick("editWord", e)}>Edit Words</MenuItem>
+                        <MenuItem divider />
+                        <MenuItem eventKey={3.4}>Separated link</MenuItem>
+                    </NavDropdown>
+                )
+                }
             </Nav>
             <Navbar.Form pullLeft>
                 <FormGroup>
