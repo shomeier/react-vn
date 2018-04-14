@@ -12,7 +12,7 @@ input {
 }
 
 /* Set a style for all buttons */
-button {
+.loginButton {
     padding: 14px 20px;
     margin: 8px 0;
     border: none;

@@ -3,7 +3,7 @@ import logo from '../assets/vietnam_round_icon_256.png';
 import cmis from 'cmis';
 // import { cmis } from '../lib/cmis';
 import './css/LoginControl.css';
-import AdminPanel from './AdminPanel';
+import MainPanel from './MainPanel';
 
 class LoginControl extends Component {
     constructor(props) {
@@ -47,7 +47,7 @@ class LoginControl extends Component {
 
         let body = null;
         if (isLoggedIn) {
-            body = <AdminPanel cmisSession={this.state.cmisSession} />;
+            body = <MainPanel cmisSession={this.state.cmisSession} />;
         } else {
             body = <LoginForm
                 onChangeUsername={this.handleChangeUsername}
@@ -71,7 +71,7 @@ function LoginForm(props) {
             </div>
             <input type="text" name="username" placeholder="Username" onChange={props.onChangeUsername} />
             <input type="password" name="password" placeholder="Password" onChange={props.onChangePassword} />
-            <button type="submit" onClick={props.onLoginClick}>
+            <button class="loginButton" type="submit" onClick={props.onLoginClick}>
                 Login
             </button>
         </div>
