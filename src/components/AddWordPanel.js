@@ -3,6 +3,7 @@ import cmis from 'cmis';
 // import { cmis } from '../lib/cmis';
 import './css/AddWordPanel.css';
 import { Button, Col, ControlLabel, Form, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
+import PartOfSpeechForm from './PartOfSpeechForm.js';
 
 export function AddWordPanel(props) {
 
@@ -19,10 +20,7 @@ export function AddWordPanel(props) {
                             placeholder="Enter english word" />
                     </Col>
                     <Col sm={5}>
-                        <ControlLabel>Part Of Speech</ControlLabel>
-                        <FormControl
-                            type="text"
-                            placeholder="Enter part of speech" />
+                        <PartOfSpeechForm cmisSession={cmisSession}/>
                     </Col>
                 </FormGroup>
             </Form>
