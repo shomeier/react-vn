@@ -77,7 +77,7 @@ function LoginForm(props) {
     return (
         <div className="loginForm">
             <div className="imgcontainer">
-                <img src={logo} alt="Avatar" className="avatar" />
+                {/* <img src={logo} alt="Avatar" className="avatar" /> */}
             </div>
             <input type="text" name="username" placeholder="Username" onChange={props.onChangeUsername} />
             <input type="password" name="password" placeholder="Password" onChange={props.onChangePassword} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 // import cmis from 'cmis';
 // import { cmis } from '../lib/cmis';
 // import './css/AddWordPanel.css';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 const logo = require('../assets/vietnam_round_icon_64.png');
 import cmis from 'cmis';
 // import { cmis } from '../lib/cmis';
