@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cmis } from 'cmis';
-import ReactList from 'react-list';
+import * as ReactList from 'react-list';
 
 interface Props {
     cmisSession: cmis.CmisSession,
