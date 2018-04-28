@@ -8,7 +8,7 @@ var config = {
   // configure the output directory and publicPath for the devServer
   output: {
     filename: 'bundle.js',
-    publicPath: 'dist',
+    publicPath: 'public',
     path: path.resolve(__dirname, "dist"),
   },
 
