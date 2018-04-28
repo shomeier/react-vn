@@ -1,5 +1,5 @@
 var path = require("path");
-const CircularDependencyPlugin = require('circular-dependency-plugin')
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 var config = {
 
@@ -11,7 +11,7 @@ var config = {
   // configure the output directory and publicPath for the devServer
   output: {
     filename: 'bundle.js',
-    publicPath: 'public',
+    publicPath: 'dist',
     path: path.resolve(__dirname, "dist"),
   },
 
@@ -19,8 +19,10 @@ var config = {
   // configure the dev server to run
   devServer: {
     port: 3000,
+    // contentBase: './dist',
     historyApiFallback: true,
     inline: true,
+    // hot: true,
   },
 
   resolve: {
