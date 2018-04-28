@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 // import React, { Component } from 'react';
-// import cmis from 'cmis';
+// import { cmis } from 'cmis';
+import { cmis } from '../lib/cmis';
 import './css/MainPanel.css';
-import { MainNavBar } from './MainNavBar.js';
-import { WelcomePanel } from './WelcomePanel.js';
-import { AddWordPanel } from './AddWordPanel.js';
+import { MainNavBar } from './MainNavBar';
+import { WelcomePanel } from './WelcomePanel';
+import { AddWordPanel } from './AddWordPanel';
 
-class MainPanel extends Component {
+interface Props {
+    cmisSession: cmis.CmisSession,
+};
+
+interface State {
+    panel: string;
+}
+
+class MainPanel extends React.Component<Props, State> {
     constructor(props) {
         super(props);
         this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
@@ -34,7 +43,8 @@ class MainPanel extends Component {
         return (
             <div className="mainPanel">
                 <MainNavBar
-                    isAdmin={cmisSession.username === "admin"}
+                    // isAdmin={cmisSession.username === "admin"}
+                    isAdmin={true}
                     cmisSession={cmisSession}
                     onMenuItemClick={this.handleMenuItemClick} />
                 <div className="centerPanel">

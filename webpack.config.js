@@ -1,9 +1,12 @@
 var path = require("path");
-var config = {
-  
-  devtool: 'eval',
+const CircularDependencyPlugin = require('circular-dependency-plugin')
 
-  entry: ["./src/App.tsx"],
+var config = {
+
+  devtool: 'source-map',
+  // devtool: 'eval',
+
+  entry: ["./src/index.tsx"],
 
   // configure the output directory and publicPath for the devServer
   output: {
@@ -21,10 +24,21 @@ var config = {
   },
 
   resolve: {
-    extensions: [".ts", ".tsx", ".js"],
+    extensions: [".ts", ".tsx", ".js", ".json"],
     // add 'src' to the modules, so that when you import files you can do so with 'src' as the relative route
     modules: ['src', 'node_modules'],
   },
+
+  plugins: [
+    new CircularDependencyPlugin({
+      // exclude detection of files based on a RegExp
+      exclude: /a\.js|node_modules/,
+      // add errors to webpack instead of warnings
+      failOnError: true,
+      // set the current working directory for displaying module paths
+      cwd: process.cwd(),
+    })
+  ],
 
   module: {
     rules: [
@@ -33,6 +47,22 @@ var config = {
         loader: "ts-loader",
         include: path.resolve('src'),
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+        ],
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        loader: 'file-loader',
+        include: path.resolve('src/assets'),
       }
     ]
   }

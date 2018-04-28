@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "outDir": "./dist/",
-    "target": "es6",
+    "sourceMap": true,
+    "target": "es5",
     "jsx": "react",
-    "module": "commonjs"
+    "module": "ESNext",
+    "moduleResolution": "node"
   },
   "exclude": [
     "node_modules"

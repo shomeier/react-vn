@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
-import cmis from 'cmis';
-// import { cmis } from '../lib/cmis';
-import { ControlLabel, FormControl, option } from 'react-bootstrap';
+import { cmis } from 'cmis';
+import { ControlLabel, FormControl } from 'react-bootstrap';
 
-class PartOfSpeechForm extends Component {
+interface Props {
+    cmisSession: cmis.CmisSession,
+};
+
+interface State {
+    options: CmisChoice[];
+}
+
+interface CmisChoice {
+    value: string;
+    displayName: string;
+}
+
+class PartOfSpeechForm extends React.Component<Props, State> {
     constructor(props) {
         super(props);
-        this.state = { options: '' };
+        this.state = { options: [] };
     }
 
 

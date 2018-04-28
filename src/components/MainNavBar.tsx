@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../assets/vietnam_round_icon_64.png';
+const logo = require('../assets/vietnam_round_icon_64.png');
 import cmis from 'cmis';
 // import { cmis } from '../lib/cmis';
 import './css/MainNavBar.css';
