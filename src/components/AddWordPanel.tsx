@@ -13,6 +13,11 @@ interface State {
     wordPropertyDef: CmisPropertyDefinition;
     partOfSpeechPropertyDef: CmisPropertyDefinition;
     languagePropertyDef: CmisPropertyDefinition;
+
+    englishWord: string;
+    partOfSpeech: string;
+    vietnameseWord: string;
+    vietnameseLanguage: string;
 }
 
 interface CmisChoice {
@@ -23,7 +28,18 @@ interface CmisChoice {
 export class AddWordPanel extends React.Component<Props, State> {
     constructor(props) {
         super(props);
-        this.state = { wordPropertyDef: null, partOfSpeechPropertyDef: null, languagePropertyDef: null};
+        this.handleChange = this.handleChange.bind(this);
+        this.state = {
+            wordPropertyDef: null, partOfSpeechPropertyDef: null, languagePropertyDef: null,
+            englishWord: null, partOfSpeech: null, vietnameseWord: null, vietnameseLanguage: null
+        };
+    }
+
+    handleChange(item, event) {
+        // console.log("Event: " + JSON.stringify(event));
+        console.log("Target Value: " + JSON.stringify(event.target.value));
+        console.log("Item: " + item);
+        this.setState({ [item]: event.target.value });
     }
 
     componentDidMount() {
@@ -54,21 +70,39 @@ export class AddWordPanel extends React.Component<Props, State> {
                     <Form horizontal>
                         <FormGroup controlId="WordEnglish">
                             <Col sm={7}>
-                                <CmisFormControl label='English Word' propertyDefinition={wordPropertyDef} />
+                                <CmisFormControl
+                                    label='English Word'
+                                    propertyDefinition={wordPropertyDef}
+                                    onChange={this.handleChange}
+                                    item='englishWord'/>
                             </Col>
                             <Col sm={5}>
-                                <CmisFormControl propertyDefinition={partOfSpeechPropertyDef} componentClass='select' />
+                                <CmisFormControl
+                                    propertyDefinition={partOfSpeechPropertyDef}
+                                    componentClass='select'
+                                    onChange={this.handleChange}
+                                    item='partOfSpeech'/>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId="WordVietnamese">
                             <Col sm={7}>
-                                <CmisFormControl label='Vietnamese Word' propertyDefinition={wordPropertyDef} />
+                                <CmisFormControl
+                                    label='Vietnamese Word'
+                                    propertyDefinition={wordPropertyDef}
+                                    onChange={this.handleChange}
+                                    item='vietnameseWord'/>
                             </Col>
                             <Col sm={5}>
-                                <CmisFormControl propertyDefinition={languagePropertyDef} componentClass='select' />
+                                <CmisFormControl
+                                    propertyDefinition={languagePropertyDef}
+                                    componentClass='select'
+                                    onChange={this.handleChange}
+                                    item='vietnameseLanguage'/>
                             </Col>
                         </FormGroup>
-                    </Form>)
+                        <Button type="submit">Save</Button>
+                    </Form>
+                )
                     :
                     <div>Loading ...</div>
                 }
@@ -88,6 +122,8 @@ interface CmisFormControlProps {
     propertyDefinition: CmisPropertyDefinition,
     value?: string;
     componentClass?: string;
+    onChange?: any;
+    item?: string;
 };
 
 const CmisFormControl: React.StatelessComponent<CmisFormControlProps> = (props) => {
@@ -113,9 +149,8 @@ const CmisFormControl: React.StatelessComponent<CmisFormControlProps> = (props) 
             <ControlLabel>{label}</ControlLabel>
             <FormControl
                 componentClass={componentClass}
-                placeholder="select">
+                placeholder="select" onChange={(e) => props.onChange(props.item, e)}>
                 {options}
-                {/* <CmisOptions cmisSession={cmisSession} typeDefinitionId='P:lingo:partOfSpeech' propertyDefinitionId='lingo:partOfSpeech' /> */}
             </FormControl>
         </div>
     );
