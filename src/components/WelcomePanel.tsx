@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 // import cmis from 'cmis';
 // import { cmis } from '../lib/cmis';
 // import './css/AddWordPanel.css';
 // import { Button } from 'react-bootstrap';
 
-export function WelcomePanel(props) {
-
+export const WelcomePanel: React.StatelessComponent<{}> = () => {
     return (
         <div className="welcomePanel">
-            Welcome!
-        </div>
+        Welcome!
+    </div>
     );
 }
-
-export default WelcomePanel;

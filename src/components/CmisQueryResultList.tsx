@@ -1,8 +1,19 @@
-import React, { Component } from 'react';
-// import cmis from 'cmis';
-import ReactList from 'react-list';
+import * as React from 'react';
+// import { cmis } from 'cmis';
+import { cmis } from '../lib/cmis';
+import * as ReactList from 'react-list';
 
-export class CmisQueryResultList extends Component {
+interface Props {
+    cmisSession: cmis.CmisSession,
+    query: string,
+};
+
+interface State {
+    results: {succinctProperties:string}[];
+    isLoading: boolean;
+}
+
+export class CmisQueryResultList extends React.Component<Props, State> {
     constructor(props) {
         super(props);
         this.renderItem = this.renderItem.bind(this);

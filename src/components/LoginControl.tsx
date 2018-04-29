@@ -1,11 +1,18 @@
-import React, { Component } from 'react';
-import logo from '../assets/vietnam_round_icon_256.png';
-import cmis from 'cmis';
-// import { cmis } from '../lib/cmis';
+import * as React from 'react';
+const logo = require('../assets/vietnam_round_icon_256.png');
+// import * as cmis from 'cmis';
+// var cmis = require('cmis');  
+import { cmis } from '../lib/cmis';
 import './css/LoginControl.css';
 import MainPanel from './MainPanel';
 
-class LoginControl extends Component {
+interface State {
+    username: string;
+    password: string;
+    cmisSession: cmis.CmisSession;
+}
+
+class LoginControl extends React.Component<{}, State>  {
     constructor(props) {
         super(props);
         this.handleChangeUsername = this.handleChangeUsername.bind(this);
@@ -27,6 +34,9 @@ class LoginControl extends Component {
 
         let cmisUrl = 'http://127.0.0.1:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
         // let cmisUrl = 'https://cmis.alfresco.com/api/-default-/public/cmis/versions/1.1/browser';
+
+        console.log("cmis: " + cmis);
+        console.log("cmis: " + JSON.stringify(cmis));
 
         let session = new cmis.CmisSession(cmisUrl);
         session.setErrorHandler(err => console.log(err.stack));
@@ -67,7 +77,7 @@ function LoginForm(props) {
     return (
         <div className="loginForm">
             <div className="imgcontainer">
-                <img src={logo} alt="Avatar" className="avatar" />
+                {/* <img src={logo} alt="Avatar" className="avatar" /> */}
             </div>
             <input type="text" name="username" placeholder="Username" onChange={props.onChangeUsername} />
             <input type="password" name="password" placeholder="Password" onChange={props.onChangePassword} />

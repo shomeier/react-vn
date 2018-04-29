@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import logo from '../assets/vietnam_round_icon_64.png';
-import cmis from 'cmis';
-// import { cmis } from '../lib/cmis';
+import * as React from 'react';
+const logo = require('../assets/vietnam_round_icon_64.png');
+// import * as cmis from 'cmis';
+import { cmis } from '../lib/cmis';
 import './css/MainNavBar.css';
 import { Button, FormGroup, FormControl, MenuItem, Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 
