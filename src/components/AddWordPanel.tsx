@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { cmis } from 'cmis';
-// import { cmis } from '../lib/cmis';
+// import { cmis } from 'cmis';
+import { cmis } from '../lib/cmis';
 import './css/AddWordPanel.css';
 import { Button, Col, ControlLabel, Form, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import PartOfSpeechForm from './PartOfSpeechForm';

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { cmis } from 'cmis';
+// import { cmis } from 'cmis';
+import { cmis } from '../lib/cmis';
 import * as ReactList from 'react-list';
 
 interface Props {
