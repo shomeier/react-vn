@@ -5,7 +5,11 @@ import './css/AddWordPanel.css';
 import { Button, Col, ControlLabel, Form, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import PartOfSpeechForm from './PartOfSpeechForm';
 
-export function AddWordPanel(props) {
+interface Props {
+    cmisSession: cmis.CmisSession,
+};
+
+export const AddWordPanel: React.StatelessComponent<Props> = (props) => {
 
     const cmisSession = props.cmisSession;
 
@@ -21,6 +25,14 @@ export function AddWordPanel(props) {
                     </Col>
                     <Col sm={5}>
                         <PartOfSpeechForm cmisSession={cmisSession}/>
+                    </Col>
+                </FormGroup>
+                <FormGroup controlId="WordVietnamese">
+                    <Col sm={7}>
+                        <ControlLabel>Vietnamese word</ControlLabel>
+                        <FormControl
+                            type="text"
+                            placeholder="Enter vietnamese word" />
                     </Col>
                 </FormGroup>
             </Form>

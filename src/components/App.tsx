@@ -2,12 +2,10 @@ import * as React from "react";
 import LoginControl from './LoginControl';
 import './css/App.css';
 
-class App extends React.Component {
-  render() {
+export const App: React.StatelessComponent<{}> = () => {
     return (
       <LoginControl />
     );
-  }
 }
 
 export default App;
