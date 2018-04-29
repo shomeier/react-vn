@@ -10,7 +10,9 @@ interface Props {
 };
 
 interface State {
+    wordPropertyDef: CmisPropertyDefinition;
     partOfSpeechPropertyDef: CmisPropertyDefinition;
+    languagePropertyDef: CmisPropertyDefinition;
 }
 
 interface CmisChoice {
@@ -21,54 +23,54 @@ interface CmisChoice {
 export class AddWordPanel extends React.Component<Props, State> {
     constructor(props) {
         super(props);
-        this.state = { partOfSpeechPropertyDef: null };
+        this.state = { wordPropertyDef: null, partOfSpeechPropertyDef: null, languagePropertyDef: null};
     }
 
     componentDidMount() {
         const cmisSession = this.props.cmisSession;
         cmisSession.getTypeDefinition('P:lingo:partOfSpeech').then((res) => {
-            // let options = res.propertyDefinitions['lingo:partOfSpeech'].choice
             this.setState({ partOfSpeechPropertyDef: res.propertyDefinitions['lingo:partOfSpeech'] });
+        });
+        cmisSession.getTypeDefinition('P:lingo:word').then((res) => {
+            this.setState({ wordPropertyDef: res.propertyDefinitions['lingo:word'] });
+        });
+        cmisSession.getTypeDefinition('P:lingo:language').then((res) => {
+            this.setState({ languagePropertyDef: res.propertyDefinitions['lingo:language'] });
         });
     }
 
     isReady() {
-        if (this.state.partOfSpeechPropertyDef) {
-            console.log("PoS: " + JSON.stringify(this.state.partOfSpeechPropertyDef));
+        if ((this.state.partOfSpeechPropertyDef) && (this.state.wordPropertyDef) && (this.state.languagePropertyDef))
             return true;
-        }
     }
 
     render() {
-        const cmisSession = this.props.cmisSession;
         const partOfSpeechPropertyDef = this.state.partOfSpeechPropertyDef;
+        const wordPropertyDef = this.state.wordPropertyDef;
+        const languagePropertyDef = this.state.languagePropertyDef;
         return (
             <div className="addWordPanel">
                 {this.isReady() ? (
-                <Form horizontal>
-                    <FormGroup controlId="WordEnglish">
-                        <Col sm={7}>
-                            <ControlLabel>English word</ControlLabel>
-                            <FormControl
-                                type="text"
-                                placeholder="Enter english word" />
-                        </Col>
-                        <Col sm={5}>
-                            <CmisFormControl propertyDefinition={partOfSpeechPropertyDef} />
-                            {/* <PartOfSpeechForm options={cmisSession} /> */}
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId="WordVietnamese">
-                        <Col sm={7}>
-                            <ControlLabel>Vietnamese word</ControlLabel>
-                            <FormControl
-                                type="text"
-                                placeholder="Enter vietnamese word" />
-                        </Col>
-                    </FormGroup>
-                </Form>)
-                :
-                <div>Loading ...</div>
+                    <Form horizontal>
+                        <FormGroup controlId="WordEnglish">
+                            <Col sm={7}>
+                                <CmisFormControl label='English Word' propertyDefinition={wordPropertyDef} />
+                            </Col>
+                            <Col sm={5}>
+                                <CmisFormControl propertyDefinition={partOfSpeechPropertyDef} componentClass='select' />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId="WordVietnamese">
+                            <Col sm={7}>
+                                <CmisFormControl label='Vietnamese Word' propertyDefinition={wordPropertyDef} />
+                            </Col>
+                            <Col sm={5}>
+                                <CmisFormControl propertyDefinition={languagePropertyDef} componentClass='select' />
+                            </Col>
+                        </FormGroup>
+                    </Form>)
+                    :
+                    <div>Loading ...</div>
                 }
             </div>
         );
@@ -82,28 +84,37 @@ interface CmisPropertyDefinition {
 }
 
 interface CmisFormControlProps {
+    label?: string,
     propertyDefinition: CmisPropertyDefinition,
     value?: string;
+    componentClass?: string;
 };
 
 const CmisFormControl: React.StatelessComponent<CmisFormControlProps> = (props) => {
 
     const propertyDefinition = props.propertyDefinition;
-    let options = propertyDefinition.choice.map(function (itemData) {
-        if (itemData.value === props.value) {
-            return <option key={itemData.value} value={itemData.value} selected>{itemData.displayName}</option>;
-        }
-        else {
-            return <option key={itemData.value} value={itemData.value}>{itemData.displayName}</option>;
-        }
-    });
+    const label = (props.label) ? props.label : propertyDefinition.displayName;
+    const componentClass = (props.componentClass) ? props.componentClass : 'input';
+
+    let options;
+    if (componentClass === 'select') {
+        options = propertyDefinition.choice.map(function (itemData) {
+            if (itemData.value === props.value) {
+                return <option key={itemData.value} value={itemData.value} selected>{itemData.displayName}</option>;
+            }
+            else {
+                return <option key={itemData.value} value={itemData.value}>{itemData.displayName}</option>;
+            }
+        });
+    }
+
     return (
         <div className="cmisFormControl">
-            <ControlLabel>{propertyDefinition.displayName}</ControlLabel>
+            <ControlLabel>{label}</ControlLabel>
             <FormControl
-                componentClass="select"
+                componentClass={componentClass}
                 placeholder="select">
-                {options} 
+                {options}
                 {/* <CmisOptions cmisSession={cmisSession} typeDefinitionId='P:lingo:partOfSpeech' propertyDefinitionId='lingo:partOfSpeech' /> */}
             </FormControl>
         </div>
