@@ -4,6 +4,7 @@ import { cmis } from '../lib/cmis';
 import './css/AddWordPanel.css';
 import { Button, Col, ControlLabel, Form, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import PartOfSpeechForm from './PartOfSpeechForm';
+import { CmisSave, Translation } from "../util/CmisSave";
 
 interface Props {
     cmisSession: cmis.CmisSession,
@@ -29,6 +30,7 @@ export class AddWordPanel extends React.Component<Props, State> {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             wordPropertyDef: null, partOfSpeechPropertyDef: null, languagePropertyDef: null,
             englishWord: null, partOfSpeech: null, vietnameseWord: null, vietnameseLanguage: null
@@ -36,10 +38,21 @@ export class AddWordPanel extends React.Component<Props, State> {
     }
 
     handleChange(item, event) {
-        // console.log("Event: " + JSON.stringify(event));
         console.log("Target Value: " + JSON.stringify(event.target.value));
         console.log("Item: " + item);
         this.setState({ [item]: event.target.value });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        const cmisSession = this.props.cmisSession;
+        const translation:Translation = {
+            partOfSpeech: this.state.partOfSpeech,
+            wordEn: this.state.englishWord,
+            wordVn: this.state.vietnameseWord,
+            languageVn: this.state.vietnameseLanguage 
+        }
+        CmisSave.saveTanslation(cmisSession, translation);
     }
 
     componentDidMount() {
@@ -100,7 +113,7 @@ export class AddWordPanel extends React.Component<Props, State> {
                                     item='vietnameseLanguage'/>
                             </Col>
                         </FormGroup>
-                        <Button type="submit">Save</Button>
+                        <Button type="submit" onClick={this.handleSubmit}>Save</Button>
                     </Form>
                 )
                     :
