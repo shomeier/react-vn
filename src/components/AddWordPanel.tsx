@@ -1,6 +1,6 @@
 import update from 'immutability-helper';
 import * as React from 'react';
-import { Button, Col, ControlLabel, Form, FormControl, FormGroup } from 'react-bootstrap';
+import { Button, Col, ControlLabel, Form, FormControl, FormGroup, Panel } from 'react-bootstrap';
 import { CmisFormControlProps, CmisFormControl } from './cmis/CmisFormControl';
 // import { cmis } from 'cmis';
 import { cmis } from '../lib/cmis';
@@ -32,7 +32,7 @@ export class AddWordPanel extends React.Component<Props, State> {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             wordPropertyDef: null, partOfSpeechPropertyDef: null, languagePropertyDef: null,
-            translation: {sourceVocab: {word: null, partOfSpeech: null, language: null}, targetVocab: [{word: null, partOfSpeech: null, language: null}]}
+            translation: { sourceVocab: { word: null, partOfSpeech: null, language: null }, targetVocab: [{ word: null, partOfSpeech: null, language: null }] }
         };
     }
 
@@ -43,20 +43,20 @@ export class AddWordPanel extends React.Component<Props, State> {
         const value = event.target.value;
         switch (item) {
             case 'sourceVocab.word':
-                    const sV_word = update(this.state.translation, {
-                        sourceVocab: {word: {$set: value} }
-                    });
-                    this.setState({ translation: sV_word });
-                    break;
+                const sV_word = update(this.state.translation, {
+                    sourceVocab: { word: { $set: value } }
+                });
+                this.setState({ translation: sV_word });
+                break;
             case 'sourceVocab.partOfSpeech':
                 const sV_partOfSpeech = update(this.state.translation, {
-                    sourceVocab: {partOfSpeech: {$set: value}}
+                    sourceVocab: { partOfSpeech: { $set: value } }
                 });
                 this.setState({ translation: sV_partOfSpeech });
                 break;
             case 'sourceVocab.language':
                 const sV_language = update(this.state.translation, {
-                    sourceVocab: {language: { $set: value }}
+                    sourceVocab: { language: { $set: value } }
                 });
                 this.setState({ translation: sV_language });
                 break;
@@ -138,22 +138,26 @@ export class AddWordPanel extends React.Component<Props, State> {
                                     item='sourceVocab.language' />
                             </Col>
                         </FormGroup>
-                        <FormGroup controlId="targetVocab">
-                            <Col sm={7}>
-                                <CmisFormControl
-                                    // label='Vietnamese Word'
-                                    propertyDefinition={wordPropertyDef}
-                                    onChange={this.handleChange}
-                                    item='targetVocab.word' />
-                            </Col>
-                            <Col sm={5}>
-                                <CmisFormControl
-                                    propertyDefinition={languagePropertyDef}
-                                    componentClass='select'
-                                    onChange={this.handleChange}
-                                    item='targetVocab.language' />
-                            </Col>
-                        </FormGroup>
+                        <Panel>
+                            <Panel.Body>
+                                <FormGroup controlId="targetVocab">
+                                    <Col sm={7}>
+                                        <CmisFormControl
+                                            // label='Vietnamese Word'
+                                            propertyDefinition={wordPropertyDef}
+                                            onChange={this.handleChange}
+                                            item='targetVocab.word' />
+                                    </Col>
+                                    <Col sm={5}>
+                                        <CmisFormControl
+                                            propertyDefinition={languagePropertyDef}
+                                            componentClass='select'
+                                            onChange={this.handleChange}
+                                            item='targetVocab.language' />
+                                    </Col>
+                                </FormGroup>
+                            </Panel.Body>
+                        </Panel>
                         <Button type="submit" onClick={this.handleSubmit}>Save</Button>
                     </Form>
                 )
