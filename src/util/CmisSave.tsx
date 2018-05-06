@@ -1,23 +1,5 @@
 import { cmis } from '../lib/cmis';
-
-export interface Translation {
-    partOfSpeech:string;
-    sourceWords:string[];
-    sourceLanguage:string;
-    meanings:Meaning[];
-}
-
-export interface Meaning {
-    classifier?:string;
-    targetWord:string;
-    targetLanguage:string;
-
-}
-
-export interface Example {
-    example:string;
-    translation:string;
-}
+import { Translation } from '../model/CmisTranslation';
 
 export class CmisSave {
         static saveTanslation(cmisSession: cmis.CmisSession, translation: Translation) {
@@ -51,22 +33,29 @@ export class CmisSave {
             });
             */
 
-        
-        cmisSession.getObjectByPath('/lingo/en').then((res) => {
-            const enFolder:string = res.succinctProperties['cmis:objectId'];
-            console.log("enFolder: " + enFolder);
-            cmisSession.createDocument(enFolder, '', {"cmis:objectTypeId": "D:cmiscustom:document", "cmis:name": translation.sourceWords[0] + '_' + translation.partOfSpeech}).then((res) => {
+
+        const sV = translation.sourceVocab;
+        const sV_Folder = '/lingo/' + sV.language;
+        cmisSession.getObjectByPath(sV_Folder).then((res) => {
+            const sV_FolderId:string = res.succinctProperties['cmis:objectId'];
+            console.log("sV_FolderId (" + sV_Folder + "): " + sV_FolderId);
+            cmisSession.createDocument(sV_FolderId, '', {"cmis:objectTypeId": "D:cmiscustom:document", "cmis:name": sV.word + '_' + sV.partOfSpeech}).then((res) => {
                 
-                console.log("wordEn: " + JSON.stringify(res));
-                const wordEnCoid:string = res.succinctProperties['cmis:objectId'];
-                cmisSession.getObjectByPath('/lingo/vn').then((res) => {
-                    const vnFolder:string = res.succinctProperties['cmis:objectId'];
-                    console.log("vnFolder: " + vnFolder);
+                console.log("sourceVocab: " + JSON.stringify(res));
+                const sV_Id:string = res.succinctProperties['cmis:objectId'];
+
+                const tV = translation.targetVocab[0];
+                const tV_Folder = '/lingo/' + tV.language;
+
+                cmisSession.getObjectByPath(tV_Folder).then((res) => {
+                    const tV_FolderId:string = res.succinctProperties['cmis:objectId'];
+                    console.log("tV_FolderId (" + tV_Folder + "): " + tV_FolderId);
                     
-                    cmisSession.createDocument(vnFolder, '', {"cmis:objectTypeId": "D:cmiscustom:document", "cmis:name": translation.meanings[0].targetWord + '_' + translation.partOfSpeech}).then((res) => {
-                        console.log("wordVn: " + JSON.stringify(res));
-                        const wordVnCoid:string = res.succinctProperties['cmis:objectId'];
-                        cmisSession.createRelationship({"cmis:objectTypeId": "R:cmiscustom:assoc", "cmis:sourceId": wordEnCoid, "cmis:targetId": wordVnCoid}).then((res)=>{
+                    cmisSession.createDocument(tV_FolderId, '', {"cmis:objectTypeId": "D:cmiscustom:document", "cmis:name": tV.word + '_' + sV.partOfSpeech}).then((res) => {
+                        console.log("targetVocab: " + JSON.stringify(res));
+                        const tV_id:string = res.succinctProperties['cmis:objectId'];
+
+                        cmisSession.createRelationship({"cmis:objectTypeId": "R:cmiscustom:assoc", "cmis:sourceId": sV_Id, "cmis:targetId": tV_id}).then((res)=>{
                             console.log("CreateRelationship Response: " + JSON.stringify(res));
                         }).catch((err)=> {
                             console.log("Error in CreateRelationship: " + JSON.stringify(err));
