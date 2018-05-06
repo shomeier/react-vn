@@ -6,6 +6,7 @@ import './css/AddWordPanel.css';
 import { Button, Col, ControlLabel, Form, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import PartOfSpeechForm from './PartOfSpeechForm';
 import { CmisSave, Translation } from "../util/CmisSave";
+import { CmisPropertyDefinition, CmisChoice } from "../util/CmisJson";
 
 interface Props {
     cmisSession: cmis.CmisSession,
@@ -21,11 +22,6 @@ interface State {
     // partOfSpeech: string;
     // vietnameseWord: string;
     // vietnameseLanguage: string;
-}
-
-interface CmisChoice {
-    value: string;
-    displayName: string;
 }
 
 export class AddWordPanel extends React.Component<Props, State> {
@@ -153,12 +149,6 @@ export class AddWordPanel extends React.Component<Props, State> {
             </div>
         );
     }
-}
-
-interface CmisPropertyDefinition {
-    displayName: string,
-    description: string,
-    choice: CmisChoice[]
 }
 
 interface CmisFormControlProps {
