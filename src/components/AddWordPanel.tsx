@@ -1,6 +1,7 @@
 import update from 'immutability-helper';
 import * as React from 'react';
 import { Button, Col, ControlLabel, Form, FormControl, FormGroup } from 'react-bootstrap';
+import { CmisFormControlProps, CmisFormControl } from './cmis/CmisFormControl';
 // import { cmis } from 'cmis';
 import { cmis } from '../lib/cmis';
 import { CmisPropertyDefinition } from "../model/CmisJson";
@@ -162,45 +163,6 @@ export class AddWordPanel extends React.Component<Props, State> {
             </div>
         );
     }
-}
-
-interface CmisFormControlProps {
-    label?: string,
-    propertyDefinition: CmisPropertyDefinition,
-    value?: string;
-    componentClass?: string;
-    onChange?: any;
-    item?: string;
-};
-
-const CmisFormControl: React.StatelessComponent<CmisFormControlProps> = (props) => {
-
-    const propertyDefinition = props.propertyDefinition;
-    const label = (props.label) ? props.label : propertyDefinition.displayName;
-    const componentClass = (props.componentClass) ? props.componentClass : 'input';
-
-    let options;
-    if (componentClass === 'select') {
-        options = propertyDefinition.choice.map(function (itemData) {
-            if (itemData.value === props.value) {
-                return <option key={itemData.value} value={itemData.value} selected>{itemData.displayName}</option>;
-            }
-            else {
-                return <option key={itemData.value} value={itemData.value}>{itemData.displayName}</option>;
-            }
-        });
-    }
-
-    return (
-        <div className="cmisFormControl">
-            <ControlLabel>{label}</ControlLabel>
-            <FormControl
-                componentClass={componentClass}
-                placeholder="select" onChange={(e) => props.onChange(props.item, e)}>
-                {options}
-            </FormControl>
-        </div>
-    );
 }
 
 export default AddWordPanel;
