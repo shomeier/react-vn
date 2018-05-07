@@ -14,32 +14,38 @@ interface Props {
 };
 
 interface State {
-    wordPropertyDef: CmisPropertyDefinition;
-    partOfSpeechPropertyDef: CmisPropertyDefinition;
-    languagePropertyDef: CmisPropertyDefinition;
-
+    propDefsLoaded: boolean;
     translation: Translation;
-    // englishWord: string;
-    // partOfSpeech: string;
-    // vietnameseWord: string;
-    // vietnameseLanguage: string;
 }
 
 export class AddWordPanel extends React.Component<Props, State> {
+
+    private wordPropDef: CmisPropertyDefinition;
+    private partOfSpeechPropDef: CmisPropertyDefinition;
+    private languagePropDef: CmisPropertyDefinition;
+
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
-            wordPropertyDef: null, partOfSpeechPropertyDef: null, languagePropertyDef: null,
-            translation: { sourceVocab: { word: null, partOfSpeech: null, language: null }, targetVocab: [{ word: null, partOfSpeech: null, language: null }] }
+            propDefsLoaded: false,
+            translation: {
+                sourceVocab: {
+                    word: null,
+                    partOfSpeech: null,
+                    language: null
+                },
+                targetVocab: [{
+                    word: null,
+                    partOfSpeech: null,
+                    language: null
+                }]
+            }
         };
     }
 
     handleChange(item, event) {
-        console.log("Target Value: " + JSON.stringify(event.target.value));
-        console.log("Item: " + item);
-        // this.setState({ [item]: event.target.value });
         const value = event.target.value;
         switch (item) {
             case 'sourceVocab.word':
@@ -80,37 +86,30 @@ export class AddWordPanel extends React.Component<Props, State> {
     handleSubmit(event) {
         event.preventDefault();
         const cmisSession = this.props.cmisSession;
-        // const translation:Translation = {
-        //     partOfSpeech: this.state.partOfSpeech,
-        //     wordEn: this.state.englishWord,
-        //     wordVn: this.state.vietnameseWord,
-        //     languageVn: this.state.vietnameseLanguage 
-        // }
         CmisSave.saveTanslation(cmisSession, this.state.translation);
     }
 
     componentDidMount() {
+        // load all required cmis property definitions ...
         const cmisSession = this.props.cmisSession;
         cmisSession.getTypeDefinition('P:lingo:partOfSpeech').then((res) => {
-            this.setState({ partOfSpeechPropertyDef: res.propertyDefinitions['lingo:partOfSpeech'] });
-        });
-        cmisSession.getTypeDefinition('P:lingo:word').then((res) => {
-            this.setState({ wordPropertyDef: res.propertyDefinitions['lingo:word'] });
-        });
-        cmisSession.getTypeDefinition('P:lingo:language').then((res) => {
-            this.setState({ languagePropertyDef: res.propertyDefinitions['lingo:language'] });
+            this.partOfSpeechPropDef = res.propertyDefinitions['lingo:partOfSpeech'];
+            cmisSession.getTypeDefinition('P:lingo:word').then((res) => {
+                this.wordPropDef = res.propertyDefinitions['lingo:word'];
+                cmisSession.getTypeDefinition('P:lingo:language').then((res) => {
+                    this.languagePropDef = res.propertyDefinitions['lingo:language'];
+                    this.setState({propDefsLoaded: true});
+                });
+            });
         });
     }
 
     isReady() {
-        if ((this.state.partOfSpeechPropertyDef) && (this.state.wordPropertyDef) && (this.state.languagePropertyDef))
+        if ((this.state.propDefsLoaded))
             return true;
     }
 
     render() {
-        const partOfSpeechPropertyDef = this.state.partOfSpeechPropertyDef;
-        const wordPropertyDef = this.state.wordPropertyDef;
-        const languagePropertyDef = this.state.languagePropertyDef;
         return (
             <div className="addWordPanel">
                 {this.isReady() ? (
@@ -119,20 +118,20 @@ export class AddWordPanel extends React.Component<Props, State> {
                             <Col sm={7}>
                                 <CmisFormControl
                                     // label='English Word'
-                                    propertyDefinition={wordPropertyDef}
+                                    propertyDefinition={this.wordPropDef}
                                     onChange={this.handleChange}
                                     item='sourceVocab.word' />
                             </Col>
                             <Col sm={3}>
                                 <CmisFormControl
-                                    propertyDefinition={partOfSpeechPropertyDef}
+                                    propertyDefinition={this.partOfSpeechPropDef}
                                     componentClass='select'
                                     onChange={this.handleChange}
                                     item='sourceVocab.partOfSpeech' />
                             </Col>
                             <Col sm={2}>
                                 <CmisFormControl
-                                    propertyDefinition={languagePropertyDef}
+                                    propertyDefinition={this.languagePropDef}
                                     componentClass='select'
                                     onChange={this.handleChange}
                                     item='sourceVocab.language' />
@@ -144,13 +143,13 @@ export class AddWordPanel extends React.Component<Props, State> {
                                     <Col sm={7}>
                                         <CmisFormControl
                                             // label='Vietnamese Word'
-                                            propertyDefinition={wordPropertyDef}
+                                            propertyDefinition={this.wordPropDef}
                                             onChange={this.handleChange}
                                             item='targetVocab.word' />
                                     </Col>
                                     <Col sm={5}>
                                         <CmisFormControl
-                                            propertyDefinition={languagePropertyDef}
+                                            propertyDefinition={this.languagePropDef}
                                             componentClass='select'
                                             onChange={this.handleChange}
                                             item='targetVocab.language' />
