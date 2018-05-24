@@ -5,6 +5,7 @@ import { cmis } from '../lib/cmis';
 import './css/MainPanel.css';
 import { MainNavBar } from './MainNavBar';
 import { WelcomePanel } from './WelcomePanel';
+import { AdminMain } from './adminPanel/AdminMain';
 import { AddWordPanel } from './AddWordPanel';
 
 interface Props {
@@ -35,7 +36,8 @@ class MainPanel extends React.Component<Props, State> {
         let centerPanel;
         switch(this.state.panel) {
             case "addWord":
-                centerPanel = <AddWordPanel cmisSession={cmisSession}/>
+                // centerPanel = <AddWordPanel cmisSession={cmisSession}/>
+                centerPanel = <AdminMain cmisSession={cmisSession}/>
                 break;
             default:
                 centerPanel = <WelcomePanel/>
