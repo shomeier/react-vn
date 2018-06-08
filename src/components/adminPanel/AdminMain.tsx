@@ -44,7 +44,7 @@ export class AdminMain extends React.Component<Props, State> {
                     </Row>
                     <Row className="show-grid">
                         <Col xs={5}>
-                            <LeftPanel cmisObjects=''/>
+                            <LeftPanel cmisSession={this.props.cmisSession}/>
                         </Col>
                         <Col xs={2}>
                             <Panel>
