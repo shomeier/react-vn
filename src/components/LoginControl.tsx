@@ -1,9 +1,9 @@
 import * as React from 'react';
-const logo = require('../assets/vietnam_round_icon_256.png');
-// import * as cmis from 'cmis';
-// var cmis = require('cmis');  
+import { Button, ControlLabel, Form, FormGroup, FormControl } from 'react-bootstrap';
 import { cmis } from '../lib/cmis';
-import './css/LoginControl.css';
+// import './css/LoginControl.css';
+import './css/main.css';
+import './css/generic.css';
 import MainPanel from './MainPanel';
 
 interface State {
@@ -24,19 +24,16 @@ class LoginControl extends React.Component<{}, State>  {
     handleChangeUsername(event) {
         this.setState({ username: event.target.value });
     }
-
+    
     handleChangePassword(event) {
         this.setState({ password: event.target.value });
     }
-
+    
     handleLoginClick(event) {
-        // event.preventDefault();
+        event.preventDefault();
 
         let cmisUrl = 'http://127.0.0.1:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
         // let cmisUrl = 'https://cmis.alfresco.com/api/-default-/public/cmis/versions/1.1/browser';
-
-        console.log("cmis: " + cmis);
-        console.log("cmis: " + JSON.stringify(cmis));
 
         let session = new cmis.CmisSession(cmisUrl);
         session.setErrorHandler(err => console.log(err.stack));
@@ -53,8 +50,7 @@ class LoginControl extends React.Component<{}, State>  {
     }
 
     render() {
-        const isLoggedIn = (this.state.cmisSession) ? this.state.cmisSession.defaultRepository : false;
-
+        const isLoggedIn = (this.state.cmisSession) ? true : false;
         let body = null;
         if (isLoggedIn) {
             body = <MainPanel cmisSession={this.state.cmisSession} />;
@@ -75,15 +71,21 @@ class LoginControl extends React.Component<{}, State>  {
 
 function LoginForm(props) {
     return (
+
         <div className="loginForm">
-            <div className="imgcontainer">
-                {/* <img src={logo} alt="Avatar" className="avatar" /> */}
-            </div>
-            <input type="text" name="username" placeholder="Username" onChange={props.onChangeUsername} />
-            <input type="password" name="password" placeholder="Password" onChange={props.onChangePassword} />
-            <button className="loginButton" type="submit" onClick={props.onLoginClick}>
-                Login
-            </button>
+            <Form>
+                <FormGroup controlId="formUserName">
+                    <ControlLabel>Name</ControlLabel>
+                    <FormControl onChange={props.onChangeUsername} type="text"/>
+                </FormGroup>
+                <FormGroup controlId="formPassword">
+                    <ControlLabel>Password</ControlLabel>
+                    <FormControl onChange={props.onChangePassword} type="password"/>
+                </FormGroup>
+                <div className="alignRight">
+                <Button onClick={props.onLoginClick} type="submit">Login</Button>
+                </div>
+            </Form>
         </div>
     )
 }

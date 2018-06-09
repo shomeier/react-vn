@@ -1,12 +1,8 @@
 import * as React from 'react';
-// import React, { Component } from 'react';
-// import { cmis } from 'cmis';
 import { cmis } from '../lib/cmis';
-import './css/MainPanel.css';
 import { MainNavBar } from './MainNavBar';
 import { WelcomePanel } from './WelcomePanel';
 import { AdminMain } from './adminPanel/AdminMain';
-import { AddWordPanel } from './AddWordPanel';
 
 interface Props {
     cmisSession: cmis.CmisSession,
