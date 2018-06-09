@@ -24,7 +24,7 @@ export namespace cmis {
     filter?: string;
     renditionFilter?: string;
     includeAllowableActions?: boolean;
-    includeRelationships?: boolean;
+    includeRelationships?: string;
     includeACL?: boolean;
     includePolicyId?: boolean;
     token?: string;
@@ -463,7 +463,7 @@ export namespace cmis {
         orderBy?: string,
         renditionFilter?: string,
         includeAllowableActions?: boolean,
-        includeRelationships?: boolean,
+        includeRelationships?: string,
         succinct?: boolean
       } = {}
     ): Promise<any> {
@@ -484,7 +484,7 @@ export namespace cmis {
         orderBy?: string,
         renditionFilter?: string,
         includeAllowableActions?: boolean,
-        includeRelationships?: boolean,
+        includeRelationships?: string,
         succinct?: boolean
       } = {}
     ): Promise<any> {
@@ -534,7 +534,7 @@ export namespace cmis {
         filter?: string,
         renditionFilter?: string,
         includeAllowableActions?: boolean,
-        includeRelationships?: boolean,
+        includeRelationships?: string,
         includeACL?: boolean,
         includePolicyIds?: boolean,
         succinct?: boolean
@@ -559,7 +559,7 @@ export namespace cmis {
         filter?: string,
         renditionFilter?: string,
         includeAllowableActions?: boolean,
-        includeRelationships?: boolean,
+        includeRelationships?: string,
         includeACL?: boolean,
         includePolicyIds?: boolean,
         succinct?: boolean
@@ -614,7 +614,7 @@ export namespace cmis {
         orderBy?: string,
         renditionFilter?: string,
         includeAllowableActions?: boolean,
-        includeRelationships?: boolean,
+        includeRelationships?: string,
         includePathSegment?: boolean,
         succinct?: boolean
       } = {}
@@ -635,7 +635,7 @@ export namespace cmis {
         filter?: string,
         renditionFilter?: string,
         includeAllowableActions?: boolean,
-        includeRelationships?: boolean,
+        includeRelationships?: string,
         includePathSegment?: boolean,
         succinct?: boolean
       } = {}
@@ -659,7 +659,7 @@ export namespace cmis {
         filter?: string,
         renditionFilter?: string,
         includeAllowableActions?: boolean,
-        includeRelationships?: boolean,
+        includeRelationships?: string,
         includePathSegment?: boolean,
         succinct?: boolean
       } = {}
@@ -695,7 +695,7 @@ export namespace cmis {
         filter?: string,
         renditionFilter?: string,
         includeAllowableActions?: boolean,
-        includeRelationships?: boolean,
+        includeRelationships?: string,
         includePathSegment?: boolean,
         succinct?: boolean
       } = {}
@@ -718,7 +718,7 @@ export namespace cmis {
         orderBy?: string,
         renditionFilter?: string,
         includeAllowableActions?: boolean,
-        includeRelationships?: boolean,
+        includeRelationships?: string,
         succinct?: boolean
       } = {}
     ): Promise<any> {
@@ -1072,7 +1072,7 @@ export namespace cmis {
         filter?: string,
         renditionFilter?: string,
         includeAllowableActions?: boolean,
-        includeRelationships?: boolean,
+        includeRelationships?: string,
         includeACL?: boolean,
         includePolicyIds?: boolean,
         succinct?: boolean
