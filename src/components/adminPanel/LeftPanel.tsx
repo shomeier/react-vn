@@ -1,6 +1,6 @@
 import { cmis } from '../../lib/cmis';
 import * as React from 'react';
-import { Panel, Table } from 'react-bootstrap';
+import { Button, Panel, Table } from 'react-bootstrap';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
@@ -12,10 +12,6 @@ interface State {
     data: any,
     pages: number,
     loading: boolean
-}
-
-const requestData = (pageSize, page, sorted, filtered) => {
-
 }
 
 export class LeftPanel extends React.Component<Props, State> {
@@ -33,7 +29,7 @@ export class LeftPanel extends React.Component<Props, State> {
         };
     }
 
-    requestData(pageSize, page, sorted, filtered): Promise<any> {
+    requestData(pageSize, page, sorted, filtered):Promise<any> {
         console.log("pageSize: " + pageSize);
         console.log("page: " + page);
         console.log("sorted: " + JSON.stringify(sorted));
@@ -57,7 +53,7 @@ export class LeftPanel extends React.Component<Props, State> {
             console.log("hasMoreItems: " + JSON.stringify(res.hasMoreItems));
             if ((res.hasMoreItems))
                 console.log("TRUE");
-                else
+            else
                 console.log("FALSE");
             // Now just get the rows of data to your React Table (and update anything else like total pages or loading)
             this.setState((prevState, props) => ({

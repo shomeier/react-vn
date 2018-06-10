@@ -41,7 +41,6 @@ class MainPanel extends React.Component<Props, State> {
         return (
             <div className="mainPanel">
                 <MainNavBar
-                    // isAdmin={cmisSession.username === "admin"}
                     isAdmin={true}
                     cmisSession={cmisSession}
                     onMenuItemClick={this.handleMenuItemClick} />
@@ -49,12 +48,6 @@ class MainPanel extends React.Component<Props, State> {
                     {centerPanel}
                 </div>
             </div>
-
-            // <div className="searchPanel">
-            //     Success. Logged in as {cmisSession.username}.
-            //     <p/>
-            //     <SearchPanel cmisSession={cmisSession}/>
-            // </div>
         )
     };
 }

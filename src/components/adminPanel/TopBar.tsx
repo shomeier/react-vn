@@ -1,36 +1,48 @@
 import * as React from 'react';
-import { Button, Col, ControlLabel, Form, FormControl, FormGroup, Panel } from 'react-bootstrap';
+import { Button, Col, ControlLabel, Form, FormControl, FormGroup, Panel, Radio } from 'react-bootstrap';
 import '../css/generic.css';
 
 interface Props {
-  // queryStatement:string;
-  // onQueryTextChange:any;
-  onQuerySubmit: any;
+    // queryStatement:string;
+    // onQueryTextChange:any;
+    //   onClickAddWord: any;
+    onClick: any;
+    language: string;
 };
 
 interface State {
-  queryStatement: string;
+    selectedOption: string;
 }
 
-export class TopBar extends React.Component<{}> {
-  constructor(props) {
-    super(props);
+export class TopBar extends React.Component<Props> {
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+    }
 
-    this.handleAdd = this.handleAdd.bind(this);
-  }
+    async handleChange(e) {
+        // e.preventDefault();
+        this.props.onClick(e.target.value);
+    }
 
-  handleAdd(e) {
-    e.preventDefault();
-    console.log("Add Word clicked ....");
-  }
+    render() {
 
-  render() {
-    return (
-      <div className="alignRight">
-        <Button type="submit" onClick={this.handleAdd}>Add Word</Button>
-      </div>
-    );
-  }
+        const language = this.props.language;
+        return (
+            <div className="alignRight">
+                <Form inline>
+                    <FormGroup>
+                        <Radio value='en' checked={(language === 'en')} onChange={this.handleChange}  name="radioGroup" inline>
+                            English
+                    </Radio>
+                        <Radio value='vn' checked={(language === 'vn')} onChange={this.handleChange}  name="radioGroup" inline>
+                            Vietnamese
+                    </Radio>
+                    </FormGroup>
+                </Form>
+            </div>
+        );
+    }
 }
 
 export default TopBar;
