@@ -1,6 +1,4 @@
 import * as React from 'react';
-// import React, { Component } from 'react';
-// import { cmis } from 'cmis';
 import { cmis } from '../../lib/cmis';
 import { Button, Col, Grid, Panel, Row, Table } from 'react-bootstrap';
 import TopBar from './TopBar';

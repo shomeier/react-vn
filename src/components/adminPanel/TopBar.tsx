@@ -3,9 +3,6 @@ import { Button, Col, ControlLabel, Form, FormControl, FormGroup, Panel, Radio }
 import '../css/generic.css';
 
 interface Props {
-    // queryStatement:string;
-    // onQueryTextChange:any;
-    //   onClickAddWord: any;
     onClick: any;
     language: string;
 };
@@ -21,6 +18,7 @@ export class TopBar extends React.Component<Props> {
     }
 
     async handleChange(e) {
+        // DO NOT CALL preventDefault() here, otherwise the radio buttons are not checked properly
         // e.preventDefault();
         this.props.onClick(e.target.value);
     }
