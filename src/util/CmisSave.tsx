@@ -53,7 +53,7 @@ export class CmisSave {
 
                 const tV = translation.targetVocab[0];
                 const tV_Folder = '/lingo/' + tV.language;
-                this.setWord(this.cmisSession, sV_Id, translation.sourceVocab.word).then((res) => {
+                this.setWord(sV_Id, translation.sourceVocab.word).then((res) => {
                     this.cmisSession.getObjectByPath(tV_Folder).then((res) => {
                         const tV_FolderId: string = res.succinctProperties['cmis:objectId'];
                         console.log("tV_FolderId (" + tV_Folder + "): " + tV_FolderId);
@@ -62,11 +62,7 @@ export class CmisSave {
                             console.log("targetVocab: " + JSON.stringify(res));
                             const tV_id: string = res.succinctProperties['cmis:objectId'];
 
-                            this.cmisSession.createRelationship({ "cmis:objectTypeId": "R:cmiscustom:assoc", "cmis:sourceId": sV_Id, "cmis:targetId": tV_id }).then((res) => {
-                                console.log("CreateRelationship Response: " + JSON.stringify(res));
-                            }).catch((err) => {
-                                console.log("Error in CreateRelationship: " + JSON.stringify(err));
-                            });
+                            this.createRelTranslation(sV_Id, tV_id);
                         });
                     });
                 }).catch((err) => {
@@ -77,8 +73,8 @@ export class CmisSave {
         });
     }
 
-    private async setWord(cmisSession: cmis.CmisSession, coid: string, word: string) {
-        const data = await cmisSession.updateProperties(coid,
+    private async setWord(coid: string, word: string) {
+        const data = await this.cmisSession.updateProperties(coid,
             { "cmis:secondaryObjectTypeIds": "P:lingo:word", "lingo:word": word }).then((res) => {
                 console.log("Created SecProp Word: " + JSON.stringify(res));
             }).catch((err) => {
@@ -90,6 +86,16 @@ export class CmisSave {
                     });
                 }
             });
+        return data;
+    }
+
+    private async createRelTranslation(sourceCoid:string, targetCoid:string) {
+        const data = await this.cmisSession.createRelationship({ "cmis:objectTypeId": "R:cmiscustom:assoc", "cmis:sourceId": sourceCoid, "cmis:targetId": targetCoid }).then((res) => {
+            console.log("CreateRelationship Response: " + JSON.stringify(res));
+        }).catch((err) => {
+            console.log("Error in CreateRelationship: " + JSON.stringify(err));
+        });
+
         return data;
     }
 }
