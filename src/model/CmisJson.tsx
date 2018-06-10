@@ -1,4 +1,5 @@
 export interface CmisPropertyDefinition {
+    defaultValue: string,
     displayName: string,
     description: string,
     choice: CmisChoice[]

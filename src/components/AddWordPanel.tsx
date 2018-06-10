@@ -86,7 +86,7 @@ export class AddWordPanel extends React.Component<Props, State> {
     handleSubmit(event) {
         event.preventDefault();
         const cmisSession = this.props.cmisSession;
-        CmisSave.saveTanslation(cmisSession, this.state.translation);
+        // CmisSave.saveTanslation(cmisSession, this.state.translation);
     }
 
     componentDidMount() {
