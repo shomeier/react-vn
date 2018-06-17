@@ -4,7 +4,7 @@ import { cmis } from '../../lib/cmis';
 import { CmisPropertyDefinition } from "../../model/CmisJson";
 import { Translation } from "../../model/CmisTranslation";
 import { CmisFormControl } from "../cmis/CmisFormControl";
-import { CmisSave } from "../../util/CmisSave";
+import { CmisControlller } from "../../util/CmisController";
 import '../css/generic.css';
 
 interface Props {
@@ -81,7 +81,7 @@ export class AddWord extends React.Component<Props, State> {
         e.preventDefault();
         console.log("Save Word clicked ...");
         const partOfSpeech = (this.state.partOfSpeech) ? (this.state.partOfSpeech) : this.state.partOfSpeechPropDef.defaultValue;
-        let cmisSave = new CmisSave(this.props.cmisSession);
+        let cmisSave = new CmisControlller(this.props.cmisSession);
         cmisSave.saveTanslation(
             {sourceVocab:
                 {word: this.state.wordEn, partOfSpeech: partOfSpeech, language: 'en'},

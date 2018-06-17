@@ -6,7 +6,7 @@ import { CmisFormControlProps, CmisFormControl } from './cmis/CmisFormControl';
 import { cmis } from '../lib/cmis';
 import { CmisPropertyDefinition } from "../model/CmisJson";
 import { Translation } from "../model/CmisTranslation";
-import { CmisSave } from "../util/CmisSave";
+import { CmisControlller } from "../util/CmisController";
 import './css/AddWordPanel.css';
 
 interface Props {
