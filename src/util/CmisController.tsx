@@ -4,6 +4,7 @@ import { Translation } from '../model/CmisTranslation';
 export class CmisControlller {
 
     private cmisSession:cmis.CmisSession;
+    static readonly BASE_FOLDER = '/lingo/languages/';
 
     constructor(cmisSession:cmis.CmisSession) {
         this.cmisSession = cmisSession;
@@ -12,13 +13,13 @@ export class CmisControlller {
     public async saveTanslation(translation: Translation) {
 
         const sV = translation.sourceVocab;
-        const sV_Folder = '/lingo/' + sV.language;
+        const sV_Folder = CmisControlller.BASE_FOLDER + sV.language;
         const sourceDocument = await this.createDocument(sV_Folder, { "cmis:objectTypeId": "D:cmiscustom:document", "cmis:name": sV.word + '_' + sV.partOfSpeech });
         const sV_id = sourceDocument.succinctProperties['cmis:objectId']
         await this.setWord(sV_id, translation.sourceVocab.word);
 
         const tV = translation.targetVocab[0];
-        const tV_Folder = '/lingo/' + tV.language;
+        const tV_Folder = CmisControlller.BASE_FOLDER + tV.language;
         const targetDocument = await this.createDocument(tV_Folder, { "cmis:objectTypeId": "D:cmiscustom:document", "cmis:name": tV.word + '_' + sV.partOfSpeech });
         const tV_id: string = targetDocument.succinctProperties['cmis:objectId'];
         await this.createRelTranslation(sV_id, tV_id);

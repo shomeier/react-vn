@@ -13,3 +13,11 @@
 - Postgresql needs to be started separately: _./postgresql/scripts/ctl.sh start_
 - _sudo ./tomcat/scripts/ctl.sh start_ 
 
+## Setup folders
+Create following folders in Repository:
+* lingo
+* lingo/languages
+* lingo/languages/en 
+* lingo/languages/vn
+* lingo/users
+
