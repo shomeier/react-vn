@@ -32,7 +32,11 @@ class LoginControl extends React.Component<{}, State>  {
     handleLoginClick(event) {
         event.preventDefault();
 
-        let cmisUrl = 'http://127.0.0.1:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
+        // MacOs Alfreso installation: Port 8080
+        // let cmisUrl = 'http://localhost:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
+        // Alfreso-Docker image: Port 8082
+        let cmisUrl = 'http://localhost:8082/alfresco/api/-default-/public/cmis/versions/1.1/browser';
+        // let cmisUrl = 'http://127.0.0.1:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
         // let cmisUrl = 'https://cmis.alfresco.com/api/-default-/public/cmis/versions/1.1/browser';
 
         let session = new cmis.CmisSession(cmisUrl);
