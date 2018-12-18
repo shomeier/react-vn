@@ -3,10 +3,9 @@
 https://www.alfresco.com/thank-you/thank-you-downloading-alfresco-community-edition
 
 ## Starting Alfresco Services
-1. Clone git repository [https://github.com/Alfresco/acs-community-deployment](https://github.com/Alfresco/acs-community-deployment).
-2. Navigate to directory _docker-compose_ where the _docker-compose.yml_ file is located.
-3. Run ```docker-compose up```
-4. Open the following URLs in your browser to check that everything starts up:
+*. Navigate to directory _docker-compose_ where the _docker-compose.yml_ file is located.
+*. Run ```docker-compose up```
+*. Open the following URLs in your browser to check that everything starts up:
 * Share: [http://<machine_ip>:8080/share](http://localhost:8080/share)
 * REST APIs and administration: [http://<machine_ip>:8082/alfresco](http://localhost:8082/alfresco)
 * Search administration: [http://<machine_ip>:8083/solr](http://localhost:8083/solr)
@@ -24,6 +23,11 @@ docker-compose down && docker-compose build --no-cache && docker-compose up
 ```
 
 ## CORS
+---
+**NOTE:**
+The directives below no more need to be executed. The CORS adjustments are automatically done in docker-compose.yml file!
+---
+
 The first time alfreso is started we need to adjust the CORS settings in order to allow CMIS requests from out ReactJS Client which is running at localhsot:3000:
 1. Login to the alfresco container ```docker exec -i -t docker-compose_alfresco_1 /bin/bash```
 2. Navigate to the _web.xml_ file where to adjust the CORS setting ```cd /usr/local/tomcat/webapps/alfresco/WEB-INF```
