@@ -28,7 +28,7 @@ docker-compose down && docker-compose build --no-cache && docker-compose up
 The directives below no more need to be executed. The CORS adjustments are automatically done in docker-compose.yml file!
 ---
 
-The first time alfreso is started we need to adjust the CORS settings in order to allow CMIS requests from out ReactJS Client which is running at localhsot:3000:
+The first time alfreso is started we need to adjust the CORS settings in order to allow CMIS requests from out ReactJS Client which is running at localhost:3000:
 1. Login to the alfresco container ```docker exec -i -t docker-compose_alfresco_1 /bin/bash```
 2. Navigate to the _web.xml_ file where to adjust the CORS setting ```cd /usr/local/tomcat/webapps/alfresco/WEB-INF```
 3. Adjust the file permissions for _web.xml_ so that we can write to it ```chmod 664 web.xml```
