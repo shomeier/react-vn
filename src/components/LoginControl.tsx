@@ -34,23 +34,39 @@ class LoginControl extends React.Component<{}, State>  {
 
         // MacOs Alfreso installation: Port 8080
         // let cmisUrl = 'http://localhost:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
-        // Alfreso-Docker image: Port 8082
-        let cmisUrl = 'http://localhost:8082/alfresco/api/-default-/public/cmis/versions/1.1/browser';
+        // let cmisUrl = 'http://localhost:8080/core/browser/bedroom?cmisselector=repositoryInfo';
+        let cmisUrl = 'http://localhost:8080/core/browser/bedroom';
+        // let cmisUrl = 'http://localhost:8082/alfresco/api/-default-/public/cmis/versions/1.1/browser';
         // let cmisUrl = 'http://127.0.0.1:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
         // let cmisUrl = 'https://cmis.alfresco.com/api/-default-/public/cmis/versions/1.1/browser';
-
+        
         let session = new cmis.CmisSession(cmisUrl);
         session.setErrorHandler(err => console.log(err.stack));
-        session.setCredentials(this.state.username, this.state.password).loadRepositories().then(() => {
+        session.defaultRepository = {
+            repositoryName: "bedroom",
+            repositoryUrl: "http://localhost:8080/core/browser/bedroom",
+            rootFolderUrl: "http://localhost:8080/core/browser/bedroom/root"
+        };
+        session.setCredentials(this.state.username, this.state.password).getRepositoryInfo().then(() => {
             this.setState({ cmisSession: session });
-            console.log("Loaded repos");
-            console.log("Repos: " + JSON.stringify(session.defaultRepository));
-        }).catch(err => {
-            alert("Invalid credentials for username: " + this.state.username);
-            console.log("Error1: " + err)
-            console.log("Error2: " + JSON.stringify(err))
-            console.log("Error3: " + JSON.stringify(err.response))
+                console.log("Loaded repos");
+                console.log("Repos: " + JSON.stringify(session.defaultRepository));
+            }).catch(err => {
+                    alert("Invalid credentials for username: " + this.state.username);
+                    console.log("Error1: " + err)
+                    console.log("Error2: " + JSON.stringify(err))
+                    console.log("Error3: " + JSON.stringify(err.response))
         });
+        // session.setCredentials(this.state.username, this.state.password).loadRepositories().then(() => {
+        //     this.setState({ cmisSession: session });
+        //     console.log("Loaded repos");
+        //     console.log("Repos: " + JSON.stringify(session.defaultRepository));
+        // }).catch(err => {
+        //     alert("Invalid credentials for username: " + this.state.username);
+        //     console.log("Error1: " + err)
+        //     console.log("Error2: " + JSON.stringify(err))
+        //     console.log("Error3: " + JSON.stringify(err.response))
+        // });
     }
 
     render() {

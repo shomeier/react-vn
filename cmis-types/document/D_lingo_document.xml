@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cmis:type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/" xsi:type="cmis:cmisTypeDocumentDefinitionType">
+    <cmis:id>D:lingo:document</cmis:id>
+    <cmis:localName>document</cmis:localName>
+    <cmis:localNamespace>sho/model/lingo</cmis:localNamespace>
+    <cmis:displayName>D:lingo:document</cmis:displayName>
+    <cmis:queryName>lingo:document</cmis:queryName>
+    <cmis:description>D:lingo:document</cmis:description>
+    <cmis:baseId>cmis:document</cmis:baseId>
+    <cmis:parentId>cmis:document</cmis:parentId>
+    <cmis:creatable>true</cmis:creatable>
+    <cmis:fileable>true</cmis:fileable>
+    <cmis:queryable>true</cmis:queryable>
+    <cmis:fulltextIndexed>true</cmis:fulltextIndexed>
+    <cmis:includedInSupertypeQuery>true</cmis:includedInSupertypeQuery>
+    <cmis:controllablePolicy>false</cmis:controllablePolicy>
+    <cmis:controllableACL>true</cmis:controllableACL>
+    <cmis:versionable>true</cmis:versionable>
+    <cmis:contentStreamAllowed>allowed</cmis:contentStreamAllowed>
+</cmis:type>

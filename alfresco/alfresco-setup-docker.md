@@ -4,7 +4,7 @@ https://www.alfresco.com/thank-you/thank-you-downloading-alfresco-community-edit
 
 ## Starting Alfresco Services
 *. Navigate to directory _docker-compose_ where the _docker-compose.yml_ file is located.
-*. Run ```docker-compose up```
+*. Run ```docker-compose up``` to create and start the containers. If containers already created only run ```docker-compose start```
 *. Open the following URLs in your browser to check that everything starts up:
 * Share: [http://<machine_ip>:8080/share](http://localhost:8080/share)
 * REST APIs and administration: [http://<machine_ip>:8082/alfresco](http://localhost:8082/alfresco)

@@ -1,3 +1,10 @@
+export interface SimpleTranslation {
+    partOfSpeech: string,
+    wordVn: string,
+    semantic: string,
+    wordEn: string
+}
+
 export interface Translation {
     sourceVocab:Vocab;
     targetVocab:Vocab[];

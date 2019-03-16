@@ -14,12 +14,13 @@ interface Props {
 };
 
 interface State {
-    wordPropDef: CmisPropertyDefinition;
+    // wordPropDef: CmisPropertyDefinition;
     partOfSpeechPropDef: CmisPropertyDefinition;
     languagePropDef: CmisPropertyDefinition;
     wordEn: string;
     partOfSpeech: string;
     wordVn: string;
+    semantic: string;
 }
 
 export class AddWord extends React.Component<Props, State> {
@@ -31,12 +32,13 @@ export class AddWord extends React.Component<Props, State> {
         this.handleSaveWord = this.handleSaveWord.bind(this);
 
         this.state = {
-            wordPropDef: undefined,
+            // wordPropDef: undefined,
             partOfSpeechPropDef: undefined,
             languagePropDef: undefined,
             wordEn: undefined,
             partOfSpeech: undefined,
-            wordVn: undefined
+            wordVn: undefined,
+            semantic: undefined
         };
     }
 
@@ -44,19 +46,21 @@ export class AddWord extends React.Component<Props, State> {
         // load all required cmis property definitions ...
         console.log("Component did mount...");
         const cmisSession = this.props.cmisSession;
-        cmisSession.getTypeDefinition('P:lingo:partOfSpeech').then((res) => {
-            this.setState({ partOfSpeechPropDef: res.propertyDefinitions['lingo:partOfSpeech'] })
+        cmisSession.getTypeDefinition('P:lingo:part_of_speech').then((res) => {
+            console.log("Trying to get partOfSpeech ...");
+            this.setState({ partOfSpeechPropDef: res.propertyDefinitions['lingo:part_of_speech'] })
         });
-        cmisSession.getTypeDefinition('P:lingo:word').then((res) => {
-            this.setState({ wordPropDef: res.propertyDefinitions['lingo:word'] });
-        });
-        cmisSession.getTypeDefinition('P:lingo:language').then((res) => {
-            this.setState({ languagePropDef: res.propertyDefinitions['lingo:language'] });
+        // cmisSession.getTypeDefinition('P:lingo:word').then((res) => {
+        //     this.setState({ wordPropDef: res.propertyDefinitions['lingo:word'] });
+        // });
+        cmisSession.getTypeDefinition('P:lingo:language_vn').then((res) => {
+            console.log("Trying to get language_vn ...");
+            this.setState({ languagePropDef: res.propertyDefinitions['lingo:dialect'] });
         });
     }
 
     isReady() {
-        if ((this.state.wordPropDef) && (this.state.partOfSpeechPropDef) && (this.state.languagePropDef))
+        if ((this.state.partOfSpeechPropDef) && (this.state.languagePropDef))
             return true;
     }
 
@@ -64,13 +68,16 @@ export class AddWord extends React.Component<Props, State> {
         const value = event.target.value;
         switch (item) {
             case 'sourceVocab.word':
-                this.setState({ wordEn: value });
+                this.setState({ wordVn: value });
                 break;
             case 'sourceVocab.partOfSpeech':
                 this.setState({ partOfSpeech: value });
                 break;
             case 'targetVocab.word':
-                this.setState({ wordVn: value });    
+                this.setState({ wordEn: value });
+                break;
+            case 'semantic':
+                this.setState({ semantic: value });
                 break;
             default:
                 break;
@@ -82,14 +89,21 @@ export class AddWord extends React.Component<Props, State> {
         console.log("Save Word clicked ...");
         const partOfSpeech = (this.state.partOfSpeech) ? (this.state.partOfSpeech) : this.state.partOfSpeechPropDef.defaultValue;
         let cmisSave = new CmisControlller(this.props.cmisSession);
-        cmisSave.saveTanslation(
-            {sourceVocab:
-                {word: this.state.wordEn, partOfSpeech: partOfSpeech, language: 'en'},
-            targetVocab:
-                [
-                    {word: this.state.wordVn, partOfSpeech: partOfSpeech, language: 'vn'}
-                ]
-            });
+        cmisSave.saveSimpleTranslation({
+            partOfSpeech: this.state.partOfSpeech,
+            wordVn: this.state.wordVn,
+            semantic: this.state.semantic,
+            wordEn: this.state.wordEn
+        });
+        // cmisSave.saveTanslation(
+        //     {
+        //         sourceVocab:
+        //             { word: this.state.wordEn, partOfSpeech: partOfSpeech, language: 'en' },
+        //         targetVocab:
+        //             [
+        //                 { word: this.state.wordVn, partOfSpeech: partOfSpeech, language: 'vn' }
+        //             ]
+        //     });
     }
 
     render() {
@@ -107,13 +121,13 @@ export class AddWord extends React.Component<Props, State> {
                     {this.isReady() ? (
                         <Form horizontal>
                             <FormGroup controlId="sourceVocab">
-                                <Col sm={7}>
+                                {/* <Col sm={7}>
                                     <CmisFormControl
                                         // label='English Word'
                                         propertyDefinition={this.state.wordPropDef}
                                         onChange={this.handleChange}
                                         item='sourceVocab.word' />
-                                </Col>
+                                </Col> */}
                                 <Col sm={3}>
                                     <CmisFormControl
                                         propertyDefinition={this.state.partOfSpeechPropDef}
@@ -121,29 +135,49 @@ export class AddWord extends React.Component<Props, State> {
                                         onChange={this.handleChange}
                                         item='sourceVocab.partOfSpeech' />
                                 </Col>
+                                <Col sm={7}>
+                                    <ControlLabel>VN Word</ControlLabel>
+                                    <FormControl
+                                        onChange={(e) => { this.handleChange('sourceVocab.word', e) }}>
+                                    </FormControl>
+                                </Col>
                             </FormGroup>
-                            <FormGroup controlId="targetVocab">
-                                    <Col sm={7}>
+                            <FormGroup controlId="semantic">
+                                {/* <Col sm={7}>
                                         <CmisFormControl
                                             // label='Vietnamese Word'
                                             propertyDefinition={this.state.wordPropDef}
                                             onChange={this.handleChange}
                                             item='targetVocab.word' />
-                                    </Col>
-                                </FormGroup>
+                                    </Col> */}
+                                <Col sm={10}>
+                                    <ControlLabel>Semantic</ControlLabel>
+                                    <FormControl
+                                        onChange={(e) => { this.handleChange('semantic', e) }}>
+                                    </FormControl>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup controlId="wordEn">
+                                <Col sm={10}>
+                                    <ControlLabel>English Word</ControlLabel>
+                                    <FormControl
+                                        onChange={(e) => { this.handleChange('targetVocab.word', e) }}>
+                                    </FormControl>
+                                </Col>
+                            </FormGroup>
                         </Form>
                     )
-                    :
-                    <div>Loading ...</div>
-                }
+                        :
+                        <div>Loading ...</div>
+                    }
                 </Modal.Body>
                 <Modal.Footer>
-                        <Button onClick={this.props.onHide}>Close</Button>
-                        <Button type="submit" onClick={this.handleSaveWord}>Save Word</Button>
-                    </Modal.Footer>
+                    <Button onClick={this.props.onHide}>Close</Button>
+                    <Button type="submit" onClick={this.handleSaveWord}>Save Word</Button>
+                </Modal.Footer>
             </Modal>
-                );
-            }
-        }
-        
+        );
+    }
+}
+
 export default AddWord;

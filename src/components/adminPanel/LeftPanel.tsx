@@ -34,7 +34,7 @@ export class LeftPanel extends React.Component<Props, State> {
         console.log("page: " + page);
         console.log("sorted: " + JSON.stringify(sorted));
         console.log("filtered: " + JSON.stringify(filtered));
-        return this.props.cmisSession.query("SELECT * from cmiscustom:document", false, { includeRelationships: "both", maxItems: pageSize, skipCount: (page * pageSize), orderBy: sorted })
+        return this.props.cmisSession.query("SELECT * from lingo:text", false, { includeRelationships: "both", maxItems: pageSize, skipCount: (page * pageSize), orderBy: sorted })
     }
 
     fetchData(state, instance) {

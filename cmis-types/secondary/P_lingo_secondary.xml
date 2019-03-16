@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cmis:type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/" xsi:type="cmis:cmisTypeSecondaryDefinitionType">
+    <cmis:id>P:lingo:secondary</cmis:id>
+    <cmis:localName>secondary</cmis:localName>
+    <cmis:localNamespace>sho/model/lingo</cmis:localNamespace>
+    <cmis:displayName>P:lingo:secondary</cmis:displayName>
+    <cmis:queryName>lingo:secondary</cmis:queryName>
+    <cmis:description>P:lingo:secondary</cmis:description>
+    <cmis:baseId>cmis:secondary</cmis:baseId>
+    <cmis:parentId>cmis:secondary</cmis:parentId>
+    <cmis:creatable>true</cmis:creatable>
+    <cmis:fileable>false</cmis:fileable>
+    <cmis:queryable>true</cmis:queryable>
+    <cmis:fulltextIndexed>true</cmis:fulltextIndexed>
+    <cmis:includedInSupertypeQuery>true</cmis:includedInSupertypeQuery>
+    <cmis:controllablePolicy>false</cmis:controllablePolicy>
+    <cmis:controllableACL>false</cmis:controllableACL>
+</cmis:type>
