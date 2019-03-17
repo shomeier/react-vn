@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cmis:type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/" xsi:type="cmis:cmisTypeRelationshipDefinitionType">
+    <cmis:id>R:lingo:relationship</cmis:id>
+    <cmis:localName>relationship</cmis:localName>
+    <cmis:localNamespace>http://www.alfresco.org/model/cmis/custom</cmis:localNamespace>
+    <cmis:displayName>R:lingo:relationship</cmis:displayName>
+    <cmis:queryName>lingo:relationship</cmis:queryName>
+    <cmis:description>R:lingo:relationship</cmis:description>
+    <cmis:baseId>cmis:relationship</cmis:baseId>
+    <cmis:parentId>cmis:relationship</cmis:parentId>
+    <cmis:creatable>true</cmis:creatable>
+    <cmis:fileable>false</cmis:fileable>
+    <cmis:queryable>true</cmis:queryable>
+    <cmis:fulltextIndexed>false</cmis:fulltextIndexed>
+    <cmis:includedInSupertypeQuery>true</cmis:includedInSupertypeQuery>
+    <cmis:controllablePolicy>false</cmis:controllablePolicy>
+    <cmis:controllableACL>false</cmis:controllableACL>
+    <cmis:allowedSourceTypes>D:lingo:text</cmis:allowedSourceTypes>
+    <cmis:allowedTargetTypes>D:lingo:text</cmis:allowedTargetTypes>
+</cmis:type>

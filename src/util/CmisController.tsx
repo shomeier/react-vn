@@ -49,14 +49,18 @@ export class CmisControlller {
         // const cmisName_vn = simpleTranslation.wordVn + '_' + simpleTranslation.partOfSpeech;
         const doc_vn = await this.createDocument(folder, { "cmis:objectTypeId": "D:lingo:text", "cmis:name": cmisName, "lingo:text": text });
         const doc_vn_id = doc_vn.succinctProperties['cmis:objectId']
-        await this.markAs(doc_vn_id, markAs);
+        const doc_vn_changeToken = doc_vn.succinctProperties['cmis:changeToken']
+        await this.markAs(doc_vn_id, doc_vn_changeToken, markAs);
 
         return doc_vn;
     }
 
-    private async markAs(doc_id: string, marker_cotid: string) {
+    private async markAs(doc_id: string, doc_changeToken : string, marker_cotid: string) {
         const data = await this.cmisSession.updateProperties(doc_id,
-            { "cmis:secondaryObjectTypeIds": marker_cotid }).catch((err) => {
+            { "cmis:secondaryObjectTypeIds": marker_cotid }, {
+                changeToken: doc_changeToken,
+                succinct: true
+              }).catch((err) => {
                 console.log("Error in updateProperties: " + err);
                 console.log("Error in updateProperties: " + JSON.stringify(err.response));
                 if (err.response) {
@@ -119,7 +123,7 @@ export class CmisControlller {
     
     private async createRelationship(sourceCoid: string, targetCoid: string, secObjectTypeIds: string) {
         try {
-        const data = await this.cmisSession.createRelationship({ "cmis:objectTypeId": "R:cmiscustom:assoc", "cmis:sourceId": sourceCoid, "cmis:targetId": targetCoid,  "cmis:secondaryObjectTypeIds": secObjectTypeIds});
+        const data = await this.cmisSession.createRelationship({ "cmis:objectTypeId": "R:lingo:relationship", "cmis:sourceId": sourceCoid, "cmis:targetId": targetCoid,  "cmis:secondaryObjectTypeIds": secObjectTypeIds});
         console.log("CreateRelationship Response: " + JSON.stringify(data));
         return data;
         } catch (e) {
