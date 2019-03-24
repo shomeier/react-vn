@@ -67,15 +67,15 @@ export class LeftPanel extends React.Component<Props, State> {
         });
     }
 
-    handleClick(e) {
-        console.log("Clicked ... " + e);
-        let cell: HTMLTableCellElement = e.target;
-        console.log("Clicked ... " + e.target);
-        console.log("Clicked ... " + cell.innerText);
-        console.log("Clicked ... " + JSON.stringify(cell.dataset));
-        console.log("Clicked ... " + e.target.value);
-        console.log("Clicked ... " + JSON.stringify(e.target));
-        console.log("Clicked ... " + JSON.stringify(e.target.value));
+    handleClick(e, cmis:any) {
+        console.log("Clicked Row ... " + JSON.stringify(cmis));
+        let coid:string = cmis.succinctProperties['cmis:objectId']
+        this.props.cmisSession.deleteObject(coid, true).then((res) => {
+            console.log("Delete result: " + JSON.stringify(res));
+        }).catch(err => {
+            console.log("Err: " + err)
+            console.log("Err stringified: " + JSON.stringify(err))
+        });
     }
 
     render() {
@@ -94,6 +94,17 @@ export class LeftPanel extends React.Component<Props, State> {
                                 Header: "Part Of Speech",
                                 id: "lastName",
                                 accessor: p => p.succinctProperties['cmis:description']
+                            },
+                            {
+                                Header: "Functions",
+                                id: "functions",
+                                Cell: row => (
+                                    <div>
+                                      <Button onClick={() => this.handleClick(this, row.original)}>
+                                      Click
+                                      </Button>
+                                    </div>
+                                  )
                             }
                         ]}
                         manual // Forces table not to paginate or sort automatically, so we can handle it server-side
