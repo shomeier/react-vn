@@ -6,7 +6,7 @@ export interface CmisFormControlProps {
     label?: string,
     propertyDefinition: CmisPropertyDefinition,
     value?: string;
-    componentClass?: string;
+    componentClass?: String;
     onChange?: any;
     item?: string;
 };
@@ -33,7 +33,7 @@ export const CmisFormControl: React.StatelessComponent<CmisFormControlProps> = (
         <div className="cmisFormControl">
             <ControlLabel>{label}</ControlLabel>
             <FormControl
-                componentClass={componentClass}
+                //componentClass={componentClass}
                 placeholder="select" onChange={(e) => props.onChange(props.item, e)}>
                 {options}
             </FormControl>
