@@ -1,3 +1,15 @@
+NemakiWare Wiki:
+https://github.com/aegif/NemakiWare/wiki
+
+Start:
+Core: 'mvn jetty:run' in core folder
+Solr: 'mvn jetty:run' in solr folder
+UI: 'activator run' in ui folder
+
+See also: https://github.com/aegif/NemakiWare/wiki/Development_-Development-in-Eclipse
+
+UI available at:  http://localhost:8080/ui/repo/bedroom/login
+
 Repository URL:
 http://localhost:8080/core/browser/bedroom?cmisselector=repositoryInfo
 
