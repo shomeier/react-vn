@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Col, ControlLabel, Form, FormControl, FormGroup, Panel, Radio } from 'react-bootstrap';
+import { Button, Col, Form, FormControl, FormGroup } from 'react-bootstrap';
 import '../css/generic.css';
 
 interface Props {
@@ -30,12 +30,12 @@ export class TopBar extends React.Component<Props> {
             <div className="alignRight">
                 <Form inline>
                     <FormGroup>
-                        <Radio value='en' checked={(language === 'en')} onChange={this.handleChange}  name="radioGroup" inline>
+                        <Form.Check value='en' checked={(language === 'en')} onChange={this.handleChange}  name="radioGroup" inline>
                             English
-                    </Radio>
-                        <Radio value='vn' checked={(language === 'vn')} onChange={this.handleChange}  name="radioGroup" inline>
+                    </Form.Check>
+                        <Form.Check value='vn' checked={(language === 'vn')} onChange={this.handleChange}  name="radioGroup" inline>
                             Vietnamese
-                    </Radio>
+                    </Form.Check>
                     </FormGroup>
                 </Form>
             </div>

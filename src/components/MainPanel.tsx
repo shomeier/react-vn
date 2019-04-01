@@ -32,7 +32,6 @@ class MainPanel extends React.Component<Props, State> {
         let centerPanel;
         switch(this.state.panel) {
             case "addWord":
-                // centerPanel = <AddWordPanel cmisSession={cmisSession}/>
                 centerPanel = <AdminMain cmisSession={cmisSession}/>
                 break;
             default:

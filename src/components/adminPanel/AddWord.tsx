@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Col, ControlLabel, Modal, Form, FormControl, FormGroup, Panel } from 'react-bootstrap';
+import { Button, Col, FormLabel, Modal, Form, FormControl, FormGroup } from 'react-bootstrap';
 import { cmis } from '../../lib/cmis';
 import { CmisPropertyDefinition } from "../../model/CmisJson";
 import { Translation } from "../../model/CmisTranslation";
@@ -109,7 +109,9 @@ export class AddWord extends React.Component<Props, State> {
     render() {
         return (
             <Modal
-                {...this.props}
+                // {...this.props}
+                show={this.props.show}
+                onHide={this.props.onHide}
                 aria-labelledby="contained-modal-title"
             >
                 <Modal.Header closeButton>
@@ -119,15 +121,9 @@ export class AddWord extends React.Component<Props, State> {
                 </Modal.Header>
                 <Modal.Body>
                     {this.isReady() ? (
-                        <Form horizontal>
+                        <Form>
                             <FormGroup controlId="sourceVocab">
-                                {/* <Col sm={7}>
-                                    <CmisFormControl
-                                        // label='English Word'
-                                        propertyDefinition={this.state.wordPropDef}
-                                        onChange={this.handleChange}
-                                        item='sourceVocab.word' />
-                                </Col> */}
+                            
                                 <Col sm={3}>
                                     <CmisFormControl
                                         propertyDefinition={this.state.partOfSpeechPropDef}
@@ -135,36 +131,31 @@ export class AddWord extends React.Component<Props, State> {
                                         onChange={this.handleChange}
                                         item='sourceVocab.partOfSpeech' />
                                 </Col>
+                                 
+                                 
                                 <Col sm={7}>
-                                    <ControlLabel>VN Word</ControlLabel>
+                                    <FormLabel>VN Word</FormLabel>
                                     <FormControl
-                                        onChange={(e) => { this.handleChange('sourceVocab.word', e) }}>
-                                    </FormControl>
+                                        onChange={(e) => { this.handleChange('sourceVocab.word', e) }}/>
                                 </Col>
+                                
                             </FormGroup>
+                            
                             <FormGroup controlId="semantic">
-                                {/* <Col sm={7}>
-                                        <CmisFormControl
-                                            // label='Vietnamese Word'
-                                            propertyDefinition={this.state.wordPropDef}
-                                            onChange={this.handleChange}
-                                            item='targetVocab.word' />
-                                    </Col> */}
                                 <Col sm={10}>
-                                    <ControlLabel>Semantic</ControlLabel>
+                                    <FormLabel>Semantic</FormLabel>
                                     <FormControl
-                                        onChange={(e) => { this.handleChange('semantic', e) }}>
-                                    </FormControl>
+                                        onChange={(e) => { this.handleChange('semantic', e) }}/>
                                 </Col>
                             </FormGroup>
                             <FormGroup controlId="wordEn">
                                 <Col sm={10}>
-                                    <ControlLabel>English Word</ControlLabel>
+                                    <FormLabel>English Word</FormLabel>
                                     <FormControl
-                                        onChange={(e) => { this.handleChange('targetVocab.word', e) }}>
-                                    </FormControl>
+                                        onChange={(e) => { this.handleChange('targetVocab.word', e) }}/>
                                 </Col>
                             </FormGroup>
+                            
                         </Form>
                     )
                         :

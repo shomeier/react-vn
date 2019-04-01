@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Col, ControlLabel, Form, FormControl, FormGroup, Panel } from 'react-bootstrap';
+import { Button, Col, Form, FormControl, FormGroup } from 'react-bootstrap';
 
 interface Props {
   // queryStatement:string;
@@ -34,7 +34,7 @@ export class QueryBar extends React.Component<Props, State> {
 
   render() {
     return (
-      <Form horizontal>
+      <Form>
         <FormGroup controlId="queryBarInlineQueryStatement">
           {/* <ControlLabel>Query</ControlLabel>{' '} */}
           <Col sm={10}>

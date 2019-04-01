@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ControlLabel, FormControl } from 'react-bootstrap';
+import { FormLabel, FormControl } from 'react-bootstrap';
 import { CmisPropertyDefinition } from "../../model/CmisJson";
 
 export interface CmisFormControlProps {
@@ -20,23 +20,43 @@ export const CmisFormControl: React.StatelessComponent<CmisFormControlProps> = (
     let options;
     if (componentClass === 'select') {
         options = propertyDefinition.choice.map(function (itemData) {
+            // console.log("itemData.value: " + itemData.value);
+            // console.log("props.value: " + props.value);
             if (itemData.value === props.value) {
-                return <option key={itemData.value} value={itemData.value} selected>{itemData.displayName}</option>;
+                return <option onChange={(e) => props.onChange(props.item, e.target)} key={itemData.value} value={itemData.value} selected>{itemData.displayName}</option>;
             }
             else {
-                return <option key={itemData.value} value={itemData.value}>{itemData.displayName}</option>;
+                return <option onChange={(e) => props.onChange(props.item, e.target)} key={itemData.value} value={itemData.value}>{itemData.displayName}</option>;
             }
         });
     }
 
+    let form;
+    if (componentClass === 'select') {
+        form = <FormControl as="select">
+        {/* componentClass={componentClass} */}
+        {/* onChange={(e) => props.onChange(props.item, e)}> */}
+        {/* onChange={(e: any) => props.onChange(props.item, e)}> */}
+        {options}
+        </FormControl>
+    } else {
+        form = <FormControl
+        //componentClass={componentClass}
+        onChange={(e: any) => props.onChange(props.item, e)}>
+        </FormControl>
+    }
+
     return (
         <div className="cmisFormControl">
-            <ControlLabel>{label}</ControlLabel>
-            <FormControl
+            {form}
+            {/**
+            <FormLabel>{label}</FormLabel>
+            <FormControl as="select"
                 //componentClass={componentClass}
                 placeholder="select" onChange={(e) => props.onChange(props.item, e)}>
                 {options}
             </FormControl>
+            */}
         </div>
     );
 }

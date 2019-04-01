@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, ControlLabel, Form, FormGroup, FormControl } from 'react-bootstrap';
+import { Button, Form, FormGroup, FormControl } from 'react-bootstrap';
 import { cmis } from '../lib/cmis';
 // import './css/LoginControl.css';
 import './css/main.css';
@@ -35,7 +35,8 @@ class LoginControl extends React.Component<{}, State>  {
         // MacOs Alfreso installation: Port 8080
         // let cmisUrl = 'http://localhost:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
         // let cmisUrl = 'http://localhost:8080/core/browser/bedroom?cmisselector=repositoryInfo';
-        let cmisUrl = 'http://localhost:8080/core/browser/bedroom';
+        // let cmisUrl = 'http://localhost:8080/core/browser/bedroom';
+        let cmisUrl = 'http://localhost:8080/core/browser/lingo';
         // let cmisUrl = 'http://localhost:8082/alfresco/api/-default-/public/cmis/versions/1.1/browser';
         // let cmisUrl = 'http://127.0.0.1:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
         // let cmisUrl = 'https://cmis.alfresco.com/api/-default-/public/cmis/versions/1.1/browser';
@@ -43,9 +44,9 @@ class LoginControl extends React.Component<{}, State>  {
         let session = new cmis.CmisSession(cmisUrl);
         session.setErrorHandler(err => console.log(err.stack));
         session.defaultRepository = {
-            repositoryName: "bedroom",
-            repositoryUrl: "http://localhost:8080/core/browser/bedroom",
-            rootFolderUrl: "http://localhost:8080/core/browser/bedroom/root"
+            repositoryName: "lingo",
+            repositoryUrl: "http://localhost:8080/core/browser/lingo",
+            rootFolderUrl: "http://localhost:8080/core/browser/lingo/root"
         };
         session.setCredentials(this.state.username, this.state.password).getRepositoryInfo().then(() => {
             this.setState({ cmisSession: session });
@@ -95,11 +96,11 @@ function LoginForm(props) {
         <div className="loginForm">
             <Form>
                 <FormGroup controlId="formUserName">
-                    <ControlLabel>Name</ControlLabel>
+                    <Form.Label>Name</Form.Label>
                     <FormControl onChange={props.onChangeUsername} type="text"/>
                 </FormGroup>
                 <FormGroup controlId="formPassword">
-                    <ControlLabel>Password</ControlLabel>
+                    <Form.Label>Password</Form.Label>
                     <FormControl onChange={props.onChangePassword} type="password"/>
                 </FormGroup>
                 <div className="alignRight">

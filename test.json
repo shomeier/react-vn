@@ -1,0 +1,87 @@
+{
+        "succinctProperties": {
+            "cmis:name": "write7_verb",
+            "cmis:description": null,
+            "cmis:objectId": "4568023bd91420bdf51f188bec05742f",
+            "cmis:objectTypeId": "D:lingo:text",
+            "cmis:creationDate": 1553324406129,
+            "cmis:createdBy": "admin",
+            "cmis:lastModificationDate": 1553324406695,
+            "cmis:lastModifiedBy": "admin",
+            "cmis:changeToken": "4568023bd91420bdf51f188bec05885f",
+            "lingo:text": "write7",
+            "cmis:secondaryObjectTypeIds": [
+                "P:lingo:word"
+            ],
+            "cmis:baseTypeId": "cmis:document",
+            "cmis:isImmutable": false,
+            "cmis:isPrivateWorkingCopy": false,
+            "cmis:isLatestVersion": true,
+            "cmis:isMajorVersion": true,
+            "cmis:isLatestMajorVersion": true,
+            "cmis:versionLabel": "1.0",
+            "cmis:versionSeriesId": "4568023bd91420bdf51f188bec056c08",
+            "cmis:checkinComment": null,
+            "cmis:isVersionSeriesCheckedOut": false,
+            "cmis:versionSeriesCheckedOutId": null,
+            "cmis:versionSeriesCheckedOutBy": null,
+            "cmis:contentStreamLength": null,
+            "cmis:contentStreamMimeType": null,
+            "cmis:contentStreamFileName": null,
+            "cmis:contentStreamId": null
+        },
+        "allowableActions": {
+            "canDeleteObject": true,
+            "canUpdateProperties": true,
+            "canGetFolderTree": false,
+            "canGetProperties": true,
+            "canGetObjectRelationships": true,
+            "canGetObjectParents": true,
+            "canGetFolderParent": false,
+            "canGetDescendants": false,
+            "canMoveObject": true,
+            "canDeleteContentStream": true,
+            "canCheckOut": true,
+            "canCancelCheckOut": false,
+            "canCheckIn": false,
+            "canSetContentStream": true,
+            "canGetAllVersions": true,
+            "canAddObjectToFolder": false,
+            "canRemoveObjectFromFolder": false,
+            "canGetContentStream": true,
+            "canApplyPolicy": false,
+            "canGetAppliedPolicies": true,
+            "canRemovePolicy": false,
+            "canGetChildren": false,
+            "canCreateDocument": false,
+            "canCreateFolder": false,
+            "canCreateRelationship": true,
+            "canCreateItem": false,
+            "canDeleteTree": false,
+            "canGetRenditions": false,
+            "canGetACL": true,
+            "canApplyACL": true
+        },
+        "relationships": [
+            {
+                "succinctProperties": {
+                    "cmis:name": null,
+                    "cmis:description": null,
+                    "cmis:objectId": "4568023bd91420bdf51f188bec05a265",
+                    "cmis:objectTypeId": "R:lingo:relationship",
+                    "cmis:creationDate": 1553324407354,
+                    "cmis:createdBy": "admin",
+                    "cmis:lastModificationDate": 1553324407354,
+                    "cmis:lastModifiedBy": "admin",
+                    "cmis:changeToken": "4568023bd91420bdf51f188bec05a96d",
+                    "cmis:secondaryObjectTypeIds": [
+                        "P:lingo:semantic"
+                    ],
+                    "cmis:baseTypeId": "cmis:relationship",
+                    "cmis:sourceId": "4568023bd91420bdf51f188bec05742f",
+                    "cmis:targetId": "4568023bd91420bdf51f188bec055148"
+                }
+            }
+        ]
+    }
+}

@@ -1,6 +1,6 @@
 import { cmis } from '../../lib/cmis';
 import * as React from 'react';
-import { Button, Panel, Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
@@ -82,7 +82,6 @@ export class LeftPanel extends React.Component<Props, State> {
         const { data, pages, loading } = this.state;
         return (
             <div>
-                <Panel>
                     <ReactTable
                         columns={[
                             {
@@ -116,7 +115,6 @@ export class LeftPanel extends React.Component<Props, State> {
                         defaultPageSize={10}
                         className="-striped -highlight"
                     />
-                </Panel>
             </div>
         )
     };

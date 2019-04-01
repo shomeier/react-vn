@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cmis } from '../../lib/cmis';
-import { Button, Col, Grid, Panel, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import TopBar from './TopBar';
 import AddWord from './AddWord';
 import LeftPanel from './LeftPanel';
@@ -31,12 +31,12 @@ export class AdminMain extends React.Component<Props, State> {
     }
 
     handleShowAddWord(event) {
-        event.preventDefault();
+        // event.preventDefault();
         this.setState({ showAddWord: true });
     }
 
     handleCloseAddWord(event) {
-        event.preventDefault();
+        // event.preventDefault();
         this.setState({ showAddWord: false });
     }
 
@@ -44,7 +44,7 @@ export class AdminMain extends React.Component<Props, State> {
 
         return (
             <div>
-                <Grid fluid={true}>
+                <Container fluid={true}>
                     <Row className="show-grid">
                         <Col xs={12} sm={12} md={12} lg={12}>
                             {console.log("Rendering TopBar again with language: " + this.state.language)}
@@ -59,8 +59,8 @@ export class AdminMain extends React.Component<Props, State> {
                             </div>
                         </Col>
                     </Row>
-                </Grid>
-                <AddWord cmisSession={this.props.cmisSession} show={this.state.showAddWord} onHide={this.handleCloseAddWord} />
+                </Container>
+                <AddWord cmisSession={this.props.cmisSession} show={this.state.showAddWord} onHide={(e) => this.handleCloseAddWord(e)} />
             </div>
         )
     };
