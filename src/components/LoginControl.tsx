@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { Button, Form, FormGroup, FormControl } from 'react-bootstrap';
 import { cmis } from '../lib/cmis';
+import { CmisSessionWrapper } from './cmis/CmisSessionWrapper';
 // import './css/LoginControl.css';
 import './css/main.css';
 import './css/generic.css';
 import MainPanel from './MainPanel';
+import { CmisRepositoryInfo } from './cmis/model/CmisRepositoryInfo';
 
 interface State {
     username: string;
     password: string;
-    cmisSession: cmis.CmisSession;
+    canLogin: boolean;
 }
 
 class LoginControl extends React.Component<{}, State>  {
@@ -18,7 +20,7 @@ class LoginControl extends React.Component<{}, State>  {
         this.handleChangeUsername = this.handleChangeUsername.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.handleLoginClick = this.handleLoginClick.bind(this);
-        this.state = { username: '', password: '', cmisSession: null };
+        this.state = { username: '', password: '', canLogin: false };
     }
 
     handleChangeUsername(event) {
@@ -32,49 +34,18 @@ class LoginControl extends React.Component<{}, State>  {
     handleLoginClick(event) {
         event.preventDefault();
 
-        // MacOs Alfreso installation: Port 8080
-        // let cmisUrl = 'http://localhost:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
-        // let cmisUrl = 'http://localhost:8080/core/browser/bedroom?cmisselector=repositoryInfo';
-        // let cmisUrl = 'http://localhost:8080/core/browser/bedroom';
-        let cmisUrl = 'http://localhost:8080/core/browser/lingo';
-        // let cmisUrl = 'http://localhost:8082/alfresco/api/-default-/public/cmis/versions/1.1/browser';
-        // let cmisUrl = 'http://127.0.0.1:8080/alfresco/api/-default-/public/cmis/versions/1.1/browser';
-        // let cmisUrl = 'https://cmis.alfresco.com/api/-default-/public/cmis/versions/1.1/browser';
-        
-        let session = new cmis.CmisSession(cmisUrl);
-        session.setErrorHandler(err => console.log(err.stack));
-        session.defaultRepository = {
-            repositoryName: "lingo",
-            repositoryUrl: "http://localhost:8080/core/browser/lingo",
-            rootFolderUrl: "http://localhost:8080/core/browser/lingo/root"
-        };
-        session.setCredentials(this.state.username, this.state.password).getRepositoryInfo().then(() => {
-            this.setState({ cmisSession: session });
-                console.log("Loaded repos");
-                console.log("Repos: " + JSON.stringify(session.defaultRepository));
-            }).catch(err => {
-                    alert("Invalid credentials for username: " + this.state.username);
-                    console.log("Error1: " + err)
-                    console.log("Error2: " + JSON.stringify(err))
-                    console.log("Error3: " + JSON.stringify(err.response))
-        });
-        // session.setCredentials(this.state.username, this.state.password).loadRepositories().then(() => {
-        //     this.setState({ cmisSession: session });
-        //     console.log("Loaded repos");
-        //     console.log("Repos: " + JSON.stringify(session.defaultRepository));
-        // }).catch(err => {
-        //     alert("Invalid credentials for username: " + this.state.username);
-        //     console.log("Error1: " + err)
-        //     console.log("Error2: " + JSON.stringify(err))
-        //     console.log("Error3: " + JSON.stringify(err.response))
-        // });
+        let session = CmisSessionWrapper.getInstance()
+        session.setCredentials(this.state.username, this.state.password);
+        let repositoryInfo = session.getRepositoryInfo();
+        let canLogin = session.canLogin()
+        this.setState({ canLogin: canLogin });
     }
 
     render() {
-        const isLoggedIn = (this.state.cmisSession) ? true : false;
+        const isLoggedIn = (this.state.canLogin) ? true : false;
         let body = null;
         if (isLoggedIn) {
-            body = <MainPanel cmisSession={this.state.cmisSession} />;
+            body = <MainPanel cmisSession={CmisSessionWrapper.getInstance().getWrappedSession()} />;
         } else {
             body = <LoginForm
                 onChangeUsername={this.handleChangeUsername}
