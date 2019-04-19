@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cmis } from '../lib/cmis';
 import { MainNavBar } from './MainNavBar';
-import { WelcomePanel } from './WelcomePanel';
+import { WelcomePanel } from './panel/WelcomePanel';
 import { AdminMain } from './adminPanel/AdminMain';
 
 interface Props {
@@ -30,20 +30,20 @@ class MainPanel extends React.Component<Props, State> {
         const cmisSession = this.props.cmisSession;
         // const centerPanel = <WelcomePanel/>;
         let centerPanel;
-        switch(this.state.panel) {
+        switch (this.state.panel) {
             case "addWord":
-                centerPanel = <AdminMain cmisSession={cmisSession}/>
+                centerPanel = <AdminMain cmisSession={cmisSession} />
                 break;
             default:
-                centerPanel = <WelcomePanel/>
+                centerPanel = <WelcomePanel />
         }
         return (
-            <div className="mainPanel">
+            <div>
                 <MainNavBar
                     isAdmin={true}
                     cmisSession={cmisSession}
                     onMenuItemClick={this.handleMenuItemClick} />
-                <div className="centerPanel">
+                <div className="mainPanel">
                     {centerPanel}
                 </div>
             </div>

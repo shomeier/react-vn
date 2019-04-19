@@ -39,22 +39,23 @@ export class CmisSessionWrapper {
     }
 
     public setCredentials(user: string, password: string) {
-            this.session.setCredentials(user, password)
+        this.session.setCredentials(user, password)
     }
 
-    public canLogin():boolean {
-        this.session.getRepositoryInfo().then(
-            repositoryInfo => {return true}
-        ).catch (
-            e => {
-                console.log("Error: Can not login. " + e)
-                return false
+    public async canLogin(): Promise<boolean> {
+        let retVal: boolean = false;
+        try {
+            let repositoryInfo = await this.session.getRepositoryInfo()
+            if (repositoryInfo) {
+                retVal = true;
             }
-        );
-        return false;
+        } catch (e) {
+            console.log("Error while logging: " + JSON.stringify(e))
+        }
+        return new Promise<boolean>(resolve => { resolve(retVal) })
     }
 
-    public async getRepositoryInfo():Promise<CmisRepositoryInfo> {
+    public async getRepositoryInfo(): Promise<CmisRepositoryInfo> {
         try {
             console.log("getting RepositoryInfo: ...")
             const data = await this.session.getRepositoryInfo()

@@ -12,43 +12,32 @@ export function MainNavBar(props) {
     const cmisSession = props.cmisSession;
 
     return (
-        <Navbar>
-            <Nav activeKey="1">
-                <Nav.Item>
-                    <Nav.Link eventKey={1} onSelect={(e) => props.onMenuItemClick("learnDict", e)}>
-                        Learn Dict
+        <div className="mainNavBar">
+            <Navbar>
+                <Nav activeKey="1">
+                    <Nav.Item>
+                        <Nav.Link eventKey={1} onSelect={(e) => props.onMenuItemClick("learnDict", e)}>
+                            Learn Dict
                     </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link eventKey={2} onClick={(e) => props.onMenuItemClick("learnSheets", e)}>
-                        Learn Sheets
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey={2} onClick={(e) => props.onMenuItemClick("learnSheets", e)}>
+                            Learn Sheets
                     </Nav.Link>
-                </Nav.Item>
+                    </Nav.Item>
 
-                {isAdmin && (
-                    <NavDropdown title="Admin" id="basic-nav-dropdown">
-                        <NavDropdown.Item eventKey={3.1} onClick={(e) => props.onMenuItemClick("addWord", e)}>Add Word</NavDropdown.Item >
-                        <NavDropdown.Item eventKey={3.2} onClick={(e) => props.onMenuItemClick("editWord", e)}>Edit Words</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item eventKey={3.4}>Separated link</NavDropdown.Item>
-                    </NavDropdown>
-                )
-                }
-            </Nav>
-        </Navbar>
-        /**
-        <Navbar.Form pullLeft>
-            <FormGroup>
-                <FormControl type="text" placeholder="Search" />
-            </FormGroup>{' '}
-            <Button type="submit">Submit</Button>
-        </Navbar.Form>
-        <Navbar.Collapse>
-            <Navbar.Text pullRight>
-                Signed in as: {cmisSession.username}
-            </Navbar.Text>
-        </Navbar.Collapse>
-        */
+                    {isAdmin && (
+                        <NavDropdown title="Admin" id="basic-nav-dropdown">
+                            <NavDropdown.Item eventKey={3.1} onClick={(e) => props.onMenuItemClick("addWord", e)}>Add Word</NavDropdown.Item >
+                            <NavDropdown.Item eventKey={3.2} onClick={(e) => props.onMenuItemClick("editWord", e)}>Edit Words</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item eventKey={3.4}>Separated link</NavDropdown.Item>
+                        </NavDropdown>
+                    )
+                    }
+                </Nav>
+            </Navbar>
+        </div>
     );
 }
 
