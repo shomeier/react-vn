@@ -2,7 +2,6 @@ import { cmis } from '../../lib/cmis';
 import * as React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import ReactTable from 'react-table';
-import 'react-table/react-table.css';
 
 interface Props {
     cmisSession: cmis.CmisSession,

@@ -29,7 +29,6 @@ class MainPanel extends React.Component<Props, State> {
     render() {
 
         const cmisSession = this.props.cmisSession;
-        // const centerPanel = <WelcomePanel/>;
         let centerPanel;
         switch (this.state.panel) {
             case "addWord":

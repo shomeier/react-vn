@@ -10,7 +10,7 @@
     "react-dom": "^16.8.5",
     "react-list": "^0.8.8",
     "react-scripts": "1.1.0",
-    "react-table": "^6.9.2",
+    "react-table": "^7.0.0-alpha.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
