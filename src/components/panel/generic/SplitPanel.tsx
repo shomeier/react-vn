@@ -1,7 +1,12 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import * as React from "react";
+import { IsOptional } from 'prop-types';
 
-export function SplitPanel(props) {
+interface Props {
+    left, center?, right?: any
+}
+
+export function SplitPanel(props: Props) {
 
     const retVal = [
         <Col>
