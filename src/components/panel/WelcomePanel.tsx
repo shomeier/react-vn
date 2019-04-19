@@ -3,10 +3,10 @@ import * as React from 'react';
 // import { cmis } from '../lib/cmis';
 // import { Button } from 'react-bootstrap';
 
-export const WelcomePanel: React.StatelessComponent<{}> = () => {
+export function WelcomePanel() {
     return (
-        <div className="welcomePanel">
-        Welcome!
+        <div className="WelcomePanel">
+            Welcome!
     </div>
     );
 }

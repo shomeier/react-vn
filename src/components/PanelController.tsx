@@ -2,6 +2,7 @@ import * as React from 'react';
 import { cmis } from '../lib/cmis';
 import { MainNavBar } from './MainNavBar';
 import { WelcomePanel } from './panel/WelcomePanel';
+import { SplitPanel } from './panel/generic/SplitPanel';
 import { AdminMain } from './adminPanel/AdminMain';
 
 interface Props {
@@ -35,7 +36,7 @@ class MainPanel extends React.Component<Props, State> {
                 centerPanel = <AdminMain cmisSession={cmisSession} />
                 break;
             default:
-                centerPanel = <WelcomePanel />
+        centerPanel = <SplitPanel left={<WelcomePanel/>} center={<WelcomePanel/>}/>
         }
         return (
             <div>
