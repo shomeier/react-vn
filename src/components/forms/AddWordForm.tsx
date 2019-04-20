@@ -19,7 +19,7 @@ export function AddWordForm() {
             setPartOfSpeechPropDef(res.propertyDefinitions['lingo:part_of_speech'])
             setIsReady(true)
         });
-    })
+    }, [isReady])
 
     return (
         <div>

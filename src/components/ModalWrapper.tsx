@@ -4,7 +4,6 @@ import {Modal} from "react-bootstrap"
 
 interface Props {
     showState:any
-    onHide?:any
     children?:any
 }
 
@@ -14,7 +13,6 @@ export function ModalWrapper(props:Props) {
 
     return (
         <Modal
-            // {...this.props}
             show={show}
             onHide={() => setShow(false)}
             aria-labelledby="contained-modal-title"
