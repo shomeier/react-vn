@@ -15,6 +15,15 @@ export interface CmisPropertyDefinition {
 }
 
 export interface CmisChoice {
-    value: string;
-    displayName: string;
+    value: string
+    displayName: string
+}
+
+export interface SuccinctCmisProperties {
+    'cmis:objectId':string
+    'cmis:changeToken':string
+}
+
+export interface SuccinctCmisObject {
+    succinctProperties:SuccinctCmisProperties
 }

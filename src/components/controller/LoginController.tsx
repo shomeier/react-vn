@@ -4,7 +4,7 @@ import { CmisSessionWrapper } from '../cmis/CmisSessionWrapper'
 import '../css/main.css';
 import '../css/generic.css';
 import MainPanel from '../PanelController';
-import { CmisRepositoryInfo } from '../cmis/model/CmisSpecModels';
+import { CmisRepositoryInfo } from '../cmis/model/CmisSpecModel';
 import { LoginForm } from '../forms/LoginForm';
 
 export function LoginController() {

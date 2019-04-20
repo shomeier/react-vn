@@ -4,10 +4,11 @@ import { Form, FormGroup, Col, FormLabel, FormControl, Button, Row } from 'react
 import { CmisFormControl } from "../cmis/CmisFormControl"
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
 import '../css/generic.css';
+import { CmisPropertyDefinition } from "../cmis/model/CmisSpecModel";
 
 export function AddWordForm() {
 
-    const [partOfSpeech, setPartOfSpeech] = useState("noun")
+    const [partOfSpeech, setPartOfSpeech] = useState()
     const [word, setWord] = useState()
     const [partOfSpeechPropDef, setPartOfSpeechPropDef] = useState()
     const [isReady, setIsReady] = useState(false)
@@ -15,7 +16,9 @@ export function AddWordForm() {
     useEffect(() => {
         let cmisSession = CmisSessionWrapper.getInstance().getWrappedSession();
         cmisSession.getTypeDefinition('P:lingo:part_of_speech').then((res) => {
-            setPartOfSpeechPropDef(res.propertyDefinitions['lingo:part_of_speech'])
+            const propDef:CmisPropertyDefinition = res.propertyDefinitions['lingo:part_of_speech']
+            setPartOfSpeechPropDef(propDef)
+            setPartOfSpeech(propDef.defaultValue)
             setIsReady(true)
         });
     }, [isReady])
@@ -40,21 +43,6 @@ export function AddWordForm() {
                             </Col>
                         </Row>
                     </FormGroup>
-
-                    {/* <FormGroup controlId="semantic">
-            <Col sm={10}>
-                <FormLabel>Semantic</FormLabel>
-                <FormControl
-                    onChange={(e) => { this.handleChange('semantic', e) }} />
-            </Col>
-        </FormGroup>
-        <FormGroup controlId="wordEn">
-            <Col sm={10}>
-                <FormLabel>English Word</FormLabel>
-                <FormControl
-                    onChange={(e) => { this.handleChange('targetVocab.word', e) }} />
-            </Col>
-        </FormGroup> */}
 
                     <div className="alignRight">
                         <Button type="submit">Submit</Button>
