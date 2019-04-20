@@ -1,11 +1,8 @@
 import * as React from "react";
-import LoginControl from './LoginControl';
-// import './css/App.css';
+import { LoginController } from './controller/LoginController';
 
-export const App: React.StatelessComponent<{}> = () => {
-    return (
-      <LoginControl />
-    );
+export function App() {
+  return (
+    <LoginController />
+  )
 }
-
-export default App;

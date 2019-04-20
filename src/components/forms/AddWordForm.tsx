@@ -23,7 +23,7 @@ export function AddWordForm() {
 
                 <Col sm={7}>
                     <FormLabel>Word</FormLabel>
-                    <FormControl onChange={(e) => setWord(e.target.value)} />
+                    <FormControl onChange={(event) => setWord((event.target as HTMLInputElement).value)} />
                 </Col>
 
             </FormGroup>

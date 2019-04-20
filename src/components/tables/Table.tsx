@@ -337,9 +337,6 @@ export default function MyTable({ loading, infinite, ...props }) {
         </Row>
         {pagination}
       </Table>
-      <br />
-      <br />
-      <JsonTree data={instance} />
     </div>
   );
 }

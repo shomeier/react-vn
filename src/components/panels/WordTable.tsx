@@ -2,6 +2,7 @@ import * as React from "react"
 import { useTableState } from "react-table";
 import { useState, useRef, useEffect } from "react";
 import Table from "../tables/Table";
+import JsonTree from "react-json-tree";
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
 import { Button } from "react-bootstrap";
 
@@ -75,6 +76,19 @@ export default function WordTable() {
         [sortBy, filters, pageIndex, pageSize]
     );
 
+    const instance = {...{
+        data,
+        columns,
+        infinite,
+        state, // Pass the state to the table
+        loading,
+        manualSorting: true, // Manual sorting
+        manualFilters: true, // Manual filters
+        manualPagination: true, // Manual pagination
+        disableMultiSort: true, // Disable multi-sort
+        disableGrouping: true, // Disable grouping
+        debug: true
+    }}
     return (
         <div>
             <Table
@@ -93,8 +107,11 @@ export default function WordTable() {
                 }}
             />
             <div className="alignRight">
-                <Button onClick={this.handleShowAddWord}>Add Word</Button>
+                <Button>Add Word</Button>
             </div>
+            <br />
+            <br />
+            <JsonTree data={instance} />
         </div>
     );
 }
