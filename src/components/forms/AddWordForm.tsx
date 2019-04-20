@@ -8,21 +8,22 @@ import { CmisPropertyDefinition } from "../cmis/model/CmisSpecModel";
 import { CmisLingoService } from "../cmis/CmisLingoService";
 
 interface Props {
-    onClose?:any
+    setPartOfSpeech:any
+    setWord:any
+    onSubmit:any
 }
 
-function handleSubmit(e, partOfSpeech, word, language, onSuccess?) {
+function handleSubmit(e, onSubmit) {
     e.preventDefault()
-    console.log("partOfSpeech: " + partOfSpeech)
-    let cmisLingoService = new CmisLingoService(CmisSessionWrapper.getInstance())
-    cmisLingoService.saveWord({partOfSpeech:partOfSpeech, word:word, language: language})
-        .then(res => {if((res === true) && (onSuccess))onSuccess()})
+    onSubmit()
+    // console.log("partOfSpeech: " + partOfSpeech)
+    // let cmisLingoService = new CmisLingoService(CmisSessionWrapper.getInstance())
+    // cmisLingoService.saveWord({partOfSpeech:partOfSpeech, word:word, language: language})
+    //     .then(res => {if((res === true) && (onSuccess))onSuccess()})
 }
 
 export function AddWordForm(props:Props) {
 
-    const [partOfSpeech, setPartOfSpeech] = useState()
-    const [word, setWord] = useState()
     const [partOfSpeechPropDef, setPartOfSpeechPropDef] = useState()
     const [isReady, setIsReady] = useState(false)
 
@@ -30,9 +31,10 @@ export function AddWordForm(props:Props) {
         let cmisSession = CmisSessionWrapper.getInstance().getWrappedSession();
         cmisSession.getTypeDefinition('P:lingo:part_of_speech').then((res) => {
             const propDef:CmisPropertyDefinition = res.propertyDefinitions['lingo:part_of_speech']
+            console.log("propDef: " + JSON.stringify(propDef))
             setPartOfSpeechPropDef(propDef)
             // set default value
-            setPartOfSpeech(propDef.defaultValue)
+            props.setPartOfSpeech(propDef.defaultValue)
             setIsReady(true)
         });
     }, [isReady])
@@ -40,7 +42,8 @@ export function AddWordForm(props:Props) {
     return (
         <div>
             {isReady ? (
-                <Form onSubmit={(e) => handleSubmit(e, partOfSpeech, word, "vn", props.onClose)}>
+            <Form onSubmit={(e) => handleSubmit(e, props.onSubmit)}>
+            {/* <Form onSubmit={(e) => handleSubmit(e, partOfSpeech, word, "vn", props.onClose)}> */}
                     <FormGroup controlId="word">
                         <Row>
                             <Col sm={5}>
@@ -48,12 +51,12 @@ export function AddWordForm(props:Props) {
                                 <CmisFormControl
                                     propertyDefinition={partOfSpeechPropDef}
                                     componentClass='select'
-                                    onChange={e => setPartOfSpeech((e.target as HTMLInputElement).value)}
+                                    onChange={(e) => props.setPartOfSpeech((e.target as HTMLInputElement).value)}
                                     item='sourceVocab.partOfSpeech' />
                             </Col>
                             <Col sm={7}>
                                 <FormLabel>Word</FormLabel>
-                                <FormControl onChange={(e) => setWord((e.target as HTMLInputElement).value)} />
+                                <FormControl onChange={(e) => props.setWord((e.target as HTMLInputElement).value)} />
                             </Col>
                         </Row>
                     </FormGroup>

@@ -6,10 +6,13 @@ import JsonTree from "react-json-tree";
 import { CmisQueryService } from "../cmis/CmisQueryService";
 import { Button } from "react-bootstrap";
 
-const statement = "SELECT * from lingo:text";
+interface Props {
+    statement:string
+}
 
-export function WordTable() {
+export function WordTable(props:Props) {
 
+    console.log("props.statement: " + props.statement)
     const columns = [
         {
             Header: "Word",
@@ -33,9 +36,10 @@ export function WordTable() {
     const currentRequestRef = useRef<number>(null);
 
     // Make a new controllable table state instance
-    const state = useTableState({ pageCount: 0 });
+    const state = useTableState({ statement:props.statement, pageCount: 0 });
 
-    const [{ sortBy, filters, pageIndex, pageSize }, setState] = state;
+    const queryStatement = props.statement;
+    const [{ statement, sortBy, filters, pageIndex, pageSize }, setState] = state;
 
     const fetchData = async () => {
         setLoading(true);
@@ -45,13 +49,13 @@ export function WordTable() {
         currentRequestRef.current = id;
 
         // Call our server for the data
-        const { rows, pageCount } = await CmisQueryService.getTableServerData({
+        const { rows, pageCount } = await CmisQueryService.getTableServerData(
             statement,
             filters,
             sortBy,
             pageSize,
             pageIndex
-        });
+        );
 
         // If this is an outdated request, disregard the results
         if (currentRequestRef.current !== id) {
@@ -71,9 +75,10 @@ export function WordTable() {
     // When sorting, filters, pageSize, or pageIndex change, fetch new data
     useEffect(
         () => {
+            console.log("Rerendering with statement: " + statement)
             fetchData();
         },
-        [sortBy, filters, pageIndex, pageSize]
+        [statement, sortBy, filters, pageIndex, pageSize]
     );
 
     const instance = {...{
