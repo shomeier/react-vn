@@ -6,15 +6,11 @@ import { SplitPanel } from './panels/generic/SplitPanel';
 import { AdminMain } from './adminPanel/AdminMain';
 import WordTable from './panels/WordTable';
 
-interface Props {
-    cmisSession: cmis.CmisSession,
-};
-
 interface State {
     panel: string;
 }
 
-class MainPanel extends React.Component<Props, State> {
+class MainPanel extends React.Component<{}, State> {
     constructor(props) {
         super(props);
         this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
@@ -29,7 +25,6 @@ class MainPanel extends React.Component<Props, State> {
 
     render() {
 
-        const cmisSession = this.props.cmisSession;
         let centerPanel;
         switch (this.state.panel) {
             case "addWord":
@@ -43,7 +38,6 @@ class MainPanel extends React.Component<Props, State> {
             <div>
                 <MainNavBar
                     isAdmin={true}
-                    cmisSession={cmisSession}
                     onMenuItemClick={this.handleMenuItemClick} />
                 <div className="mainPanel">
                     {centerPanel}

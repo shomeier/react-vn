@@ -16,14 +16,14 @@ export function AddWordForm() {
                     <CmisFormControl
                         propertyDefinition={this.state.partOfSpeechPropDef}
                         componentClass='select'
-                        onChange={e => setPartOfSpeech(e.target.value)}
+                        onChange={e => setPartOfSpeech((e.target as HTMLInputElement).value)}
                         item='sourceVocab.partOfSpeech' />
                 </Col>
 
 
                 <Col sm={7}>
                     <FormLabel>Word</FormLabel>
-                    <FormControl onChange={(event) => setWord((event.target as HTMLInputElement).value)} />
+                    <FormControl onChange={(e) => setWord((e.target as HTMLInputElement).value)} />
                 </Col>
 
             </FormGroup>

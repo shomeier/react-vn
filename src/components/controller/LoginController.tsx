@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cmis } from '../../lib/cmis';
-import { CmisSessionWrapper } from '../cmis/CmisSessionWrapper';
+import { CmisSessionWrapper } from '../cmis/CmisSessionWrapper'
 import '../css/main.css';
 import '../css/generic.css';
 import MainPanel from '../PanelController';
@@ -12,10 +12,10 @@ export function LoginController() {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [canLogin, setCanLogin] = React.useState(false);
-
+    
     let body = null;
     if (canLogin) {
-        body = <MainPanel cmisSession={CmisSessionWrapper.getInstance().getWrappedSession()} />;
+        body = <MainPanel />
     } else {
         body = <LoginForm
             onChangeUsername={(event) => setUsername(event.target.value)}

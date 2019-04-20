@@ -92,19 +92,7 @@ export default function WordTable() {
     return (
         <div>
             <Table
-                {...{
-                    data,
-                    columns,
-                    infinite,
-                    state, // Pass the state to the table
-                    loading,
-                    manualSorting: true, // Manual sorting
-                    manualFilters: true, // Manual filters
-                    manualPagination: true, // Manual pagination
-                    disableMultiSort: true, // Disable multi-sort
-                    disableGrouping: true, // Disable grouping
-                    debug: true
-                }}
+                {...instance}
             />
             <div className="alignRight">
                 <Button>Add Word</Button>

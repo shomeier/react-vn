@@ -1,6 +1,5 @@
 import * as React from 'react';
 const logo = require('../assets/vietnam_round_icon_64.png');
-// import * as cmis from 'cmis';
 import { cmis } from '../lib/cmis';
 import './css/MainNavBar.css';
 import { Button, FormGroup, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap';
@@ -9,7 +8,6 @@ export function MainNavBar(props) {
 
     const isAdmin = props.isAdmin;
     console.log("isAdmin: " + isAdmin);
-    const cmisSession = props.cmisSession;
 
     return (
         <div className="mainNavBar">
