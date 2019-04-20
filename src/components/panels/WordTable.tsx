@@ -8,7 +8,7 @@ import { Button } from "react-bootstrap";
 
 const statement = "SELECT * from lingo:text";
 
-export default function WordTable() {
+export function WordTable() {
 
     const columns = [
         {
@@ -94,12 +94,9 @@ export default function WordTable() {
             <Table
                 {...instance}
             />
-            <div className="alignRight">
-                <Button>Add Word</Button>
-            </div>
+            {/* <br />
             <br />
-            <br />
-            <JsonTree data={instance} />
+            <JsonTree data={instance} /> */}
         </div>
-    );
+    )
 }
