@@ -7,13 +7,19 @@ import '../css/generic.css';
 import { CmisPropertyDefinition } from "../cmis/model/CmisSpecModel";
 import { CmisLingoService } from "../cmis/CmisLingoService";
 
-function handleSubmit(e, partOfSpeech, word, language) {
-    e.preventDefault()
-    let cmisLingoService = new CmisLingoService(CmisSessionWrapper.getInstance())
-    cmisLingoService.saveWord({partOfSpeech:partOfSpeech, word:word, language: "vn"})
+interface Props {
+    onClose?:any
 }
 
-export function AddWordForm() {
+function handleSubmit(e, partOfSpeech, word, language, onSuccess?) {
+    e.preventDefault()
+    console.log("partOfSpeech: " + partOfSpeech)
+    let cmisLingoService = new CmisLingoService(CmisSessionWrapper.getInstance())
+    cmisLingoService.saveWord({partOfSpeech:partOfSpeech, word:word, language: language})
+        .then(res => {if((res === true) && (onSuccess))onSuccess()})
+}
+
+export function AddWordForm(props:Props) {
 
     const [partOfSpeech, setPartOfSpeech] = useState()
     const [word, setWord] = useState()
@@ -31,12 +37,10 @@ export function AddWordForm() {
         });
     }, [isReady])
 
-    let cmisLingoService = new CmisLingoService(CmisSessionWrapper.getInstance())
-
     return (
         <div>
             {isReady ? (
-                <Form onSubmit={(e) => handleSubmit(e, partOfSpeech, word, "vn")}>
+                <Form onSubmit={(e) => handleSubmit(e, partOfSpeech, word, "vn", props.onClose)}>
                     <FormGroup controlId="word">
                         <Row>
                             <Col sm={5}>

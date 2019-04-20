@@ -19,7 +19,7 @@ export class CmisLingoService {
         this.cmisSession = sessionWrapper.getWrappedSession();
     }
 
-    public async saveWord(word: CmisWord) {
+    public async saveWord(word: CmisWord):Promise<boolean> {
         
         console.log("Saving word: " + JSON.stringify(word))
         try {
@@ -29,8 +29,10 @@ export class CmisLingoService {
             const textId = text.succinctProperties["cmis:objectId"]
             const textChangeToken = text.succinctProperties["cmis:changeToken"]
             await this.markAs(textId, textChangeToken, CmisLingoService.WORD_MARKER)
+            return new Promise<boolean>(resolve => { resolve(true) })
         } catch (e) {
             console.log("Error while saving word: " + e)
+            return new Promise<boolean>(resolve => { resolve(false) })
         }
     }
 

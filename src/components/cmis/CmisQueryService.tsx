@@ -3,7 +3,7 @@ import {CmisSessionWrapper} from "./CmisSessionWrapper"
 
 export class CmisQueryService {
     
-    public static async getTableServerData({statement, filters, sortBy, pageSize, pageIndex }):Promise<CmisTableData> {
+    public static async getTableServerData(statement, filters, sortBy, pageSize, pageIndex ):Promise<CmisTableData> {
 
         console.log("Getting server data with statement: " + statement);
         console.log("filters: " + filters)
