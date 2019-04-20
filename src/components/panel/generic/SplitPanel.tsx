@@ -9,7 +9,7 @@ interface Props {
 export function SplitPanel(props: Props) {
 
     const retVal = [
-        <Col>
+        <Col key="SplitPanel-left">
             <div className="SplitPanel-left">
                 {props.left}
             </div>
@@ -17,7 +17,7 @@ export function SplitPanel(props: Props) {
     ]
     if (props.center) {
         retVal.push(
-            < Col >
+            < Col key="SplitPanel-center">>
                 <div className="SplitPanel-center">
                     {props.center}
                 </div>
@@ -25,7 +25,7 @@ export function SplitPanel(props: Props) {
     }
     if (props.right) {
         retVal.push(
-            <Col>
+            <Col key="SplitPanel-right">>
                 <div className="SplitPanel-right">
                     {props.right}
                 </div>
