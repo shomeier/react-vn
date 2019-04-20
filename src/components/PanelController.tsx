@@ -4,7 +4,7 @@ import { MainNavBar } from './MainNavBar';
 import { WelcomePanel } from './panel/WelcomePanel';
 import { SplitPanel } from './panel/generic/SplitPanel';
 import { AdminMain } from './adminPanel/AdminMain';
-import WordList from './panel/WordList';
+import WordTable from './panel/WordTable';
 
 interface Props {
     cmisSession: cmis.CmisSession,
@@ -34,7 +34,7 @@ class MainPanel extends React.Component<Props, State> {
         switch (this.state.panel) {
             case "addWord":
                 // centerPanel = <AdminMain cmisSession={cmisSession} />
-                centerPanel = <SplitPanel left={<WordList />} />
+                centerPanel = <SplitPanel left={<WordTable />} />
                 break;
             default:
                 centerPanel = <SplitPanel left={<WelcomePanel />} center={<WelcomePanel />} />

@@ -5,7 +5,7 @@ import { CmisSessionWrapper } from './cmis/CmisSessionWrapper';
 import './css/main.css';
 import './css/generic.css';
 import MainPanel from './PanelController';
-import { CmisRepositoryInfo } from './cmis/model/CmisRepositoryInfo';
+import { CmisRepositoryInfo } from './cmis/model/spec/CmisRepositoryInfo';
 
 function LoginControl() {
 
