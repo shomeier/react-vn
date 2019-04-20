@@ -1,6 +1,6 @@
 import { cmis } from '../../lib/cmis';
 import { Alert } from 'react-bootstrap';
-import { CmisRepositoryInfo } from './model/spec/CmisRepositoryInfo';
+import { CmisRepositoryInfo } from './model/CmisSpecModels';
 import React = require('react');
 import { CmisTableData } from './model/CmisTableData';
 
