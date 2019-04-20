@@ -1,8 +1,9 @@
 import * as React from "react"
 import { useTableState } from "react-table";
 import { useState, useRef, useEffect } from "react";
-import Table from "../table/Table";
+import Table from "../tables/Table";
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
+import { Button } from "react-bootstrap";
 
 const statement = "SELECT * from lingo:text";
 
@@ -75,20 +76,25 @@ export default function WordTable() {
     );
 
     return (
-        <Table
-            {...{
-                data,
-                columns,
-                infinite,
-                state, // Pass the state to the table
-                loading,
-                manualSorting: true, // Manual sorting
-                manualFilters: true, // Manual filters
-                manualPagination: true, // Manual pagination
-                disableMultiSort: true, // Disable multi-sort
-                disableGrouping: true, // Disable grouping
-                debug: true
-            }}
-        />
+        <div>
+            <Table
+                {...{
+                    data,
+                    columns,
+                    infinite,
+                    state, // Pass the state to the table
+                    loading,
+                    manualSorting: true, // Manual sorting
+                    manualFilters: true, // Manual filters
+                    manualPagination: true, // Manual pagination
+                    disableMultiSort: true, // Disable multi-sort
+                    disableGrouping: true, // Disable grouping
+                    debug: true
+                }}
+            />
+            <div className="alignRight">
+                <Button onClick={this.handleShowAddWord}>Add Word</Button>
+            </div>
+        </div>
     );
 }

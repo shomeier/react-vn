@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { cmis } from '../lib/cmis';
 import { MainNavBar } from './MainNavBar';
-import { WelcomePanel } from './panel/WelcomePanel';
-import { SplitPanel } from './panel/generic/SplitPanel';
+import { WelcomePanel } from './panels/WelcomePanel';
+import { SplitPanel } from './panels/generic/SplitPanel';
 import { AdminMain } from './adminPanel/AdminMain';
-import WordTable from './panel/WordTable';
+import WordTable from './panels/WordTable';
 
 interface Props {
     cmisSession: cmis.CmisSession,
