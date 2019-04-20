@@ -20,7 +20,8 @@ export class CmisLingoService {
     }
 
     public async saveWord(word: CmisWord) {
-
+        
+        console.log("Saving word: " + JSON.stringify(word))
         try {
             const folder = CmisLingoService.BASE_FOLDER_WORDS + '/' + word.language;
             const cmisName = word.word + '_' + word.partOfSpeech;
