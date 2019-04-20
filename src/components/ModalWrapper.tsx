@@ -4,6 +4,7 @@ import {Modal} from "react-bootstrap"
 
 interface Props {
     showState:any
+    title:string
     children?:any
 }
 
@@ -18,9 +19,9 @@ export function ModalWrapper(props:Props) {
             aria-labelledby="contained-modal-title"
         >
             <Modal.Header closeButton>
-                {/* <Modal.Title id="contained-modal-title">
-                    <strong>Add a new word</strong>
-                </Modal.Title> */}
+                <Modal.Title id="contained-modal-title">
+                    <strong>{props.title}</strong>
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                {props.children}

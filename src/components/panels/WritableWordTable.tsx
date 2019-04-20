@@ -12,7 +12,7 @@ export function WritableWordTable() {
 
     return (
         <div>
-            <ModalWrapper showState={showState}>
+            <ModalWrapper showState={showState} title="Add a new word">
                 <AddWordForm/>
             </ModalWrapper>
             <WordTable/>

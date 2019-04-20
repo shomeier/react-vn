@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
-import { Form, FormGroup, Col, FormLabel, FormControl, Button } from 'react-bootstrap'
+import { Form, FormGroup, Col, FormLabel, FormControl, Button, Row } from 'react-bootstrap'
 import { CmisFormControl } from "../cmis/CmisFormControl"
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
 import '../css/generic.css';
@@ -15,7 +15,6 @@ export function AddWordForm() {
     useEffect(() => {
         let cmisSession = CmisSessionWrapper.getInstance().getWrappedSession();
         cmisSession.getTypeDefinition('P:lingo:part_of_speech').then((res) => {
-            console.log("Trying to get partOfSpeech ...")
             setPartOfSpeechPropDef(res.propertyDefinitions['lingo:part_of_speech'])
             setIsReady(true)
         });
@@ -26,21 +25,20 @@ export function AddWordForm() {
             {isReady ? (
                 <Form>
                     <FormGroup controlId="word">
-
-                        <Col sm={3}>
-                            <CmisFormControl
-                                propertyDefinition={partOfSpeechPropDef}
-                                componentClass='select'
-                                onChange={e => setPartOfSpeech((e.target as HTMLInputElement).value)}
-                                item='sourceVocab.partOfSpeech' />
-                        </Col>
-
-
-                        <Col sm={7}>
-                            <FormLabel>Word</FormLabel>
-                            <FormControl onChange={(e) => setWord((e.target as HTMLInputElement).value)} />
-                        </Col>
-
+                        <Row>
+                            <Col sm={5}>
+                                <FormLabel>Part Of Speech</FormLabel>
+                                <CmisFormControl
+                                    propertyDefinition={partOfSpeechPropDef}
+                                    componentClass='select'
+                                    onChange={e => setPartOfSpeech((e.target as HTMLInputElement).value)}
+                                    item='sourceVocab.partOfSpeech' />
+                            </Col>
+                            <Col sm={7}>
+                                <FormLabel>Word</FormLabel>
+                                <FormControl onChange={(e) => setWord((e.target as HTMLInputElement).value)} />
+                            </Col>
+                        </Row>
                     </FormGroup>
 
                     {/* <FormGroup controlId="semantic">
@@ -58,7 +56,9 @@ export function AddWordForm() {
             </Col>
         </FormGroup> */}
 
-                    <Button className="alignRight" type="submit">Submit</Button>
+                    <div className="alignRight">
+                        <Button type="submit">Submit</Button>
+                    </div>
                 </Form>
             )
                 :
