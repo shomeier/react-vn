@@ -3,7 +3,7 @@ import { useTableState } from "react-table";
 import { useState, useRef, useEffect } from "react";
 import Table from "../tables/Table";
 import JsonTree from "react-json-tree";
-import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
+import { CmisQueryService } from "../cmis/CmisQueryService";
 import { Button } from "react-bootstrap";
 
 const statement = "SELECT * from lingo:text";
@@ -45,7 +45,7 @@ export default function WordTable() {
         currentRequestRef.current = id;
 
         // Call our server for the data
-        const { rows, pageCount } = await CmisSessionWrapper.getInstance().getTableServerData({
+        const { rows, pageCount } = await CmisQueryService.getTableServerData({
             statement,
             filters,
             sortBy,
