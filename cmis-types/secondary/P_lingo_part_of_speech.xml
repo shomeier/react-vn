@@ -31,7 +31,9 @@
         <cmis:queryable>true</cmis:queryable>
         <cmis:orderable>true</cmis:orderable>
         <cmis:openChoice>false</cmis:openChoice>
-        <cmis:defaultValue/>
+        <cmis:defaultValue>
+            <cmis:value>noun</cmis:value>
+        </cmis:defaultValue>
         <cmis:choice displayName="noun">
             <cmis:value>noun</cmis:value>
         </cmis:choice>
