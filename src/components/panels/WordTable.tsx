@@ -7,12 +7,12 @@ import { CmisQueryService } from "../cmis/CmisQueryService";
 import { Button } from "react-bootstrap";
 
 interface Props {
-    statement:string
+    query: string
 }
 
-export function WordTable(props:Props) {
+export function WordTable(props: Props) {
 
-    console.log("props.statement: " + props.statement)
+    console.log("In WordTable with query: " + props.query);
     const columns = [
         {
             Header: "Word",
@@ -36,10 +36,9 @@ export function WordTable(props:Props) {
     const currentRequestRef = useRef<number>(null);
 
     // Make a new controllable table state instance
-    const state = useTableState({ statement:props.statement, pageCount: 0 });
-
-    const queryStatement = props.statement;
-    const [{ statement, sortBy, filters, pageIndex, pageSize }, setState] = state;
+    const query = props.query
+    const state = useTableState({ pageCount: 0 })
+    const [{sortBy, filters, pageIndex, pageSize }, setState] = state
 
     const fetchData = async () => {
         setLoading(true);
@@ -50,7 +49,7 @@ export function WordTable(props:Props) {
 
         // Call our server for the data
         const { rows, pageCount } = await CmisQueryService.getTableServerData(
-            statement,
+            props.query,
             filters,
             sortBy,
             pageSize,
@@ -68,6 +67,7 @@ export function WordTable(props:Props) {
             ...old,
             pageCount
         }));
+        console.log("STATE IN FETCH: " + JSON.stringify(state[0]));
 
         setLoading(false);
     };
@@ -75,25 +75,27 @@ export function WordTable(props:Props) {
     // When sorting, filters, pageSize, or pageIndex change, fetch new data
     useEffect(
         () => {
-            console.log("Rerendering with statement: " + statement)
+            console.log("Rerendering with statement: " + props.query)
             fetchData();
         },
-        [statement, sortBy, filters, pageIndex, pageSize]
+        [props.query, sortBy, filters, pageIndex, pageSize]
     );
 
-    const instance = {...{
-        data,
-        columns,
-        infinite,
-        state, // Pass the state to the table
-        loading,
-        manualSorting: true, // Manual sorting
-        manualFilters: true, // Manual filters
-        manualPagination: true, // Manual pagination
-        disableMultiSort: true, // Disable multi-sort
-        disableGrouping: true, // Disable grouping
-        debug: true
-    }}
+    const instance = {
+        ...{
+            data,
+            columns,
+            infinite,
+            state, // Pass the state to the table
+            loading,
+            manualSorting: true, // Manual sorting
+            manualFilters: true, // Manual filters
+            manualPagination: true, // Manual pagination
+            disableMultiSort: true, // Disable multi-sort
+            disableGrouping: true, // Disable grouping
+            debug: false
+        }
+    }
     return (
         <div>
             <Table
