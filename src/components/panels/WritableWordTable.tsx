@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { useTableState } from "react-table";
+import { useTableState, HeaderColumn, Cell} from "react-table";
 import { CmisLingoService } from "../cmis/CmisLingoService";
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
 import { AddWordForm } from "../forms/AddWordForm";
 import { ModalWrapper } from "../ModalWrapper";
 import { GenericCmisTable } from "../tables/GenericeCmisTable";
-import { Input, Cell } from "../tables/Styles";
+import { Input } from "../tables/Styles";
 import JsonTree from "react-json-tree";
 
 const query = "SELECT lingo:text, cmis:name from lingo:text ORDER BY lingo:text";
@@ -43,23 +43,26 @@ export function WritableWordTable() {
             )
     }
 
-    const columns = [
+    const columns:HeaderColumn[] = [
         {
             Header: "Word",
             id: "lingo:text",
             accessor: w => w.succinctProperties['lingo:text'],
             minWidth: 400,
             maxWidth: 600,
-            Filter: header => {
+            Filter: (header:HeaderColumn) => {
                 return (
+                    <div>
                     <Input
                         placeholder='Search...'
                         value={header.filterValue || ""}
                         onChange={e => header.setFilter(e.target.value)}
                     />
+                    <JsonTree data={header}/>
+                    </div>
                 );
             },
-            Cell: (cell) => {
+            Cell: (cell:Cell) => {
                 let index = cell.row.index
                 let cellData = data[0][index].succinctProperties[cell.column.id]
                 let cellCoid = data[0][index].succinctProperties["cmis:objectId"]

@@ -1,3 +1,5 @@
+import { any } from "prop-types";
+
 // Type definitions for react-table 7
 // Project: https://github.com/tannerlinsley/react-table#readme
 // Definitions by: Grsmto <https://github.com/grsmto>
@@ -27,12 +29,15 @@ declare module "react-table" {
       Filter?: string | ((props: Api) => JSX.Element | string);
       Cell?: string | ((cell: Cell) => JSX.Element | string);
       id?: string | number;
+      show?: boolean;
       minWidth?: string | number;
       maxWidth?: string | number;
       width?: string | number;
       canSortBy?: boolean;
       canGroupBy?: boolean;
       canFilter?: boolean;
+      filterValue?: any;
+      setFilter?: any;
       sortByFn?: (a: any, b: any, desc: boolean) => 0 | 1 | -1;
       defaultSortDesc?: boolean;
     }
