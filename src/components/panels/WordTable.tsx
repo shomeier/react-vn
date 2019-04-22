@@ -21,7 +21,7 @@ export function WordTable(props: Props) {
     const columns = [
         {
             Header: "Word",
-            id: "word",
+            id: "lingo:text",
             accessor: w => w.succinctProperties['lingo:text'],
             minWidth: 140,
             maxWidth: 200,
