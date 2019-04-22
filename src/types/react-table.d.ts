@@ -1,5 +1,3 @@
-import { any } from "prop-types";
-
 // Type definitions for react-table 7
 // Project: https://github.com/tannerlinsley/react-table#readme
 // Definitions by: Grsmto <https://github.com/grsmto>
@@ -7,6 +5,8 @@ import { any } from "prop-types";
 // TypeScript Version: 3.0
 declare module "react-table" {
 
+    import { any } from "prop-types";
+  
     export type Cell = {
       render: (type: string) => any;
       getCellProps: () => any;

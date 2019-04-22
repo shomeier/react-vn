@@ -43,14 +43,14 @@ export function WritableWordTable() {
             )
     }
 
-    const columns:HeaderColumn[] = [
+    const columns = [
         {
             Header: "Word",
             id: "lingo:text",
             accessor: w => w.succinctProperties['lingo:text'],
             minWidth: 400,
             maxWidth: 600,
-            Filter: (header:HeaderColumn) => {
+            Filter: (header) => {
                 return (
                     <div>
                     <Input
@@ -62,7 +62,7 @@ export function WritableWordTable() {
                     </div>
                 );
             },
-            Cell: (cell:Cell) => {
+            Cell: (cell) => {
                 let index = cell.row.index
                 let cellData = data[0][index].succinctProperties[cell.column.id]
                 let cellCoid = data[0][index].succinctProperties["cmis:objectId"]
