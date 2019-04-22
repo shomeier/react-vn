@@ -20,6 +20,7 @@ export function WritableWordTable() {
     const [partOfSpeech, setPartOfSpeech] = useState()
     const [word, setWord] = useState()
     const [statement, setStatement] = useState(query)
+    const data = useState([]);
 
      // Make a new controllable table state instance
      const state = useTableState({pageCount: 0 })
@@ -57,6 +58,20 @@ export function WritableWordTable() {
                         onChange={e => header.setFilter(e.target.value)}
                     />
                 );
+            },
+            Cell: (cell) => {
+                let index = cell.row.index
+                let cellData = data[0][index].succinctProperties[cell.column.id]
+                let cellCoid = data[0][index].succinctProperties["cmis:objectId"]
+                return (
+                    <span onClick={() => {
+                        console.log("Clicked Cell...")
+                        console.log("Index: " + index)
+                        console.log("Cell Data COID: " + cellCoid)
+                    }}>
+                        {cellData}
+                    </span>
+                )
             }
         },
         {
@@ -74,7 +89,7 @@ export function WritableWordTable() {
                 <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={handleSubmit} />
             </ModalWrapper>
             {console.log("Instanciating writable word table ....")}
-            <GenericCmisTable statement={statement} state={state} columns={columns}/>
+            <GenericCmisTable statement={statement} state={state} columns={columns} data={data}/>
             <div className="alignRight">
                 <Button onClick={() => { setShowForm(true) }}>Add Word</Button>
             </div>
