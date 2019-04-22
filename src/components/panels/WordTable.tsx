@@ -1,25 +1,39 @@
 import * as React from "react"
-import { useTableState } from "react-table";
+import { useTableState, useFilters, TableProps } from "react-table";
 import { useState, useRef, useEffect } from "react";
-import Table from "../tables/Table";
+import MyTable from "../tables/Table";
 import JsonTree from "react-json-tree";
 import { CmisQueryService } from "../cmis/CmisQueryService";
 import { Button } from "react-bootstrap";
+import { Input } from "../tables/Styles";
+import { CmisStatementBuilder } from '../cmis/CmisStatementBuilder'
 
 interface Props {
     query: string
+    filter?: any
 }
 
 export function WordTable(props: Props) {
 
     console.log("In WordTable with query: " + props.query);
+    console.log("In WordTable with filter: " + JSON.stringify(props.filter));
+
     const columns = [
         {
             Header: "Word",
             id: "word",
             accessor: w => w.succinctProperties['lingo:text'],
             minWidth: 140,
-            maxWidth: 200
+            maxWidth: 200,
+            Filter: header => {
+                return (
+                    <Input
+                        placeholder='Search...'
+                        value={header.filterValue || ""}
+                        onChange={e => header.setFilter(e.target.value)}
+                    />
+                );
+            }
         },
         {
             Header: "Part of Speec",
@@ -38,7 +52,11 @@ export function WordTable(props: Props) {
     // Make a new controllable table state instance
     const query = props.query
     const state = useTableState({ pageCount: 0 })
-    const [{sortBy, filters, pageIndex, pageSize }, setState] = state
+    const [{ sortBy, filters, pageIndex, pageSize }, setState] = state
+    console.log("data: " + data)
+    console.log("columns: " + columns)
+    // const filter = useFilters({ data, columns })
+    // setFilter("word", props.filter.word)
 
     const fetchData = async () => {
         setLoading(true);
@@ -82,23 +100,25 @@ export function WordTable(props: Props) {
     );
 
     const instance = {
-        ...{
-            data,
-            columns,
-            infinite,
-            state, // Pass the state to the table
-            loading,
-            manualSorting: true, // Manual sorting
-            manualFilters: true, // Manual filters
-            manualPagination: true, // Manual pagination
-            disableMultiSort: true, // Disable multi-sort
-            disableGrouping: true, // Disable grouping
-            debug: false
+        infinite: infinite,
+        loading: loading,
+        tableProps: {
+            ...{
+                data,
+                columns,
+                state, // Pass the state to the table
+                manualSorting: true, // Manual sorting
+                manualFilters: true, // Manual filters
+                manualPagination: true, // Manual pagination
+                disableMultiSort: true, // Disable multi-sort
+                disableGrouping: true, // Disable grouping
+                debug: false
+            }
         }
     }
     return (
         <div>
-            <Table
+            <MyTable 
                 {...instance}
             />
             {/* <br />

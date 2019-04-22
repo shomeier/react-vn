@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import { AddWordForm } from "../forms/AddWordForm";
 import { CmisLingoService } from "../cmis/CmisLingoService";
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
+import { Input } from "../tables/Styles";
 
 const query = "SELECT lingo:text, cmis:name from lingo:text ORDER BY lingo:text";
 
@@ -17,6 +18,7 @@ export function WritableWordTable() {
     const [partOfSpeech, setPartOfSpeech] = useState()
     const [word, setWord] = useState()
     const [statement, setStatement] = useState(query)
+    const [filter, setFilter] = useState({})
 
     const handleSubmit = () => {
         console.log("partOfSpeech: " + partOfSpeech)
@@ -26,11 +28,11 @@ export function WritableWordTable() {
                 if (res === true) {
                     setShowForm(false)
                 }
-                setStatement("SELECT lingo:text, cmis:name from lingo:text WHERE lingo:text='" + word + "' ORDER BY lingo:text ")
+                // setStatement("SELECT lingo:text, cmis:name from lingo:text WHERE lingo:text='" + word + "' ORDER BY lingo:text ")
+                setFilter({"word":word})
             }
             )
     }
-
 
     return (
         <div>
@@ -38,7 +40,7 @@ export function WritableWordTable() {
                 <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={handleSubmit} />
             </ModalWrapper>
             {console.log("Instanciating writable word table ....")}
-            <WordTable query={statement} />
+            <WordTable query={statement} filter={filter} />
             <div className="alignRight">
                 <Button onClick={() => { setShowForm(true) }}>Add Word</Button>
             </div>

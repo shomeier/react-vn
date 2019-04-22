@@ -11,7 +11,8 @@ import {
   useSortBy,
   useExpanded,
   usePagination,
-  useFlexLayout
+  useFlexLayout,
+  TableProps
 } from "react-table";
 
 import {
@@ -80,10 +81,15 @@ const useInfiniteScroll = ({
   };
 };
 
-export default function MyTable({ loading, infinite, ...props }) {
+interface MyTableProps {
+  infinite:boolean,
+  loading:boolean,
+  tableProps:TableProps
+}
+export default function MyTable(props:MyTableProps) {
   const instance = useTable(
     {
-      ...props
+      ...props.tableProps
     },
     useColumns,
     useRows,
@@ -123,7 +129,7 @@ export default function MyTable({ loading, infinite, ...props }) {
     overscan,
     setOverscan
   } = useInfiniteScroll({
-    enabled: infinite,
+    enabled: props.infinite,
     sortBy,
     groupBy,
     filters,
@@ -179,7 +185,7 @@ export default function MyTable({ loading, infinite, ...props }) {
     );
   };
 
-  if (infinite) {
+  if (props.infinite) {
     tableBody = (
       <List
         ref={listRef}
@@ -203,7 +209,7 @@ export default function MyTable({ loading, infinite, ...props }) {
 
   let pagination;
 
-  if (infinite) {
+  if (props.infinite) {
     pagination = (
       <Pagination {...getRowProps()}>
         <Cell>
@@ -327,7 +333,7 @@ export default function MyTable({ loading, infinite, ...props }) {
         ))}
         {tableBody}
         <Row {...getRowProps()}>
-          {loading ? (
+          {props.loading ? (
             <Cell>
               <strong>Loading...</strong>
             </Cell>

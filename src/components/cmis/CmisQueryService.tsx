@@ -1,18 +1,22 @@
 import {CmisTableData} from "../cmis/model/CmisTableData"
 import {CmisSessionWrapper} from "./CmisSessionWrapper"
+import {CmisStatementBuilder} from "./CmisStatementBuilder"
 
 export class CmisQueryService {
     
     public static async getTableServerData(statement, filters, sortBy, pageSize, pageIndex ):Promise<CmisTableData> {
 
         console.log("Getting server data with statement: " + statement);
-        console.log("filters: " + filters)
+        console.log("filters: " + JSON.stringify(filters))
         console.log("sortBy: " + sortBy)
         console.log("pageSize: " + pageSize)
         console.log("pageIndex: " + pageIndex)
-    
+        
         let cmisSession = CmisSessionWrapper.getInstance().getWrappedSession()
-        let result = await cmisSession.query(statement, false, { includeRelationships: "both", includeAllowableActions: true, maxItems: pageSize, skipCount: (pageIndex * pageSize), orderBy: sortBy })
+        
+        let builtStatement = CmisStatementBuilder.buildCmisStatement(statement, filters, sortBy);
+        console.log("builtStatement: " + builtStatement)
+        let result = await cmisSession.query(builtStatement, false, { includeRelationships: "both", includeAllowableActions: true, maxItems: pageSize, skipCount: (pageIndex * pageSize), orderBy: sortBy })
         // console.log("Result: " + JSON.stringify(result));
         // console.log("hasMoreItems: " + result.hasMoreItems);
         // console.log("hasMoreItems: " + JSON.stringify(result.hasMoreItems));
