@@ -4,6 +4,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 3.0
 declare module "react-table" {
+
     export type Cell = {
       render: (type: string) => any;
       getCellProps: () => any;
@@ -19,7 +20,7 @@ declare module "react-table" {
       getRowProps: () => any;
       original: any;
     };
-  
+
     export interface HeaderColumn {
       accessor: string | ((originalRow: any) => string);
       Header?: string | ((props: Api) => JSX.Element | string);

@@ -23,12 +23,12 @@ export class CmisLingoService {
         
         console.log("Saving word: " + JSON.stringify(word))
         try {
-            const folder = CmisLingoService.BASE_FOLDER_WORDS + '/' + word.language;
-            const cmisName = word.word + '_' + word.partOfSpeech;
-            const text = await this.createText(folder, cmisName, word.word)
-            const textId = text.succinctProperties["cmis:objectId"]
-            const textChangeToken = text.succinctProperties["cmis:changeToken"]
-            await this.markAs(textId, textChangeToken, CmisLingoService.WORD_MARKER)
+            // const folder = CmisLingoService.BASE_FOLDER_WORDS + '/' + word.language;
+            // const cmisName = word.word + '_' + word.partOfSpeech;
+            // const text = await this.createText(folder, cmisName, word.word)
+            // const textId = text.succinctProperties["cmis:objectId"]
+            // const textChangeToken = text.succinctProperties["cmis:changeToken"]
+            // await this.markAs(textId, textChangeToken, CmisLingoService.WORD_MARKER)
             return new Promise<boolean>(resolve => { resolve(true) })
         } catch (e) {
             console.log("Error while saving word: " + e)

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useTableState, useFilters, TableProps } from "react-table";
+import { useTableState, useFilters, TableProps, HeaderColumn } from "react-table";
 import { useState, useRef, useEffect } from "react";
 import MyTable from "../tables/Table";
 import JsonTree from "react-json-tree";
@@ -10,13 +10,13 @@ import { CmisStatementBuilder } from '../cmis/CmisStatementBuilder'
 
 interface Props {
     query: string
-    filter?: any
+    state: any
 }
 
 export function WordTable(props: Props) {
 
     console.log("In WordTable with query: " + props.query);
-    console.log("In WordTable with filter: " + JSON.stringify(props.filter));
+    console.log("In WordTable with state: " + JSON.stringify(props.state[0]));
 
     const columns = [
         {
@@ -44,20 +44,13 @@ export function WordTable(props: Props) {
         }
     ];
 
+
     const infinite = false;
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const currentRequestRef = useRef<number>(null);
-
-    // Make a new controllable table state instance
-    const query = props.query
-    const state = useTableState({ pageCount: 0 })
-    const [{ sortBy, filters, pageIndex, pageSize }, setState] = state
-    console.log("data: " + data)
-    console.log("columns: " + columns)
-    // const filter = useFilters({ data, columns })
-    // setFilter("word", props.filter.word)
-
+    const [{ sortBy, filters, pageIndex, pageSize }, setState] = props.state
+ 
     const fetchData = async () => {
         setLoading(true);
 
@@ -85,7 +78,7 @@ export function WordTable(props: Props) {
             ...old,
             pageCount
         }));
-        console.log("STATE IN FETCH: " + JSON.stringify(state[0]));
+        console.log("STATE IN FETCH: " + JSON.stringify(props.state[0]));
 
         setLoading(false);
     };
@@ -106,7 +99,7 @@ export function WordTable(props: Props) {
             ...{
                 data,
                 columns,
-                state, // Pass the state to the table
+                state:props.state, // Pass the state to the table
                 manualSorting: true, // Manual sorting
                 manualFilters: true, // Manual filters
                 manualPagination: true, // Manual pagination
@@ -116,6 +109,10 @@ export function WordTable(props: Props) {
             }
         }
     }
+
+    // console.log("instance.tableProps: " + JSON.stringify(instance.tableProps))
+    // const filter = useFilters(instance.tableProps)
+
     return (
         <div>
             <MyTable 
