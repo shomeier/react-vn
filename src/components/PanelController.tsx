@@ -3,7 +3,6 @@ import { cmis } from '../lib/cmis';
 import { MainNavBar } from './MainNavBar';
 import { WelcomePanel } from './panels/WelcomePanel';
 import { SplitPanel } from './panels/generic/SplitPanel';
-import { AdminMain } from './adminPanel/AdminMain';
 import { WritableWordTable } from './panels/WritableWordTable';
 
 interface State {
