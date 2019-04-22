@@ -8,7 +8,7 @@ export class CmisStatementBuilder {
         if (filters) {
             for (let key in filters) {
                 if (filters[key].length > 0)
-                    filter += key + "='" + filters[key] + "'";
+                    filter += key + " LIKE '" + filters[key] + "%'";
             }
         }
 
