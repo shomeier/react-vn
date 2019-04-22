@@ -14,6 +14,15 @@ export function LoginController() {
     const [canLogin, setCanLogin] = React.useState(false);
     
     let body = null;
+
+    // debug starts
+    let session = CmisSessionWrapper.getInstance()
+    session.setCredentials("admin", "admin")
+    session.canLogin().then((loginSuccess) => {
+        setCanLogin(loginSuccess)
+    });
+    // debug ends
+
     if (canLogin) {
         body = <MainPanel />
     } else {

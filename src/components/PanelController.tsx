@@ -31,7 +31,8 @@ class MainPanel extends React.Component<{}, State> {
                 centerPanel = <SplitPanel left={<WritableWordTable />} />
                 break;
             default:
-                centerPanel = <SplitPanel left={<WelcomePanel />} center={<WelcomePanel />} />
+                centerPanel = <SplitPanel left={<WritableWordTable />} />
+            // centerPanel = <SplitPanel left={<WelcomePanel />} center={<WelcomePanel />} />
         }
         return (
             <div>
