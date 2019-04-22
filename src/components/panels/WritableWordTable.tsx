@@ -1,13 +1,14 @@
-import * as React from "react"
-import { useState } from "react"
-import { useTableState } from "react-table"
-import { GenericCmisTable } from "../tables/GenericeCmisTable"
-import { ModalWrapper } from "../ModalWrapper";
+import * as React from "react";
+import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { AddWordForm } from "../forms/AddWordForm";
+import { useTableState } from "react-table";
 import { CmisLingoService } from "../cmis/CmisLingoService";
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
-import { Input } from "../tables/Styles";
+import { AddWordForm } from "../forms/AddWordForm";
+import { ModalWrapper } from "../ModalWrapper";
+import { GenericCmisTable } from "../tables/GenericeCmisTable";
+import { Input, Cell } from "../tables/Styles";
+import JsonTree from "react-json-tree";
 
 const query = "SELECT lingo:text, cmis:name from lingo:text ORDER BY lingo:text";
 
@@ -35,7 +36,7 @@ export function WritableWordTable() {
                 }
                 setState(old => ({
                     ...old,
-                    filters:{"word":word}
+                    filters:{"lingo:text":word}
                 }));
             }
             )
@@ -46,8 +47,8 @@ export function WritableWordTable() {
             Header: "Word",
             id: "lingo:text",
             accessor: w => w.succinctProperties['lingo:text'],
-            minWidth: 140,
-            maxWidth: 200,
+            minWidth: 400,
+            maxWidth: 600,
             Filter: header => {
                 return (
                     <Input
@@ -73,7 +74,7 @@ export function WritableWordTable() {
                 <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={handleSubmit} />
             </ModalWrapper>
             {console.log("Instanciating writable word table ....")}
-            <GenericCmisTable query={statement} state={state} columns={columns}/>
+            <GenericCmisTable statement={statement} state={state} columns={columns}/>
             <div className="alignRight">
                 <Button onClick={() => { setShowForm(true) }}>Add Word</Button>
             </div>

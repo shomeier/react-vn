@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useTableState, useFilters, TableProps, HeaderColumn } from "react-table";
+import { useTableState, useFilters, Cell, TableProps, HeaderColumn } from "react-table";
 import { useState, useRef, useEffect } from "react";
 import MyTable from "./Table";
 import JsonTree from "react-json-tree";
@@ -10,13 +10,13 @@ import { CmisStatementBuilder } from '../cmis/CmisStatementBuilder'
 
 interface Props {
     columns:any
-    query: string
+    statement: string
     state: any
 }
 
 export function GenericCmisTable(props: Props) {
 
-    console.log("In WordTable with query: " + props.query);
+    console.log("In WordTable with query: " + props.statement);
     console.log("In WordTable with state: " + JSON.stringify(props.state[0]));
 
     const infinite = false;
@@ -34,7 +34,7 @@ export function GenericCmisTable(props: Props) {
 
         // Call our server for the data
         const { rows, pageCount } = await CmisQueryService.getTableServerData(
-            props.query,
+            props.statement,
             filters,
             sortBy,
             pageSize,
@@ -60,15 +60,24 @@ export function GenericCmisTable(props: Props) {
     // When sorting, filters, pageSize, or pageIndex change, fetch new data
     useEffect(
         () => {
-            console.log("Rerendering with statement: " + props.query)
+            console.log("Rerendering with statement: " + props.statement)
             fetchData();
         },
-        [props.query, sortBy, filters, pageIndex, pageSize]
+        [props.statement, sortBy, filters, pageIndex, pageSize]
     );
+
+
+    const handleCellClick = (cell:Cell, data) => {
+        console.log("CLICKED..." + cell)
+        let index = cell.row.index
+        console.log("ROW: " + JSON.stringify(cell.row.index))
+        console.log("DATA: " + JSON.stringify(data[index].succinctProperties['cmis:objectId']))
+    }
 
     const instance = {
         infinite: infinite,
         loading: loading,
+        onCellClick: handleCellClick,
         tableProps: {
             ...{
                 data,

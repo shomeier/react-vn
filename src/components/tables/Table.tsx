@@ -84,6 +84,7 @@ const useInfiniteScroll = ({
 interface MyTableProps {
   infinite:boolean,
   loading:boolean,
+  onCellClick?:any,
   tableProps:TableProps
 }
 export default function MyTable(props:MyTableProps) {
@@ -102,6 +103,7 @@ export default function MyTable(props:MyTableProps) {
   );
 
   const {
+    data,
     getTableProps,
     headerGroups,
     rows,
@@ -160,7 +162,9 @@ export default function MyTable(props:MyTableProps) {
                   cell.render("Aggregated")
                 ) : null
               ) : (
-                <span>
+                <span onClick={() => {
+                  props.onCellClick(cell, data)}
+                }>
                   {isPivot ? (
                     <span
                       style={{
@@ -170,6 +174,10 @@ export default function MyTable(props:MyTableProps) {
                         whiteSpace: "nowrap"
                       }}
                       onClick={() => row.toggleExpanded()}
+                      // onClick={() => {
+                      //   console.log("CLICKED ::::::")
+                      //   props.onCellClick(row, data)}
+                      // }
                     >
                       <Emoji style={{}}>{row.isExpanded ? "👇" : "👉"}</Emoji>
                     </span>
@@ -343,6 +351,7 @@ export default function MyTable(props:MyTableProps) {
         </Row>
         {pagination}
       </Table>
+      <JsonTree data={instance}/>
     </div>
   );
 }
