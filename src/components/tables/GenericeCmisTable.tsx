@@ -1,49 +1,23 @@
 import * as React from "react"
 import { useTableState, useFilters, TableProps, HeaderColumn } from "react-table";
 import { useState, useRef, useEffect } from "react";
-import MyTable from "../tables/Table";
+import MyTable from "./Table";
 import JsonTree from "react-json-tree";
 import { CmisQueryService } from "../cmis/CmisQueryService";
 import { Button } from "react-bootstrap";
-import { Input } from "../tables/Styles";
+import { Input } from "./Styles";
 import { CmisStatementBuilder } from '../cmis/CmisStatementBuilder'
 
 interface Props {
+    columns:any
     query: string
     state: any
 }
 
-export function WordTable(props: Props) {
+export function GenericCmisTable(props: Props) {
 
     console.log("In WordTable with query: " + props.query);
     console.log("In WordTable with state: " + JSON.stringify(props.state[0]));
-
-    const columns = [
-        {
-            Header: "Word",
-            id: "lingo:text",
-            accessor: w => w.succinctProperties['lingo:text'],
-            minWidth: 140,
-            maxWidth: 200,
-            Filter: header => {
-                return (
-                    <Input
-                        placeholder='Search...'
-                        value={header.filterValue || ""}
-                        onChange={e => header.setFilter(e.target.value)}
-                    />
-                );
-            }
-        },
-        {
-            Header: "Part of Speec",
-            id: "partOfSpeech",
-            accessor: w => w.succinctProperties['cmis:name'],
-            minWidth: 140,
-            maxWidth: 200
-        }
-    ];
-
 
     const infinite = false;
     const [data, setData] = useState([]);
@@ -98,7 +72,7 @@ export function WordTable(props: Props) {
         tableProps: {
             ...{
                 data,
-                columns,
+                columns:props.columns,
                 state:props.state, // Pass the state to the table
                 manualSorting: true, // Manual sorting
                 manualFilters: true, // Manual filters

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState } from "react"
 import { useTableState } from "react-table"
-import { WordTable } from "./WordTable"
+import { GenericCmisTable } from "../tables/GenericeCmisTable"
 import { ModalWrapper } from "../ModalWrapper";
 import { Button } from "react-bootstrap";
 import { AddWordForm } from "../forms/AddWordForm";
@@ -41,13 +41,39 @@ export function WritableWordTable() {
             )
     }
 
+    const columns = [
+        {
+            Header: "Word",
+            id: "lingo:text",
+            accessor: w => w.succinctProperties['lingo:text'],
+            minWidth: 140,
+            maxWidth: 200,
+            Filter: header => {
+                return (
+                    <Input
+                        placeholder='Search...'
+                        value={header.filterValue || ""}
+                        onChange={e => header.setFilter(e.target.value)}
+                    />
+                );
+            }
+        },
+        {
+            Header: "Part of Speec",
+            id: "partOfSpeech",
+            accessor: w => w.succinctProperties['cmis:name'],
+            minWidth: 140,
+            maxWidth: 200
+        }
+    ];
+
     return (
         <div>
             <ModalWrapper showState={showState} title="Add a new word">
                 <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={handleSubmit} />
             </ModalWrapper>
             {console.log("Instanciating writable word table ....")}
-            <WordTable query={statement} state={state}/>
+            <GenericCmisTable query={statement} state={state} columns={columns}/>
             <div className="alignRight">
                 <Button onClick={() => { setShowForm(true) }}>Add Word</Button>
             </div>
