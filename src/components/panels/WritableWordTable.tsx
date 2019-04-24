@@ -10,7 +10,7 @@ import { GenericCmisTable } from "../tables/GenericeCmisTable";
 import { Input } from "../tables/Styles";
 import JsonTree from "react-json-tree";
 
-const query = "SELECT lingo:text, cmis:name from lingo:text ORDER BY lingo:text";
+const statement = "SELECT lingo:text, cmis:name from lingo:text ORDER BY lingo:text";
 
 export function WritableWordTable() {
 
@@ -19,7 +19,6 @@ export function WritableWordTable() {
 
     const [partOfSpeech, setPartOfSpeech] = useState()
     const [word, setWord] = useState()
-    const [statement, setStatement] = useState(query)
     const data = useState([]);
 
      // Make a new controllable table state instance
