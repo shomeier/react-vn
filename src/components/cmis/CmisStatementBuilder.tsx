@@ -13,10 +13,10 @@ export class CmisStatementBuilder {
         }
 
         if (filter.length > 0) {
-            const test = "SELECT lingo:text, cmis:name FROM lingo:text ORDER BY lingo:text";
+            // const test = "SELECT lingo:text, cmis:name FROM lingo:text ORDER BY lingo:text";
             let selectFromRegEx = /(SELECT\s*(\w*:\w*)(,\s*\w*:\w*)*\s*FROM\s*(\w*:\w*))/gi
-            let orderByRegEx = /(ORDER BY\s*(\w*:\w*))/gi
-            replaced = test.replace(selectFromRegEx, "$1 WHERE " + filter);
+            // let orderByRegEx = /(ORDER BY\s*(\w*:\w*))/gi
+            replaced = statement.replace(selectFromRegEx, "$1 WHERE " + filter);
             console.log("Replaced: " + replaced)
         }
 
