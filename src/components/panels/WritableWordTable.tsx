@@ -58,7 +58,7 @@ export function WritableWordTable() {
                         value={header.filterValue || ""}
                         onChange={e => header.setFilter(e.target.value)}
                     />
-                    <JsonTree data={header}/>
+                    {/* <JsonTree data={header}/> */}
                     </div>
                 );
             },

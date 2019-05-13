@@ -1,10 +1,7 @@
 import * as React from 'react';
-import { cmis } from '../lib/cmis';
 import { MainNavBar } from './MainNavBar';
-import { WelcomePanel } from './panels/WelcomePanel';
 import { SplitPanel } from './panels/generic/SplitPanel';
-// import { WritableWordTable } from './panels/WritableWordTable';
-import { BootstrapWordTable } from './panels/BootstrapWordTable';
+import { WritableWordTable } from './panels/WritableWordTable';
 
 interface State {
     panel: string;
@@ -29,12 +26,12 @@ class MainPanel extends React.Component<{}, State> {
         switch (this.state.panel) {
             case "addWord":
                 // centerPanel = <AdminMain cmisSession={cmisSession} />
-                // centerPanel = <SplitPanel left={<WritableWordTable />} />
-                centerPanel = <SplitPanel left={<BootstrapWordTable />} />
+                centerPanel = <SplitPanel left={<WritableWordTable />} />
+                // centerPanel = <SplitPanel left={<BootstrapWordTable />} />
                 break;
             default:
-                // centerPanel = <SplitPanel left={<WritableWordTable />} />
-                centerPanel = <SplitPanel left={<BootstrapWordTable />} />
+                centerPanel = <SplitPanel left={<WritableWordTable />} />
+                // centerPanel = <SplitPanel left={<BootstrapWordTable />} />
             // centerPanel = <SplitPanel left={<WelcomePanel />} center={<WelcomePanel />} />
         }
         return (
