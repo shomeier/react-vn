@@ -6,8 +6,8 @@ import { CmisLingoService } from "../cmis/CmisLingoService";
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
 import { AddWordForm } from "../forms/AddWordForm";
 import { ModalWrapper } from "../ModalWrapper";
-import { GenericCmisTable } from "../tables/GenericeCmisTable";
-import { Input } from "../tables/Styles";
+import { GenericCmisTable } from "./generic/GenericCmisTable";
+import { Input } from "./generic/Styles";
 import JsonTree from "react-json-tree";
 
 // const statement = "SELECT t.lingo:text, t.cmis:name FROM lingo:text AS t JOIN lingo:word AS w ON t.cmis:objectId = w.cmis:objectId  ORDER BY lingo:text";
@@ -83,6 +83,23 @@ export function WritableWordTable() {
             accessor: w => w.succinctProperties['cmis:name'],
             minWidth: 140,
             maxWidth: 200
+        },
+        {
+            Header: "Functions",
+            id: "functions",
+            minWidth: 140,
+            maxWidth: 200,
+            Cell: (cell) => {
+                let index = cell.row.index
+                let cellData = data[0][index].succinctProperties[cell.column.id]
+                let cellCoid = data[0][index].succinctProperties["cmis:objectId"]
+                return (
+                    <span style={{display: 'flex'}}>
+                        <Button>Details</Button>
+                        <Button>Add Relationship</Button>
+                    </span>
+                )
+            }
         }
     ];
 

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState, useRef, useEffect } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
-import { CmisQueryService } from "../cmis/CmisQueryService";
+import { CmisQueryService } from "../../cmis/CmisQueryService";
 
 interface Props {
     statement: string

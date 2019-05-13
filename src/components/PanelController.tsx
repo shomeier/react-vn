@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { MainNavBar } from './MainNavBar';
 import { SplitPanel } from './panels/generic/SplitPanel';
-import { WritableWordTable } from './panels/WritableWordTable';
+import { WritableWordTable } from './tables/WritableWordTable';
 
 interface State {
     panel: string;

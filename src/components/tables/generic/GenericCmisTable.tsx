@@ -3,10 +3,10 @@ import { useTableState, useFilters, Cell, TableProps, HeaderColumn } from "react
 import { useState, useRef, useEffect } from "react";
 import MyTable from "./Table";
 import JsonTree from "react-json-tree";
-import { CmisQueryService } from "../cmis/CmisQueryService";
+import { CmisQueryService } from "../../cmis/CmisQueryService";
 import { Button } from "react-bootstrap";
 import { Input } from "./Styles";
-import { CmisStatementBuilder } from '../cmis/CmisStatementBuilder'
+import { CmisStatementBuilder } from '../../cmis/CmisStatementBuilder'
 
 interface Props {
     columns:any
