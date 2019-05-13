@@ -1,36 +1,27 @@
 import * as React from 'react';
+import {useState} from 'react';
 import { MainNavBar } from './MainNavBar';
 import { SplitPanel } from './panels/generic/SplitPanel';
 import { WritableWordTable } from './tables/WritableWordTable';
 import WritableRelationshipsTable from './tables/WritableRelationshipsTable';
 
-interface State {
-    panel: string;
-}
+export default function PanelController() {
 
-class MainPanel extends React.Component<{}, State> {
-    constructor(props) {
-        super(props);
-        this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
-        this.state = { panel: "welcome" }
-    }
+    const [panel, setPanel] = useState()
 
-    handleMenuItemClick(item, e) {
+    const handleMenuItemClick = (item, e) => {
         e.preventDefault();
         console.log("Menu Item clicked: " + item);
-        this.setState({ panel: item })
+        setPanel(item);
     }
 
-    // handleCellClick(cell) {
-    //     let index = cell.row.index
-    //     let cellData = data[0][index].succinctProperties[cell.column.id]
-    //     let cellCoid = data[0][index].succinctProperties["cmis:objectId"]
-    // }
-
-    render() {
+    const handleCellClick = (cell) => {
+        let index = cell.row.index
+        let cellCoid = cell.data[index].succinctProperties["cmis:objectId"]
+    }
 
         let centerPanel;
-        switch (this.state.panel) {
+        switch (    panel) {
             case "addWord":
                 // centerPanel = <AdminMain cmisSession={cmisSession} />
                 centerPanel = <SplitPanel left={<WritableWordTable/>} />
@@ -46,13 +37,10 @@ class MainPanel extends React.Component<{}, State> {
             <div>
                 <MainNavBar
                     isAdmin={true}
-                    onMenuItemClick={this.handleMenuItemClick} />
+                    onMenuItemClick={handleMenuItemClick} />
                 <div className="mainPanel">
                     {centerPanel}
                 </div>
             </div>
         )
-    };
 }
-
-export default MainPanel;

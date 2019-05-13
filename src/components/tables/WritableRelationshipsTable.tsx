@@ -11,8 +11,6 @@ interface Props {
 export default function WritableRelationshipsTable(props: Props) {
     const statement = "SELECT cmis:name, cmis:objectTypeId, cmis:secondaryObjectTypeIds FROM cmis:relationship WHERE cmis:objectId = '" + props.coid + "' ORDER BY cmis:objectTypeId";
 
-    const data = useState([]);
-
     // Make a new controllable table state instance
     const state = useTableState({ pageCount: 0 })
 
@@ -25,8 +23,8 @@ export default function WritableRelationshipsTable(props: Props) {
             maxWidth: 600,
             Cell: (cell) => {
                 let index = cell.row.index
-                let cellData = data[0][index].succinctProperties[cell.column.id]
-                let cellCoid = data[0][index].succinctProperties["cmis:objectId"]
+                let cellData = cell.data[index].succinctProperties[cell.column.id]
+                let cellCoid = cell.data[index].succinctProperties["cmis:objectId"]
                 return (
                     <span onClick={() => {
                         console.log("Clicked Cell...")

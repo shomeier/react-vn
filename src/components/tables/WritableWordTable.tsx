@@ -68,9 +68,8 @@ export function WritableWordTable() {
             },
             Cell: (cell) => {
                 let index = cell.row.index
-                let data = cell.data
-                let cellData = data[index].succinctProperties[cell.column.id]
-                let cellCoid = data[index].succinctProperties["cmis:objectId"]
+                let cellData = cell.data[index].succinctProperties[cell.column.id]
+                let cellCoid = cell.data[index].succinctProperties["cmis:objectId"]
                 return (
                     <span onClick={() => {
                         console.log("Clicked Cell...")

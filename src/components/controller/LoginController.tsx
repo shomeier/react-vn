@@ -3,7 +3,7 @@ import { cmis } from '../../lib/cmis';
 import { CmisSessionWrapper } from '../cmis/CmisSessionWrapper'
 import '../css/main.css';
 import '../css/generic.css';
-import MainPanel from '../PanelController';
+import PanelController from '../PanelController';
 import { CmisRepositoryInfo } from '../cmis/model/CmisSpecModel';
 import { LoginForm } from '../forms/LoginForm';
 
@@ -24,7 +24,7 @@ export function LoginController() {
     // debug ends
 
     if (canLogin) {
-        body = <MainPanel />
+        body = <PanelController />
     } else {
         body = <LoginForm
             onChangeUsername={(event) => setUsername(event.target.value)}
