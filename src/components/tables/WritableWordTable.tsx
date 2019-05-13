@@ -10,6 +10,10 @@ import { GenericCmisTable } from "./generic/GenericCmisTable";
 import { Input } from "./generic/Styles";
 import JsonTree from "react-json-tree";
 
+interface Props {
+    handleCellClick: any
+}
+
 // const statement = "SELECT t.lingo:text, t.cmis:name FROM lingo:text AS t JOIN lingo:word AS w ON t.cmis:objectId = w.cmis:objectId  ORDER BY lingo:text";
 const statement = "SELECT lingo:text, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
 
@@ -20,7 +24,7 @@ export function WritableWordTable() {
 
     const [partOfSpeech, setPartOfSpeech] = useState()
     const [word, setWord] = useState()
-    const data = useState([]);
+    // const data = useState([]);
 
      // Make a new controllable table state instance
      const state = useTableState({pageCount: 0 })
@@ -64,8 +68,9 @@ export function WritableWordTable() {
             },
             Cell: (cell) => {
                 let index = cell.row.index
-                let cellData = data[0][index].succinctProperties[cell.column.id]
-                let cellCoid = data[0][index].succinctProperties["cmis:objectId"]
+                let data = cell.data
+                let cellData = data[index].succinctProperties[cell.column.id]
+                let cellCoid = data[index].succinctProperties["cmis:objectId"]
                 return (
                     <span onClick={() => {
                         console.log("Clicked Cell...")
@@ -73,6 +78,7 @@ export function WritableWordTable() {
                         console.log("Cell Data COID: " + cellCoid)
                     }}>
                         {cellData}
+                     <JsonTree data={cell}/>
                     </span>
                 )
             }
@@ -90,9 +96,6 @@ export function WritableWordTable() {
             minWidth: 140,
             maxWidth: 200,
             Cell: (cell) => {
-                let index = cell.row.index
-                let cellData = data[0][index].succinctProperties[cell.column.id]
-                let cellCoid = data[0][index].succinctProperties["cmis:objectId"]
                 return (
                     <span style={{display: 'flex'}}>
                         <Button>Details</Button>
@@ -109,7 +112,7 @@ export function WritableWordTable() {
                 <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={handleSubmit} />
             </ModalWrapper>
             {console.log("Instanciating writable word table ....")}
-            <GenericCmisTable statement={statement} state={state} columns={columns} data={data}/>
+            <GenericCmisTable statement={statement} state={state} columns={columns}/>
             <div className="alignRight">
                 <Button onClick={() => { setShowForm(true) }}>Add Word</Button>
             </div>

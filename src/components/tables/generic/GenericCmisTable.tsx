@@ -11,7 +11,6 @@ import { CmisStatementBuilder } from '../../cmis/CmisStatementBuilder'
 interface Props {
     columns:any
     statement: string
-    data:any
     state: any
 }
 
@@ -21,7 +20,7 @@ export function GenericCmisTable(props: Props) {
     console.log("In WordTable with state: " + JSON.stringify(props.state[0]));
 
     const infinite = false;
-    const [data, setData] = props.data;
+    const [data, setData] = useState([]);;
     const [loading, setLoading] = useState(false);
     const currentRequestRef = useRef<number>(null);
     const [{ sortBy, filters, pageIndex, pageSize }, setState] = props.state
