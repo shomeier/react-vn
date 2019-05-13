@@ -17,7 +17,7 @@ interface Props {
 // const statement = "SELECT t.lingo:text, t.cmis:name FROM lingo:text AS t JOIN lingo:word AS w ON t.cmis:objectId = w.cmis:objectId  ORDER BY lingo:text";
 const statement = "SELECT lingo:text, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
 
-export function WritableWordTable() {
+export function WritableWordTable(props:Props) {
 
     const showState = useState(false)
     const [showForm, setShowForm] = showState
@@ -52,8 +52,8 @@ export function WritableWordTable() {
             Header: "Word",
             id: "lingo:text",
             accessor: w => w.succinctProperties['lingo:text'],
-            minWidth: 400,
-            maxWidth: 600,
+            // minWidth: 400,
+            // maxWidth: 600,
             Filter: (header) => {
                 return (
                     <div>
@@ -66,18 +66,20 @@ export function WritableWordTable() {
                     </div>
                 );
             },
+            // Cell: props.handleCellClick
             Cell: (cell) => {
                 let index = cell.row.index
                 let cellData = cell.data[index].succinctProperties[cell.column.id]
                 let cellCoid = cell.data[index].succinctProperties["cmis:objectId"]
                 return (
                     <span onClick={() => {
+                        props.handleCellClick(cell)
                         console.log("Clicked Cell...")
                         console.log("Index: " + index)
                         console.log("Cell Data COID: " + cellCoid)
                     }}>
                         {cellData}
-                     <JsonTree data={cell}/>
+                     {/* <JsonTree data={cell}/> */}
                     </span>
                 )
             }
@@ -86,8 +88,8 @@ export function WritableWordTable() {
             Header: "Part of Speec",
             id: "partOfSpeech",
             accessor: w => w.succinctProperties['cmis:name'],
-            minWidth: 140,
-            maxWidth: 200
+            // minWidth: 140,
+            // maxWidth: 200
         },
         {
             Header: "Functions",
@@ -98,7 +100,6 @@ export function WritableWordTable() {
                 return (
                     <span style={{display: 'flex'}}>
                         <Button>Details</Button>
-                        <Button>Add Relationship</Button>
                     </span>
                 )
             }

@@ -17,11 +17,11 @@ export function SplitPanel(props: Props) {
     ]
     if (props.center) {
         retVal.push(
-            < Col key="SplitPanel-center">>
+            <Col key="SplitPanel-center">
                 <div className="SplitPanel-center">
                     {props.center}
                 </div>
-            </Col >)
+            </Col>)
     }
     if (props.right) {
         retVal.push(

@@ -16,8 +16,8 @@ interface Props {
 
 export function GenericCmisTable(props: Props) {
 
-    console.log("In WordTable with query: " + props.statement);
-    console.log("In WordTable with state: " + JSON.stringify(props.state[0]));
+    console.log("In generic cmis table with query: " + props.statement);
+    console.log("In generic cmis table with state: " + JSON.stringify(props.state[0]));
 
     const infinite = false;
     const [data, setData] = useState([]);;
@@ -52,7 +52,6 @@ export function GenericCmisTable(props: Props) {
             ...old,
             pageCount
         }));
-        console.log("STATE IN FETCH: " + JSON.stringify(props.state[0]));
 
         setLoading(false);
     };
@@ -60,7 +59,7 @@ export function GenericCmisTable(props: Props) {
     // When sorting, filters, pageSize, or pageIndex change, fetch new data
     useEffect(
         () => {
-            console.log("Rerendering with statement: " + props.statement)
+            console.log("Rerendering generic cmis table with statement: " + props.statement)
             fetchData();
         },
         [props.statement, sortBy, filters, pageIndex, pageSize]
@@ -86,7 +85,7 @@ export function GenericCmisTable(props: Props) {
     }
 
     // console.log("instance.tableProps: " + JSON.stringify(instance.tableProps))
-    // const filter = useFilters(instance.tableProps)
+    // const filter = useFilters(instance.t ableProps)
 
     return (
         <div>

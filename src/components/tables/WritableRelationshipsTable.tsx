@@ -47,7 +47,6 @@ export default function WritableRelationshipsTable(props: Props) {
 
     return (
         <div>
-            {console.log("Instanciating writable word table ....")}
             <GenericCmisTable statement={statement} state={state} columns={columns} />
         </div>
     )
