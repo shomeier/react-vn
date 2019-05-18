@@ -1,5 +1,5 @@
 import * as React from "react"
-import { GenericCmisTable } from "./generic/GenericCmisTable";
+import { GenericCmisQueryTable } from "./generic/GenericCmisQueryTable";
 import { useState } from "react";
 import { useTableState } from "react-table";
 
@@ -47,7 +47,7 @@ export default function WritableRelationshipsTable(props: Props) {
 
     return (
         <div>
-            <GenericCmisTable statement={statement} state={state} columns={columns} />
+            <GenericCmisQueryTable statement={statement} state={state} columns={columns} />
         </div>
     )
 }

@@ -6,7 +6,7 @@ import { CmisLingoService } from "../cmis/CmisLingoService";
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
 import { AddWordForm } from "../forms/AddWordForm";
 import { ModalWrapper } from "../ModalWrapper";
-import { GenericCmisTable } from "./generic/GenericCmisTable";
+import { GenericCmisQueryTable } from "./generic/GenericCmisQueryTable";
 import { Input } from "./generic/Styles";
 import JsonTree from "react-json-tree";
 
@@ -112,7 +112,7 @@ export function WritableWordTable(props:Props) {
                 <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={handleSubmit} />
             </ModalWrapper>
             {console.log("Instanciating writable word table ....")}
-            <GenericCmisTable statement={statement} state={state} columns={columns}/>
+            <GenericCmisQueryTable statement={statement} state={state} columns={columns}/>
             <div className="alignRight">
                 <Button onClick={() => { setShowForm(true) }}>Add Word</Button>
             </div>

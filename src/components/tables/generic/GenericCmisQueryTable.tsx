@@ -14,7 +14,7 @@ interface Props {
     state: any
 }
 
-export function GenericCmisTable(props: Props) {
+export function GenericCmisQueryTable(props: Props) {
 
     console.log("In generic cmis table with query: " + props.statement);
     console.log("In generic cmis table with state: " + JSON.stringify(props.state[0]));
