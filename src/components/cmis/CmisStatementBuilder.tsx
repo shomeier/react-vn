@@ -14,9 +14,14 @@ export class CmisStatementBuilder {
 
         if (filter.length > 0) {
             // const test = "SELECT lingo:text, cmis:name FROM lingo:text ORDER BY lingo:text";
-            let selectFromRegEx = /(SELECT\s*(\w*:\w*)(,\s*\w*:\w*)*\s*FROM\s*(\w*:\w*))/gi
+            // let selectFromRegEx = /(SELECT\s*(\w*:\w*)(,\s*\w*:\w*)*\s*FROM\s*(\w*:\w*))/gi
+            // SELECT lingo:text, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word')
+            let selectFromRegEx = /(SELECT\s*(\w*:\w*)(,\s*\w*:\w*)*\s*FROM\s*(\w*:\w*)\s*WHERE\s*ANY\s*(\w*:\w*)\s*IN\s*[(]'(\w*:\w*:\w*)'[)])/gi
+
+            let regEx = new RegExp(selectFromRegEx);
+            console.log(regEx.test(statement));
             // let orderByRegEx = /(ORDER BY\s*(\w*:\w*))/gi
-            replaced = statement.replace(selectFromRegEx, "$1 WHERE " + filter);
+            replaced = statement.replace(selectFromRegEx, "$1 AND " + filter);
             console.log("Replaced: " + replaced)
         }
 
