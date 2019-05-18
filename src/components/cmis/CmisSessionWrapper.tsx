@@ -27,6 +27,7 @@ export class CmisSessionWrapper {
             repositoryUrl: "http://localhost:8080/core/browser/lingo",
             rootFolderUrl: "http://localhost:8080/core/browser/lingo/root"
         };
+        this.session.setCharset("UTF-8")
     }
     static getInstance(): CmisSessionWrapper {
         if (!CmisSessionWrapper.instance) {
