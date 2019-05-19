@@ -51,7 +51,7 @@ export function AddWordForm(props:Props) {
                                 <CmisFormControl
                                     propertyDefinition={partOfSpeechPropDef}
                                     componentClass='select'
-                                    onChange={(e) => props.setPartOfSpeech((e.target as HTMLInputElement).value)}
+                                    onChange={(e) => {console.log("Setting partOfSpeech: " + (e.target).value); props.setPartOfSpeech((e.target as HTMLInputElement).value)}}
                                     item='sourceVocab.partOfSpeech' />
                             </Col>
                             <Col sm={7}>

@@ -10,6 +10,8 @@ export class CmisLingoService {
     private static readonly BASE_FOLDER_SEMANTICS = CmisLingoService.BASE_FOLDER + '/semantics'
 
     private static readonly WORD_MARKER = "P:lingo:word";
+    private static readonly POS_MARKER = "P:lingo:part_of_speech";
+    private static readonly LANGUAGE_MARKER_PREFIX = "P:lingo:language_";
 
     private sessionWrapper: CmisSessionWrapper
     private cmisSession: cmis.CmisSession
@@ -26,7 +28,7 @@ export class CmisLingoService {
             const folder = CmisLingoService.BASE_FOLDER_WORDS + '/' + word.language;
             const cmisName = word.word + '_' + word.partOfSpeech;
             // const text = await this.createText(folder, cmisName, word.word)
-            const text = await this.createWord(folder, cmisName, word.word)
+            const text = await this.createWord(folder, cmisName, word)
             // const textId = text.succinctProperties["cmis:objectId"]
             // const textChangeToken = text.succinctProperties["cmis:changeToken"]
             // await this.markAs(textId, textChangeToken, CmisLingoService.WORD_MARKER)
@@ -49,9 +51,15 @@ export class CmisLingoService {
         }
     }
     
-    private async createWord(folder: string, cmisName: string, text: string): Promise<SuccinctCmisObject> {
+    private async createWord(folder: string, cmisName: string, word: CmisWord): Promise<SuccinctCmisObject> {
         try {
-            const doc_vn = await this.createDocument(folder, { "cmis:objectTypeId": "D:lingo:text", "cmis:name": cmisName, "lingo:text": text, "cmis:secondaryObjectTypeIds": CmisLingoService.WORD_MARKER });
+            const doc_vn = await this.createDocument(folder, {
+                "cmis:objectTypeId": "D:lingo:text",
+                "cmis:name": cmisName,
+                "lingo:text": word.word,
+                "lingo:part_of_speech": word.partOfSpeech,
+                "cmis:secondaryObjectTypeIds": [CmisLingoService.WORD_MARKER, CmisLingoService.LANGUAGE_MARKER_PREFIX + word.language, CmisLingoService.POS_MARKER]
+            });
             const doc_vn_id = doc_vn.succinctProperties['cmis:objectId']
             const doc_vn_changeToken = doc_vn.succinctProperties['cmis:changeToken']
 

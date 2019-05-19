@@ -30,7 +30,7 @@ export default function PanelController() {
             // centerPanel = <AdminMain cmisSession={cmisSession} />
             // centerPanel = <SplitPanel left={<WritableWordTable />} />
             centerPanel = <SplitPanel 
-                left={<WritableWordQueryTable handleCellClick={handleCellClick} />}
+                left={<WritableWordQueryTable language='vn' handleCellClick={handleCellClick} />}
                 center={<WritableRelationshipsTable coid={coid} />} 
                 right={<GenericVerticalObjectTable coid={coid} />}
                 />
@@ -38,7 +38,7 @@ export default function PanelController() {
             break;
         default:
             centerPanel = <SplitPanel
-                left={<WritableWordQueryTable handleCellClick={handleCellClick} />}
+                left={<WritableWordQueryTable language='vn' handleCellClick={handleCellClick} />}
                 center={<WritableRelationshipsTable coid={coid} />} 
                 right={<GenericVerticalObjectTable coid={coid} />}
                 />

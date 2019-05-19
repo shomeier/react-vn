@@ -11,11 +11,12 @@ import { Input } from "./generic/Styles";
 import JsonTree from "react-json-tree";
 
 interface Props {
+    language: string;
     handleCellClick: any
 }
 
 // const statement = "SELECT t.lingo:text, t.cmis:name FROM lingo:text AS t JOIN lingo:word AS w ON t.cmis:objectId = w.cmis:objectId  ORDER BY lingo:text";
-const statement = "SELECT lingo:text, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
+const statement = "SELECT lingo:text, lingo:part_of_speech, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
 
 export function WritableWordQueryTable(props:Props) {
 
@@ -24,17 +25,14 @@ export function WritableWordQueryTable(props:Props) {
 
     const [partOfSpeech, setPartOfSpeech] = useState()
     const [word, setWord] = useState()
-    // const data = useState([]);
 
      // Make a new controllable table state instance
      const state = useTableState({pageCount: 0 })
-     console.log("STATE 1: " + JSON.stringify(state[0]));
      const [, setState] = state
-     console.log("STATE 2: " + JSON.stringify(state[0]));
 
     const handleSubmit = () => {
         let cmisLingoService = new CmisLingoService(CmisSessionWrapper.getInstance())
-        cmisLingoService.saveWord({ partOfSpeech: partOfSpeech, word: word, language: "vn" })
+        cmisLingoService.saveWord({ partOfSpeech: partOfSpeech, word: word, language: props.language })
             .then((res) => {
                 if (res === true) {
                     setShowForm(false)
@@ -52,8 +50,8 @@ export function WritableWordQueryTable(props:Props) {
             Header: "Word",
             id: "lingo:text",
             accessor: w => w.succinctProperties['lingo:text'],
-            // minWidth: 400,
-            // maxWidth: 600,
+            minWidth: 200,
+            maxWidth: 250,
             Filter: (header) => {
                 return (
                     <div>
@@ -66,7 +64,6 @@ export function WritableWordQueryTable(props:Props) {
                     </div>
                 );
             },
-            // Cell: props.handleCellClick
             Cell: (cell) => {
                 let index = cell.row.index
                 let cellData = cell.data[index].succinctProperties[cell.column.id]
@@ -85,16 +82,16 @@ export function WritableWordQueryTable(props:Props) {
             }
         },
         {
-            Header: "Part of Speec",
-            id: "partOfSpeech",
-            accessor: w => w.succinctProperties['cmis:name'],
-            // minWidth: 140,
-            // maxWidth: 200
+            Header: "Part of Speech",
+            id: "part_of_speech",
+            accessor: w => w.succinctProperties['lingo:part_of_speech'],
+            minWidth: 150,
+            maxWidth: 200
         },
         {
             Header: "Functions",
             id: "functions",
-            minWidth: 140,
+            minWidth: 150,
             maxWidth: 200,
             Cell: (cell) => {
                 return (

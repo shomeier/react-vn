@@ -23,17 +23,17 @@ export const CmisFormControl: React.StatelessComponent<CmisFormControlProps> = (
             // console.log("itemData.value: " + itemData.value);
             // console.log("props.value: " + props.value);
             if (itemData.value === props.value) {
-                return <option onChange={(e) => props.onChange(props.item, e.target)} key={itemData.value} value={itemData.value} selected>{itemData.displayName}</option>;
+                return <option onChange={(e) => props.onChange(props.item, e)} key={itemData.value} value={itemData.value} selected>{itemData.displayName}</option>;
             }
             else {
-                return <option onChange={(e) => props.onChange(props.item, e.target)} key={itemData.value} value={itemData.value}>{itemData.displayName}</option>;
+                return <option onChange={(e) => props.onChange(props.item, e)} key={itemData.value} value={itemData.value}>{itemData.displayName}</option>;
             }
         });
     }
 
     let form;
     if (componentClass === 'select') {
-        form = <FormControl as="select">
+        form = <FormControl onChange={(e: any) => props.onChange(e)} as="select">
         {/* componentClass={componentClass} */}
         {/* onChange={(e) => props.onChange(props.item, e)}> */}
         {/* onChange={(e: any) => props.onChange(props.item, e)}> */}
