@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useTableState } from "react-table";
 import MyTable from "./generic/Table";
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
+import { splitBsPropsAndOmit } from "react-bootstrap/lib/utils/bootstrapUtils";
 
 interface Props {
     coid: string
@@ -43,17 +44,13 @@ export default function WritableRelationshipsTable(props: Props) {
         setLoading(false);
     };
 
-    // When sorting, filters, pageSize, or pageIndex change, fetch new data
     useEffect(
         () => {
-            console.log("Rerendering relationships table")
+            console.log("Rerendering relationships table with id: " + props.coid)
             fetchData();
         },
         [props.coid]
     );
-
-    // Make a new controllable table state instance
-    // const state = useTableState({ pageCount: 0 })
 
     const columns = [
         {
@@ -100,18 +97,11 @@ export default function WritableRelationshipsTable(props: Props) {
             ...{
                 data,
                 columns:columns,
-                manualSorting: false, // Manual sorting
-                manualFilters: false, // Manual filters
-                manualPagination: false, // Manual pagination
-                disableMultiSort: true, // Disable multi-sort
                 disableGrouping: true, // Disable grouping
                 debug: false
             }
         }
     }
-
-    // console.log("instance.tableProps: " + JSON.stringify(instance.tableProps))
-    // const filter = useFilters(instance.t ableProps)
 
     return (
         <div>

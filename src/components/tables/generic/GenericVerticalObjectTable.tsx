@@ -25,7 +25,7 @@ export default function GenericVerticalObjectTable(props: Props) {
         let session = CmisSessionWrapper.getInstance().getWrappedSession();
         let result = await session.getObject(props.coid)
         // let result = await session.getObjectRelationships(props.coid, false, 'source', null, {maxItems:250, skipCount:0, includeAllowableActions:true, filter:'*', succinct:true})
-        console.log("Result Object: " + JSON.stringify(result))
+        console.log("Result OBJECT: " + JSON.stringify(result))
 
         // If this is an outdated request, disregard the results
         if (currentRequestRef.current !== id) {
@@ -45,18 +45,13 @@ export default function GenericVerticalObjectTable(props: Props) {
         console.log("verticalData: " + verticalData)
         // Set the data and pageCount
         setData(verticalData);
-        // setState(old => ({
-        //     ...old,
-        //     pageCount
-        // }));
 
         setLoading(false);
     };
 
-    // When sorting, filters, pageSize, or pageIndex change, fetch new data
     useEffect(
         () => {
-            console.log("Rerendering generic vertical object table")
+            console.log("Rerendering generic vertical object table for object with id: " + props.coid)
             fetchData();
         },
         [props.coid]
@@ -69,20 +64,6 @@ export default function GenericVerticalObjectTable(props: Props) {
             accessor: w => w.key,
             minWidth: 200,
             maxWidth: 250,
-            // Cell: (cell) => {
-            //     let index = cell.row.index
-            //     let cellData = cell.data[index].succinctProperties[cell.column.id]
-            //     let cellCoid = cell.data[index].succinctProperties["cmis:objectId"]
-            //     return (
-            //         <span onClick={() => {
-            //             console.log("Clicked Cell...")
-            //             console.log("Index: " + index)
-            //             console.log("Cell Data COID: " + cellCoid)
-            //         }}>
-            //             {cellData}
-            //         </span>
-            //     )
-            // }
         },
         {
             Header: "Value",
@@ -100,18 +81,10 @@ export default function GenericVerticalObjectTable(props: Props) {
             ...{
                 data:data,
                 columns:columns,
-                manualSorting: false, // Manual sorting
-                manualFilters: false, // Manual filters
-                manualPagination: false, // Manual pagination
-                disableMultiSort: true, // Disable multi-sort
-                disableGrouping: true, // Disable grouping
-                debug: false
+                disableGrouping: true
             }
         }
     }
-
-    // console.log("instance.tableProps: " + JSON.stringify(instance.tableProps))
-    // const filter = useFilters(instance.t ableProps)
 
     return (
         <div>
