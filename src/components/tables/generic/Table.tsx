@@ -83,7 +83,7 @@ const useInfiniteScroll = ({
 
 interface MyTableProps {
   infinite:boolean,
-  loading:boolean,
+  loading?:boolean,
   tableProps:TableProps
 }
 export default function MyTable(props:MyTableProps) {

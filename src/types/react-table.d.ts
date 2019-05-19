@@ -24,7 +24,7 @@ declare module "react-table" {
     };
 
     export interface HeaderColumn {
-      accessor: string | ((originalRow: any) => string);
+      accessor?: string | ((originalRow: any) => string);
       Header?: string | ((props: Api) => JSX.Element | string);
       Filter?: string | ((props: Api) => JSX.Element | string);
       Cell?: string | ((cell: Cell) => JSX.Element | string);

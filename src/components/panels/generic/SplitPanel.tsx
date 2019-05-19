@@ -25,7 +25,7 @@ export function SplitPanel(props: Props) {
     }
     if (props.right) {
         retVal.push(
-            <Col key="SplitPanel-right">>
+            <Col key="SplitPanel-right">
                 <div className="SplitPanel-right">
                     {props.right}
                 </div>
@@ -34,7 +34,7 @@ export function SplitPanel(props: Props) {
 
     return (
         <div className="SplitPanel">
-            <Container>
+            <Container fluid={true}>
                 <Row>
                     {retVal}
                 </Row>

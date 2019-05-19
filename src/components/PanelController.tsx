@@ -4,6 +4,7 @@ import { MainNavBar } from './MainNavBar';
 import { SplitPanel } from './panels/generic/SplitPanel';
 import { WritableWordQueryTable } from './tables/WritableWordQueryTable';
 import WritableRelationshipsTable from './tables/WritableRelationshipsTable';
+import GenericVerticalObjectTable from './tables/generic/GenericVerticalObjectTable';
 
 export default function PanelController() {
 
@@ -17,6 +18,7 @@ export default function PanelController() {
     }
 
     const handleCellClick = (cell) => {
+        console.log("In HandleCell Click...")
         let index = cell.row.index
         let cellCoid = cell.data[index].succinctProperties["cmis:objectId"]
         setCoid(cellCoid)
@@ -27,11 +29,19 @@ export default function PanelController() {
         case "addWord":
             // centerPanel = <AdminMain cmisSession={cmisSession} />
             // centerPanel = <SplitPanel left={<WritableWordTable />} />
-            centerPanel = <SplitPanel left={<WritableWordQueryTable handleCellClick={handleCellClick} />} center={<WritableRelationshipsTable coid={coid} />} />
+            centerPanel = <SplitPanel 
+                left={<WritableWordQueryTable handleCellClick={handleCellClick} />}
+                center={<WritableRelationshipsTable coid={coid} />} 
+                right={<GenericVerticalObjectTable coid={coid} />}
+                />
             // centerPanel = <SplitPanel left={<BootstrapWordTable />} />
             break;
         default:
-            centerPanel = <SplitPanel left={<WritableWordQueryTable handleCellClick={handleCellClick} />} center={<WritableRelationshipsTable coid={coid} />} />
+            centerPanel = <SplitPanel
+                left={<WritableWordQueryTable handleCellClick={handleCellClick} />}
+                center={<WritableRelationshipsTable coid={coid} />} 
+                right={<GenericVerticalObjectTable coid={coid} />}
+                />
         // centerPanel = <SplitPanel left={<WritableWordTable />} />
         // centerPanel = <SplitPanel left={<BootstrapWordTable />} />
         // centerPanel = <SplitPanel left={<WelcomePanel />} center={<WelcomePanel />} />
