@@ -35,7 +35,7 @@
         <cmis:choice displayName="Hà Nội">
             <cmis:value>Hà Nội</cmis:value>
         </cmis:choice>
-        <cmis:choice displayName="Huế&#x9;">
+        <cmis:choice displayName="Huế">
             <cmis:value>Huế	</cmis:value>
         </cmis:choice>
         <cmis:choice displayName="Sài Gòn">
