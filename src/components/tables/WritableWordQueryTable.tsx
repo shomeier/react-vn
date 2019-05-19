@@ -17,7 +17,7 @@ interface Props {
 // const statement = "SELECT t.lingo:text, t.cmis:name FROM lingo:text AS t JOIN lingo:word AS w ON t.cmis:objectId = w.cmis:objectId  ORDER BY lingo:text";
 const statement = "SELECT lingo:text, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
 
-export function WritableWordTable(props:Props) {
+export function WritableWordQueryTable(props:Props) {
 
     const showState = useState(false)
     const [showForm, setShowForm] = showState

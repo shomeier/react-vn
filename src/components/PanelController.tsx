@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { MainNavBar } from './MainNavBar';
 import { SplitPanel } from './panels/generic/SplitPanel';
-import { WritableWordTable } from './tables/WritableWordTable';
+import { WritableWordQueryTable } from './tables/WritableWordQueryTable';
 import WritableRelationshipsTable from './tables/WritableRelationshipsTable';
 
 export default function PanelController() {
@@ -27,11 +27,11 @@ export default function PanelController() {
         case "addWord":
             // centerPanel = <AdminMain cmisSession={cmisSession} />
             // centerPanel = <SplitPanel left={<WritableWordTable />} />
-            centerPanel = <SplitPanel left={<WritableWordTable handleCellClick={handleCellClick} />} center={<WritableRelationshipsTable coid={coid} />} />
+            centerPanel = <SplitPanel left={<WritableWordQueryTable handleCellClick={handleCellClick} />} center={<WritableRelationshipsTable coid={coid} />} />
             // centerPanel = <SplitPanel left={<BootstrapWordTable />} />
             break;
         default:
-            centerPanel = <SplitPanel left={<WritableWordTable handleCellClick={handleCellClick} />} center={<WritableRelationshipsTable coid={coid} />} />
+            centerPanel = <SplitPanel left={<WritableWordQueryTable handleCellClick={handleCellClick} />} center={<WritableRelationshipsTable coid={coid} />} />
         // centerPanel = <SplitPanel left={<WritableWordTable />} />
         // centerPanel = <SplitPanel left={<BootstrapWordTable />} />
         // centerPanel = <SplitPanel left={<WelcomePanel />} center={<WelcomePanel />} />
