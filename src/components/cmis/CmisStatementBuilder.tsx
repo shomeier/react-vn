@@ -13,15 +13,16 @@ export class CmisStatementBuilder {
         }
 
         if (filter.length > 0) {
-            // const test = "SELECT lingo:text, cmis:name FROM lingo:text ORDER BY lingo:text";
-            // let selectFromRegEx = /(SELECT\s*(\w*:\w*)(,\s*\w*:\w*)*\s*FROM\s*(\w*:\w*))/gi
-            // SELECT lingo:text, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word')
-            let selectFromRegEx = /(SELECT\s*(\w*:\w*)(,\s*\w*:\w*)*\s*FROM\s*(\w*:\w*)\s*WHERE\s*ANY\s*(\w*:\w*)\s*IN\s*[(]'(\w*:\w*:\w*)'[)])/gi
+            let columnSelectorPart = "((\\w*\\.)?\\w*:\\w*)"
+            let selectPart = "SELECT\\s*" + columnSelectorPart + "(,\\s*" + columnSelectorPart + ")*\\s*"
+            let fromPart = "FROM\\s*" + columnSelectorPart + "(\\s*AS\\s*\\w*)*\\s*"
+            let joinPart = "JOIN\\s*" + columnSelectorPart + "\\s*AS\\s*\\w*\\s*ON\\s*" + columnSelectorPart + "\\s*=\\s*" + columnSelectorPart + "\\s*"
+            let wherePart = "WHERE\\s*ANY\\s*(\\w*:\\w*)\\s*IN\\s*\\('.*'\\)"
+            let selectFromRegExString = "(" + selectPart + fromPart + joinPart + wherePart + ")"
 
-            let regEx = new RegExp(selectFromRegEx);
-            console.log(regEx.test(statement));
-            // let orderByRegEx = /(ORDER BY\s*(\w*:\w*))/gi
-            replaced = statement.replace(selectFromRegEx, "$1 AND " + filter);
+            let regEx = new RegExp(selectFromRegExString, "gi")
+
+            replaced = statement.replace(regEx, "$1 AND " + filter);
             console.log("Replaced: " + replaced)
         }
 

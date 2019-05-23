@@ -16,7 +16,8 @@ interface Props {
 }
 
 // const statement = "SELECT t.lingo:text, t.cmis:name FROM lingo:text AS t JOIN lingo:word AS w ON t.cmis:objectId = w.cmis:objectId  ORDER BY lingo:text";
-const statement = "SELECT lingo:text, lingo:part_of_speech, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
+// const statement = "SELECT lingo:text, lingo:part_of_speech, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
+const statement = "SELECT lingo:text, P.lingo:part_of_speech, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text AS T JOIN lingo:part_of_speech AS P ON T.cmis:objectId = P.cmis:objectId WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
 
 export function WritableWordQueryTable(props:Props) {
 
@@ -108,7 +109,7 @@ export function WritableWordQueryTable(props:Props) {
             <ModalWrapper showState={showState} title="Add a new word">
                 <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={handleSubmit} />
             </ModalWrapper>
-            {console.log("Instanciating writable word table ....")}
+            {console.log("Instantiating writable word table ....")}
             <GenericCmisQueryTable statement={statement} state={state} columns={columns}/>
             <div className="alignRight">
                 <Button onClick={() => { setShowForm(true) }}>Add Word</Button>
