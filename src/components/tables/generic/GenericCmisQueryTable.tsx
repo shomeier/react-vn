@@ -11,19 +11,34 @@ import { CmisStatementBuilder } from '../../cmis/CmisStatementBuilder'
 interface Props {
     columns:any
     statement: string
-    state: any
+    filters?: any
 }
 
 export function GenericCmisQueryTable(props: Props) {
 
     console.log("In generic cmis table with query: " + props.statement);
-    console.log("In generic cmis table with state: " + JSON.stringify(props.state[0]));
+    console.log("In generic cmis table with filter: " + JSON.stringify(props.filters));
 
     const infinite = false;
     const [data, setData] = useState([]);;
     const [loading, setLoading] = useState(false);
     const currentRequestRef = useRef<number>(null);
-    const [{ sortBy, filters, pageIndex, pageSize }, setState] = props.state
+    // Make a new controllable table state instance
+    const state = useTableState({ filters: props.filters ,pageCount: 0 })
+    const [{ sortBy, filters, pageIndex, pageSize }, setState] = state
+    console.log("STATEEEE: " + JSON.stringify(state[0]))
+    // if (filters !== props.filters) {
+
+    // const newState = { ...state[0], filters:props.filters };
+    // setState(newState)
+    // setState(old => {
+    //     console.log("OLD STATE: " + JSON.stringify(old))
+    //     let newState = { ...old,filters:props.filters}
+    //     console.log("NEW STATE: " + JSON.stringify(newState))
+    //     // return;
+    // })
+            // }
+        
  
     const fetchData = async () => {
         setLoading(true);
@@ -73,7 +88,7 @@ export function GenericCmisQueryTable(props: Props) {
             ...{
                 data,
                 columns:props.columns,
-                state:props.state, // Pass the state to the table
+                state:state, // Pass the state to the table
                 manualSorting: true, // Manual sorting
                 manualFilters: true, // Manual filters
                 manualPagination: true, // Manual pagination

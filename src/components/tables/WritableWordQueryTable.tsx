@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { useTableState, HeaderColumn, Cell} from "react-table";
+import { useTableState, HeaderColumn, Cell } from "react-table";
 import { CmisLingoService } from "../cmis/CmisLingoService";
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
 import { AddWordForm } from "../forms/AddWordForm";
@@ -19,17 +19,14 @@ interface Props {
 // const statement = "SELECT lingo:text, lingo:part_of_speech, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
 const statement = "SELECT lingo:text, P.lingo:part_of_speech, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text AS T JOIN lingo:part_of_speech AS P ON T.cmis:objectId = P.cmis:objectId WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
 
-export function WritableWordQueryTable(props:Props) {
+export function WritableWordQueryTable(props: Props) {
 
     const showState = useState(false)
     const [showForm, setShowForm] = showState
 
     const [partOfSpeech, setPartOfSpeech] = useState()
     const [word, setWord] = useState()
-
-     // Make a new controllable table state instance
-     const state = useTableState({pageCount: 0 })
-     const [, setState] = state
+    const [filters, setFilters] = useState({})
 
     const handleSubmit = () => {
         let cmisLingoService = new CmisLingoService(CmisSessionWrapper.getInstance())
@@ -38,12 +35,8 @@ export function WritableWordQueryTable(props:Props) {
                 if (res === true) {
                     setShowForm(false)
                 }
-                setState(old => ({
-                    ...old,
-                    filters:{"lingo:text":word}
-                }));
-            }
-            )
+                setFilters({ "lingo:text": word })
+            })
     }
 
     const columns = [
@@ -56,12 +49,12 @@ export function WritableWordQueryTable(props:Props) {
             Filter: (header) => {
                 return (
                     <div>
-                    <Input
-                        placeholder='Search...'
-                        value={header.filterValue || ""}
-                        onChange={e => header.setFilter(e.target.value)}
-                    />
-                    {/* <JsonTree data={header}/> */}
+                        <Input
+                            placeholder='Search...'
+                            value={header.filterValue || ""}
+                            onChange={e => header.setFilter(e.target.value)}
+                        />
+                        {/* <JsonTree data={header}/> */}
                     </div>
                 );
             },
@@ -77,7 +70,7 @@ export function WritableWordQueryTable(props:Props) {
                         console.log("Cell Data COID: " + cellCoid)
                     }}>
                         {cellData}
-                     {/* <JsonTree data={cell}/> */}
+                        {/* <JsonTree data={cell}/> */}
                     </span>
                 )
             }
@@ -96,7 +89,7 @@ export function WritableWordQueryTable(props:Props) {
             maxWidth: 200,
             Cell: (cell) => {
                 return (
-                    <span style={{display: 'flex'}}>
+                    <span style={{ display: 'flex' }}>
                         <Button>Details</Button>
                     </span>
                 )
@@ -110,7 +103,7 @@ export function WritableWordQueryTable(props:Props) {
                 <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={handleSubmit} />
             </ModalWrapper>
             {console.log("Instantiating writable word table ....")}
-            <GenericCmisQueryTable statement={statement} state={state} columns={columns}/>
+            <GenericCmisQueryTable statement={statement} filters={filters} columns={columns} />
             <div className="alignRight">
                 <Button onClick={() => { setShowForm(true) }}>Add Word</Button>
             </div>
