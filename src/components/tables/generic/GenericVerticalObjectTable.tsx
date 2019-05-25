@@ -56,10 +56,12 @@ export default function GenericVerticalObjectTable(props: Props) {
         let cellDataValue = cellData.value
         let displayData = (cellDataValue) ? cellDataValue.toString() : ""
         console.log("IN RENDER EDITABLE")
-        const [input, setInput] = useState(cellDataValue)
+        const [input, setInput] = useState(displayData)
 
         return (
-            <FormControl value={input} onBlur={(e:any) => {
+            <FormControl value={input} 
+            onChange={(e:any) => setInput(e.target.value)}
+            onBlur={(e:any) => {
                 let newValue = e.target.value
                 console.log("In onBlur with Value...." + newValue)
                 let key = cellDataKey
