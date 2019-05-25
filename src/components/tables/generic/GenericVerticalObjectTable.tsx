@@ -4,6 +4,7 @@ import { useTableState } from "react-table";
 import MyTable from "./Table";
 import { CmisSessionWrapper } from "../../cmis/CmisSessionWrapper";
 import { FormControl } from "react-bootstrap";
+import { Input } from "./Styles";
 
 interface Props {
     coid: string
@@ -14,7 +15,7 @@ export default function GenericVerticalObjectTable(props: Props) {
     const [data, setData] = useState([]);;
     const [loading, setLoading] = useState(false);
     const currentRequestRef = useRef<number>(null);
-    const tableState = useTableState({pageSize: 50})
+    const tableState = useTableState({ pageSize: 50 })
 
     const fetchData = async () => {
         setLoading(true);
@@ -95,6 +96,20 @@ export default function GenericVerticalObjectTable(props: Props) {
             accessor: w => w.key,
             minWidth: 225,
             maxWidth: 250,
+            Filter: (header) => {
+                if (header.filterValue !== "lingo")
+                    header.setFilter("lingo")
+                return (
+                    <div>
+                        <Input
+                            placeholder='Search...'
+                            value={header.filterValue || ""}
+                            onChange={e => header.setFilter(e.target.value)}
+                        />
+                        {/* <JsonTree data={header}/> */}
+                    </div>
+                );
+            }
         },
         {
             Header: "Value",
@@ -110,10 +125,10 @@ export default function GenericVerticalObjectTable(props: Props) {
         infinite: false,
         loading: loading,
         tableProps: {
-                data: data,
-                state: tableState,
-                columns: columns,
-                disableGrouping: true
+            data: data,
+            state: tableState,
+            columns: columns,
+            disableGrouping: true
         }
     }
 
