@@ -49,19 +49,32 @@ export default function GenericVerticalObjectTable(props: Props) {
         setLoading(false);
     };
 
-
     const renderEditable = (cell) => {
-        let cellProps = cell.getCellProps()
-        let cellData = cell.data[cell.row.index]
+        // let cellData = cell.data[cell.row.index]
+        let cellData = data[cell.row.index];
         let cellDataKey = cellData.key
         let cellDataValue = cellData.value
         let displayData = (cellDataValue) ? cellDataValue.toString() : ""
         console.log("IN RENDER EDITABLE")
-        const [data, setData] = useState(displayData)
+        const [input, setInput] = useState(cellDataValue)
+
         return (
-            <FormControl value={data} onChange={(e: any) => {
-                setData(e.target.value);
-                console.log("Edited Form Control..." + e.target.value)
+            <FormControl value={input} onBlur={(e:any) => {
+                let newValue = e.target.value
+                console.log("In onBlur with Value...." + newValue)
+                let key = cellDataKey
+                setData(old => 
+                    old.map(item => {
+                        if (item.key === key) {
+                            return {
+                                key: key,
+                                value: newValue
+                            }
+                        } else {
+                            return item;
+                        }
+                    } )
+                )
             }}/>
         );
     }
