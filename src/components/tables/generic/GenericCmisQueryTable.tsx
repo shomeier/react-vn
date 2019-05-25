@@ -27,18 +27,6 @@ export function GenericCmisQueryTable(props: Props) {
     const state = useTableState({ filters: props.filters ,pageCount: 0 })
     const [{ sortBy, filters, pageIndex, pageSize }, setState] = state
     console.log("STATEEEE: " + JSON.stringify(state[0]))
-    // if (filters !== props.filters) {
-
-    // const newState = { ...state[0], filters:props.filters };
-    // setState(newState)
-    // setState(old => {
-    //     console.log("OLD STATE: " + JSON.stringify(old))
-    //     let newState = { ...old,filters:props.filters}
-    //     console.log("NEW STATE: " + JSON.stringify(newState))
-    //     // return;
-    // })
-            // }
-        
  
     const fetchData = async () => {
         setLoading(true);
@@ -98,9 +86,6 @@ export function GenericCmisQueryTable(props: Props) {
             }
         }
     }
-
-    // console.log("instance.tableProps: " + JSON.stringify(instance.tableProps))
-    // const filter = useFilters(instance.t ableProps)
 
     return (
         <div>
