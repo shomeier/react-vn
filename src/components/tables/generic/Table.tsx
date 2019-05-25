@@ -38,7 +38,7 @@ const useInfiniteScroll = ({
 }) => {
   const listRef = useRef<List>(null);
   const [scrollToIndex, setScrollToIndex] = useState(0);
-  const [rowHeight, setRowHeight] = useState(40);
+  const [rowHeight, setRowHeight] = useState(55);
   const [height, setHeight] = useState(500);
   const [overscan, setOverscan] = useState(25);
 
@@ -158,8 +158,8 @@ export default function MyTable(props:MyTableProps) {
           even: index % 2,
           selected: (props.onRowSelect) ? row.index === rowSelected : false,
           onClick: (e) => {
-            setRowSelected(row.index)
             if (props.onRowSelect) {
+              setRowSelected(row.index)
               props.onRowSelect(row)
             }
           }

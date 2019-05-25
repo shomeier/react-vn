@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useTableState } from "react-table";
 import MyTable from "./Table";
 import { CmisSessionWrapper } from "../../cmis/CmisSessionWrapper";
+import { FormControl } from "react-bootstrap";
 
 interface Props {
     coid: string
@@ -24,7 +25,6 @@ export default function GenericVerticalObjectTable(props: Props) {
         // Call our server for the data
         let session = CmisSessionWrapper.getInstance().getWrappedSession();
         let result = await session.getObject(props.coid)
-        // let result = await session.getObjectRelationships(props.coid, false, 'source', null, {maxItems:250, skipCount:0, includeAllowableActions:true, filter:'*', succinct:true})
         console.log("Result OBJECT: " + JSON.stringify(result))
 
         // If this is an outdated request, disregard the results
@@ -35,12 +35,12 @@ export default function GenericVerticalObjectTable(props: Props) {
         // turn the data vertically
         let verticalData: any[] = new Array();
         let horizontalData = result.succinctProperties
-        Object.keys(horizontalData).forEach(function(key) {
+        Object.keys(horizontalData).forEach(function (key) {
             verticalData.push({
                 key: key,
                 value: horizontalData[key]
             });
-          })
+        })
 
         console.log("verticalData: " + verticalData)
         // Set the data and pageCount
@@ -49,28 +49,20 @@ export default function GenericVerticalObjectTable(props: Props) {
         setLoading(false);
     };
 
+
     const renderEditable = (cell) => {
         let cellProps = cell.getCellProps()
-        let cellData = cell.data[cell.row.index][cell.column.id]
+        let cellData = cell.data[cell.row.index]
+        let cellDataKey = cellData.key
+        let cellDataValue = cellData.value
+        let displayData = (cellDataValue) ? cellDataValue.toString() : ""
         console.log("IN RENDER EDITABLE")
+        const [data, setData] = useState(displayData)
         return (
-            <div
-            // {...cellProps}
-            // {...cell.getCellProps({
-            //     style: {...cellProps.style, backgroundColor: "#fafafa" }})}
-            onBlur={e => {
-                e.preventDefault()
-                // const data = [...this.state.data];
-                // cellData = e.target.innerHTML;
-                // this.setState({ data });
-              }}
-            onClick={e => e.preventDefault()}
-            contentEditable
-            suppressContentEditableWarning
-            dangerouslySetInnerHTML={{
-                __html: cellData
-              }}
-            />
+            <FormControl value={data} onChange={(e: any) => {
+                setData(e.target.value);
+                console.log("Edited Form Control..." + e.target.value)
+            }}/>
         );
     }
 
@@ -87,16 +79,16 @@ export default function GenericVerticalObjectTable(props: Props) {
             Header: "Key",
             id: "key",
             accessor: w => w.key,
-            minWidth: 200,
+            minWidth: 225,
             maxWidth: 250,
         },
         {
             Header: "Value",
             id: "value",
             accessor: w => w.value,
-            minWidth: 100,
+            minWidth: 225,
             maxWidth: 200,
-            Cell: renderEditable    
+            Cell: renderEditable
         }
     ]
 
@@ -105,8 +97,8 @@ export default function GenericVerticalObjectTable(props: Props) {
         loading: loading,
         tableProps: {
             ...{
-                data:data,
-                columns:columns,
+                data: data,
+                columns: columns,
                 disableGrouping: true
             }
         }
