@@ -17,11 +17,18 @@ const RowBase = styled.div`
 `;
 
 export const Row = styled(RowBase)`
-  ${props =>
-    props.even &&
-    css`
-      background: rgba(42, 117, 146, 0.12);
-    `}
+  ${props => {
+      if (props.selected) {
+        return css`
+        background: rgba(42, 117, 146, 0.5);
+        `
+      } else if (props.even) {
+        return css`
+        background: rgba(42, 117, 146, 0.12);
+        `
+      }
+    }
+  }
 `;
 
 export const HeaderRow = styled(RowBase)`

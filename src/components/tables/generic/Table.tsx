@@ -84,6 +84,7 @@ const useInfiniteScroll = ({
 interface MyTableProps {
   infinite:boolean,
   loading?:boolean,
+  onSelectRow?:any,
   tableProps:TableProps
 }
 export default function MyTable(props:MyTableProps) {
@@ -140,6 +141,8 @@ export default function MyTable(props:MyTableProps) {
 
   let tableBody;
 
+  const [rowSelected, setRowSelected] = useState()
+
   const renderRow = (row, index, style = {}) => {
     if (!row) {
       return (
@@ -150,7 +153,17 @@ export default function MyTable(props:MyTableProps) {
     }
     prepareRow(row);
     return (
-      <Row {...row.getRowProps({ style, even: index % 2 })}>
+      <Row {...row.getRowProps({
+          style,
+          even: index % 2,
+          selected: row.index === rowSelected,
+          onClick: (e) => {
+            setRowSelected(row.index)
+            if (props.onSelectRow) {
+              props.onSelectRow(row)
+            }
+          }
+          })}>
         {row.cells.map(cell => {
           const isPivot = row.groupByID === cell.column.id;
           const showAggregate = row.subRows && !isPivot;
