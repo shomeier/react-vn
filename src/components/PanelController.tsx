@@ -9,7 +9,7 @@ import GenericVerticalObjectTable from './tables/generic/GenericVerticalObjectTa
 export default function PanelController() {
 
     const [panel, setPanel] = useState()
-    const [coid, setCoid] = useState()
+    const [wordCoid, setWordCoid] = useState()
 
     const handleMenuItemClick = (item, e) => {
         e.preventDefault();
@@ -21,7 +21,7 @@ export default function PanelController() {
         console.log("In handleRowSelect ...")
         let index = row.index
         let coid = row.original.succinctProperties["cmis:objectId"]
-        setCoid(coid)
+        setWordCoid(coid)
     }
 
     let centerPanel;
@@ -30,17 +30,17 @@ export default function PanelController() {
             // centerPanel = <AdminMain cmisSession={cmisSession} />
             // centerPanel = <SplitPanel left={<WritableWordTable />} />
             centerPanel = <SplitPanel 
-                left={<WritableWordQueryTable language='vn' onRowSelect={handleRowSelect} />}
-                center={<WritableRelationshipsTable coid={coid} />} 
-                right={<GenericVerticalObjectTable coid={coid} />}
+                left={<WritableWordQueryTable language='vn' onRowSelect={handleRowSelect} selectedWordCoid={wordCoid}/>}
+                center={<WritableRelationshipsTable coid={wordCoid} />} 
+                right={<GenericVerticalObjectTable coid={wordCoid} />}
                 />
             // centerPanel = <SplitPanel left={<BootstrapWordTable />} />
             break;
         default:
             centerPanel = <SplitPanel
-                left={<WritableWordQueryTable language='vn' onRowSelect={handleRowSelect} />}
-                center={<WritableRelationshipsTable coid={coid} />} 
-                right={<GenericVerticalObjectTable coid={coid} />}
+                left={<WritableWordQueryTable language='vn' onRowSelect={handleRowSelect} selectedWordCoid={wordCoid}/>}
+                center={<WritableRelationshipsTable coid={wordCoid} />} 
+                right={<GenericVerticalObjectTable coid={wordCoid} />}
                 />
         // centerPanel = <SplitPanel left={<WritableWordTable />} />
         // centerPanel = <SplitPanel left={<BootstrapWordTable />} />
