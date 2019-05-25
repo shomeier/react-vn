@@ -14,6 +14,7 @@ export default function GenericVerticalObjectTable(props: Props) {
     const [data, setData] = useState([]);;
     const [loading, setLoading] = useState(false);
     const currentRequestRef = useRef<number>(null);
+    const tableState = useTableState({pageSize: 50})
 
     const fetchData = async () => {
         setLoading(true);
@@ -109,11 +110,10 @@ export default function GenericVerticalObjectTable(props: Props) {
         infinite: false,
         loading: loading,
         tableProps: {
-            ...{
                 data: data,
+                state: tableState,
                 columns: columns,
                 disableGrouping: true
-            }
         }
     }
 
