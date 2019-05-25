@@ -156,7 +156,7 @@ export default function MyTable(props:MyTableProps) {
       <Row {...row.getRowProps({
           style,
           even: index % 2,
-          selected: row.index === rowSelected,
+          selected: (props.onRowSelect) ? row.index === rowSelected : false,
           onClick: (e) => {
             setRowSelected(row.index)
             if (props.onRowSelect) {

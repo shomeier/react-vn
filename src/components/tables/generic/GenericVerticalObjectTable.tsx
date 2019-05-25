@@ -49,6 +49,31 @@ export default function GenericVerticalObjectTable(props: Props) {
         setLoading(false);
     };
 
+    const renderEditable = (cell) => {
+        let cellProps = cell.getCellProps()
+        let cellData = cell.data[cell.row.index][cell.column.id]
+        console.log("IN RENDER EDITABLE")
+        return (
+            <div
+            // {...cellProps}
+            // {...cell.getCellProps({
+            //     style: {...cellProps.style, backgroundColor: "#fafafa" }})}
+            onBlur={e => {
+                e.preventDefault()
+                // const data = [...this.state.data];
+                // cellData = e.target.innerHTML;
+                // this.setState({ data });
+              }}
+            onClick={e => e.preventDefault()}
+            contentEditable
+            suppressContentEditableWarning
+            dangerouslySetInnerHTML={{
+                __html: cellData
+              }}
+            />
+        );
+    }
+
     useEffect(
         () => {
             console.log("Rerendering generic vertical object table for object with id: " + props.coid)
@@ -70,7 +95,8 @@ export default function GenericVerticalObjectTable(props: Props) {
             id: "value",
             accessor: w => w.value,
             minWidth: 100,
-            maxWidth: 200
+            maxWidth: 200,
+            Cell: renderEditable    
         }
     ]
 
