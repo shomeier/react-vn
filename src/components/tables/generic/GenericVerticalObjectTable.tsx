@@ -50,34 +50,32 @@ export default function GenericVerticalObjectTable(props: Props) {
     };
 
     const renderEditable = (cell) => {
-        // let cellData = cell.data[cell.row.index]
-        let cellData = data[cell.row.index];
+        let cellData = cell.data[cell.row.index]
+        // let cellData = data[cell.row.index];
         let cellDataKey = cellData.key
         let cellDataValue = cellData.value
         let displayData = (cellDataValue) ? cellDataValue.toString() : ""
         console.log("IN RENDER EDITABLE")
-        const [input, setInput] = useState(displayData)
 
         return (
-            <FormControl value={input} 
-            onChange={(e:any) => setInput(e.target.value)}
-            onBlur={(e:any) => {
-                let newValue = e.target.value
-                console.log("In onBlur with Value...." + newValue)
-                let key = cellDataKey
-                setData(old => 
-                    old.map(item => {
-                        if (item.key === key) {
-                            return {
-                                key: key,
-                                value: newValue
+            <FormControl value={displayData}
+                onChange={(e: any) => {
+                    let newValue = e.target.value
+                    console.log("Input: " + newValue)
+                    setData(old =>
+                        old.map(item => {
+                            if (item.key === cellDataKey) {
+                                return {
+                                    key: cellDataKey,
+                                    value: newValue
+                                }
+                            } else {
+                                return item;
                             }
-                        } else {
-                            return item;
-                        }
-                    } )
-                )
-            }}/>
+                        })
+                    )
+                }}
+            />
         );
     }
 
@@ -108,7 +106,7 @@ export default function GenericVerticalObjectTable(props: Props) {
     ]
 
     const instance = {
-        infinite: true,
+        infinite: false,
         loading: loading,
         tableProps: {
             ...{
