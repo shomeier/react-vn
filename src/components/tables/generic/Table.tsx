@@ -84,7 +84,7 @@ const useInfiniteScroll = ({
 interface MyTableProps {
   infinite:boolean,
   loading?:boolean,
-  onSelectRow?:any,
+  onRowSelect?:any,
   tableProps:TableProps
 }
 export default function MyTable(props:MyTableProps) {
@@ -159,8 +159,8 @@ export default function MyTable(props:MyTableProps) {
           selected: row.index === rowSelected,
           onClick: (e) => {
             setRowSelected(row.index)
-            if (props.onSelectRow) {
-              props.onSelectRow(row)
+            if (props.onRowSelect) {
+              props.onRowSelect(row)
             }
           }
           })}>

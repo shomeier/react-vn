@@ -17,11 +17,11 @@ export default function PanelController() {
         setPanel(item);
     }
 
-    const handleCellClick = (cell) => {
-        console.log("In HandleCell Click...")
-        let index = cell.row.index
-        let cellCoid = cell.data[index].succinctProperties["cmis:objectId"]
-        setCoid(cellCoid)
+    const handleRowSelect = (row) => {
+        console.log("In handleRowSelect ...")
+        let index = row.index
+        let coid = row.original.succinctProperties["cmis:objectId"]
+        setCoid(coid)
     }
 
     let centerPanel;
@@ -30,7 +30,7 @@ export default function PanelController() {
             // centerPanel = <AdminMain cmisSession={cmisSession} />
             // centerPanel = <SplitPanel left={<WritableWordTable />} />
             centerPanel = <SplitPanel 
-                left={<WritableWordQueryTable language='vn' handleCellClick={handleCellClick} />}
+                left={<WritableWordQueryTable language='vn' onRowSelect={handleRowSelect} />}
                 center={<WritableRelationshipsTable coid={coid} />} 
                 right={<GenericVerticalObjectTable coid={coid} />}
                 />
@@ -38,7 +38,7 @@ export default function PanelController() {
             break;
         default:
             centerPanel = <SplitPanel
-                left={<WritableWordQueryTable language='vn' handleCellClick={handleCellClick} />}
+                left={<WritableWordQueryTable language='vn' onRowSelect={handleRowSelect} />}
                 center={<WritableRelationshipsTable coid={coid} />} 
                 right={<GenericVerticalObjectTable coid={coid} />}
                 />

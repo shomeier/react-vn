@@ -12,7 +12,7 @@ import JsonTree from "react-json-tree";
 
 interface Props {
     language: string;
-    handleCellClick: any
+    onRowSelect?: any
 }
 
 // const statement = "SELECT t.lingo:text, t.cmis:name FROM lingo:text AS t JOIN lingo:word AS w ON t.cmis:objectId = w.cmis:objectId  ORDER BY lingo:text";
@@ -57,22 +57,6 @@ export function WritableWordQueryTable(props: Props) {
                         {/* <JsonTree data={header}/> */}
                     </div>
                 );
-            },
-            Cell: (cell) => {
-                let index = cell.row.index
-                let cellData = cell.data[index].succinctProperties[cell.column.id]
-                let cellCoid = cell.data[index].succinctProperties["cmis:objectId"]
-                return (
-                    <span onClick={() => {
-                        props.handleCellClick(cell)
-                        console.log("Clicked Cell...")
-                        console.log("Index: " + index)
-                        console.log("Cell Data COID: " + cellCoid)
-                    }}>
-                        {cellData}
-                        {/* <JsonTree data={cell}/> */}
-                    </span>
-                )
             }
         },
         {
@@ -81,29 +65,16 @@ export function WritableWordQueryTable(props: Props) {
             accessor: w => w.succinctProperties['lingo:part_of_speech'],
             minWidth: 150,
             maxWidth: 200
-        },
-        {
-            Header: "Functions",
-            id: "functions",
-            minWidth: 150,
-            maxWidth: 200,
-            Cell: (cell) => {
-                return (
-                    <span style={{ display: 'flex' }}>
-                        <Button>Details</Button>
-                    </span>
-                )
-            }
         }
     ];
 
     return (
         <div>
             <ModalWrapper showState={showState} title="Add a new word">
-                <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={handleSubmit} />
+                <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={props.onRowSelect} />
             </ModalWrapper>
             {console.log("Instantiating writable word table ....")}
-            <GenericCmisQueryTable statement={statement} filters={filters} columns={columns} />
+            <GenericCmisQueryTable statement={statement} filters={filters} onRowSelect={props.onRowSelect} columns={columns} />
             <div className="alignRight">
                 <Button onClick={() => { setShowForm(true) }}>Add Word</Button>
             </div>

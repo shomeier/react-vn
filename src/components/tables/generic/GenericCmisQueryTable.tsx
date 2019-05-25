@@ -11,7 +11,8 @@ import { CmisStatementBuilder } from '../../cmis/CmisStatementBuilder'
 interface Props {
     columns:any
     statement: string
-    filters?: any
+    filters?: any,
+    onRowSelect?:any
 }
 
 export function GenericCmisQueryTable(props: Props) {
@@ -72,6 +73,7 @@ export function GenericCmisQueryTable(props: Props) {
     const instance = {
         infinite: infinite,
         loading: loading,
+        onRowSelect: props.onRowSelect,
         tableProps: {
             ...{
                 data,
