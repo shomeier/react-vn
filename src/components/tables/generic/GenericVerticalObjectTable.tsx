@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useTableState } from "react-table";
 import MyTable from "./Table";
 import { CmisSessionWrapper } from "../../cmis/CmisSessionWrapper";
-import { FormControl } from "react-bootstrap";
+import { FormControl, Button } from "react-bootstrap";
 import { Input } from "./Styles";
 
 interface Props {
@@ -17,6 +17,20 @@ export default function GenericVerticalObjectTable(props: Props) {
     const currentRequestRef = useRef<number>(null);
     const tableState = useTableState({ pageSize: 50 })
 
+    const session = CmisSessionWrapper.getInstance().getWrappedSession();
+    const saveData = async () => {
+        let cmisProps = {}
+        data.map(item => {
+            if (item.value) {
+                cmisProps[item.key] = item.value
+            }
+        })
+
+        console.log("cmisProps: " + JSON.stringify(cmisProps))
+        let result = await session.updateProperties(props.coid, cmisProps, { changeToken: cmisProps['cmis:changeToken'], succinct: true })
+        console.log("Result SAAAVED OBJECT: " + JSON.stringify(result))
+    }
+
     const fetchData = async () => {
         setLoading(true);
 
@@ -25,7 +39,6 @@ export default function GenericVerticalObjectTable(props: Props) {
         currentRequestRef.current = id;
 
         // Call our server for the data
-        let session = CmisSessionWrapper.getInstance().getWrappedSession();
         let result = await session.getObject(props.coid)
         console.log("Result OBJECT: " + JSON.stringify(result))
 
@@ -136,6 +149,7 @@ export default function GenericVerticalObjectTable(props: Props) {
         <div>
             <MyTable {...instance}
             />
+            <Button onClick={saveData}>Save</Button>
             {/* <br />
             <br />
             <JsonTree data={instance} /> */}
