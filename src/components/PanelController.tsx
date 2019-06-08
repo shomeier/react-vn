@@ -9,7 +9,8 @@ import GenericVerticalObjectTable from './tables/generic/GenericVerticalObjectTa
 export default function PanelController() {
 
     const [panel, setPanel] = useState()
-    const [wordCoid, setWordCoid] = useState()
+    const [sourceCoid, setSourceCoid] = useState()
+    const [targetCoid, setTargetCoid] = useState()
 
     const handleMenuItemClick = (item, e) => {
         e.preventDefault();
@@ -17,11 +18,18 @@ export default function PanelController() {
         setPanel(item);
     }
 
-    const handleRowSelect = (row) => {
-        console.log("In handleRowSelect ...")
+    const handleSourceRowSelect = (row) => {
+        console.log("In handleWordRowSelect ...")
         let index = row.index
         let coid = row.original.succinctProperties["cmis:objectId"]
-        setWordCoid(coid)
+        setSourceCoid(coid)
+    }
+    
+    const handleRelationshipRowSelect = (row) => {
+        console.log("In handleRelationshipRowSelect ...")
+        // console.log("--------> relationships: " + JSON.stringify(row.original))
+        let coid = row.original.succinctProperties["cmis:targetId"]
+        setTargetCoid(coid)
     }
 
     let centerPanel;
@@ -30,17 +38,17 @@ export default function PanelController() {
             // centerPanel = <AdminMain cmisSession={cmisSession} />
             // centerPanel = <SplitPanel left={<WritableWordTable />} />
             centerPanel = <SplitPanel 
-                left={<WritableWordQueryTable language='vn' onRowSelect={handleRowSelect} selectedWordCoid={wordCoid}/>}
-                center={<WritableRelationshipsTable coid={wordCoid} />} 
-                right={<GenericVerticalObjectTable coid={wordCoid} />}
+                left={<WritableWordQueryTable language='vn' onRowSelect={handleSourceRowSelect} selectedWordCoid={sourceCoid}/>}
+                center={<WritableRelationshipsTable onRowSelect={handleRelationshipRowSelect} coid={sourceCoid} />} 
+                right={<GenericVerticalObjectTable coid={targetCoid} />}
                 />
             // centerPanel = <SplitPanel left={<BootstrapWordTable />} />
             break;
         default:
             centerPanel = <SplitPanel
-                left={<WritableWordQueryTable language='vn' onRowSelect={handleRowSelect} selectedWordCoid={wordCoid}/>}
-                center={<WritableRelationshipsTable coid={wordCoid} />} 
-                right={<GenericVerticalObjectTable coid={wordCoid} />}
+                left={<WritableWordQueryTable language='vn' onRowSelect={handleSourceRowSelect} selectedWordCoid={sourceCoid}/>}
+                center={<WritableRelationshipsTable onRowSelect={handleRelationshipRowSelect} coid={sourceCoid} />} 
+                right={<GenericVerticalObjectTable coid={targetCoid} />}
                 />
         // centerPanel = <SplitPanel left={<WritableWordTable />} />
         // centerPanel = <SplitPanel left={<BootstrapWordTable />} />

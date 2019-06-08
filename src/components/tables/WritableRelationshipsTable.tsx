@@ -7,6 +7,7 @@ import { splitBsPropsAndOmit } from "react-bootstrap/lib/utils/bootstrapUtils";
 
 interface Props {
     coid: string
+    onRowSelect?: any
 }
 
 
@@ -92,6 +93,7 @@ export default function WritableRelationshipsTable(props: Props) {
 
     const instance = {
         infinite: infinite,
+        onRowSelect: props.onRowSelect,
         loading: loading,
         tableProps: {
             ...{
