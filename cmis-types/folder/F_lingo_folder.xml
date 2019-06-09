@@ -4,9 +4,9 @@
     <cmis:id>F:lingo:folder</cmis:id>
     <cmis:localName>folder</cmis:localName>
     <cmis:localNamespace>sho/model/lingo</cmis:localNamespace>
-    <cmis:displayName>F:lingo:folder</cmis:displayName>
+    <cmis:displayName>Lingo Folder</cmis:displayName>
     <cmis:queryName>lingo:folder</cmis:queryName>
-    <cmis:description>F:lingo:folder</cmis:description>
+    <cmis:description>Lingo Folder</cmis:description>
     <cmis:baseId>cmis:folder</cmis:baseId>
     <cmis:parentId>cmis:folder</cmis:parentId>
     <cmis:creatable>true</cmis:creatable>
@@ -16,4 +16,9 @@
     <cmis:includedInSupertypeQuery>true</cmis:includedInSupertypeQuery>
     <cmis:controllablePolicy>false</cmis:controllablePolicy>
     <cmis:controllableACL>true</cmis:controllableACL>
+    <cmis:typeMutability>
+        <cmis:create>true</cmis:create>
+        <cmis:update>true</cmis:update>
+        <cmis:delete>true</cmis:delete>
+    </cmis:typeMutability>
 </cmis:type>

@@ -3,19 +3,24 @@
     xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/" xsi:type="cmis:cmisTypeRelationshipDefinitionType">
     <cmis:id>R:lingo:relationship</cmis:id>
     <cmis:localName>relationship</cmis:localName>
-    <cmis:localNamespace>http://www.alfresco.org/model/cmis/custom</cmis:localNamespace>
-    <cmis:displayName>R:lingo:relationship</cmis:displayName>
+    <cmis:localNamespace>sho/model/lingo</cmis:localNamespace>
+    <cmis:displayName>Lingo Relationship</cmis:displayName>
     <cmis:queryName>lingo:relationship</cmis:queryName>
-    <cmis:description>R:lingo:relationship</cmis:description>
-    <cmis:baseId>cmis:relationship</cmis:baseId>
-    <cmis:parentId>cmis:relationship</cmis:parentId>
-    <cmis:creatable>true</cmis:creatable>
-    <cmis:fileable>false</cmis:fileable>
-    <cmis:queryable>true</cmis:queryable>
-    <cmis:fulltextIndexed>false</cmis:fulltextIndexed>
-    <cmis:includedInSupertypeQuery>true</cmis:includedInSupertypeQuery>
-    <cmis:controllablePolicy>false</cmis:controllablePolicy>
-    <cmis:controllableACL>false</cmis:controllableACL>
-    <cmis:allowedSourceTypes>D:lingo:text</cmis:allowedSourceTypes>
-    <cmis:allowedTargetTypes>D:lingo:text</cmis:allowedTargetTypes>
-</cmis:type>
+    <cmis:description>Lingo Relationship</cmis:description>
+        <cmis:baseId>cmis:relationship</cmis:baseId>
+        <cmis:parentId>cmis:relationship</cmis:parentId>
+        <cmis:creatable>true</cmis:creatable>
+        <cmis:fileable>false</cmis:fileable>
+        <cmis:queryable>true</cmis:queryable>
+        <cmis:fulltextIndexed>false</cmis:fulltextIndexed>
+        <cmis:includedInSupertypeQuery>true</cmis:includedInSupertypeQuery>
+        <cmis:controllablePolicy>false</cmis:controllablePolicy>
+        <cmis:controllableACL>false</cmis:controllableACL>
+        <cmis:allowedSourceTypes>D:lingo:document</cmis:allowedSourceTypes>
+        <cmis:allowedTargetTypes>D:lingo:document</cmis:allowedTargetTypes>
+        <cmis:typeMutability>
+            <cmis:create>true</cmis:create>
+            <cmis:update>true</cmis:update>
+            <cmis:delete>true</cmis:delete>
+        </cmis:typeMutability>
+    </cmis:type>

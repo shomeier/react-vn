@@ -6,7 +6,7 @@
     <cmis:localNamespace>sho/model/lingo</cmis:localNamespace>
     <cmis:displayName>Word</cmis:displayName>
     <cmis:queryName>lingo:word</cmis:queryName>
-    <cmis:description>P:lingo:word</cmis:description>
+    <cmis:description>Word</cmis:description>
     <cmis:baseId>cmis:secondary</cmis:baseId>
     <cmis:parentId>P:lingo:secondary</cmis:parentId>
     <cmis:creatable>true</cmis:creatable>
@@ -16,4 +16,26 @@
     <cmis:includedInSupertypeQuery>true</cmis:includedInSupertypeQuery>
     <cmis:controllablePolicy>false</cmis:controllablePolicy>
     <cmis:controllableACL>false</cmis:controllableACL>
+    <cmis:typeMutability>
+        <cmis:create>true</cmis:create>
+        <cmis:update>true</cmis:update>
+        <cmis:delete>true</cmis:delete>
+    </cmis:typeMutability>
+    <cmis:propertyStringDefinition>
+        <cmis:id>lingo:word</cmis:id>
+        <cmis:localName>word</cmis:localName>
+        <cmis:localNamespace>sho/model/lingo</cmis:localNamespace>
+        <cmis:displayName>Word</cmis:displayName>
+        <cmis:queryName>lingo:word</cmis:queryName>
+        <cmis:description>Word</cmis:description>
+        <cmis:propertyType>string</cmis:propertyType>
+        <cmis:cardinality>single</cmis:cardinality>
+        <cmis:updatability>readwrite</cmis:updatability>
+        <cmis:inherited>false</cmis:inherited>
+        <cmis:required>true</cmis:required>
+        <cmis:queryable>true</cmis:queryable>
+        <cmis:orderable>true</cmis:orderable>
+        <cmis:openChoice>true</cmis:openChoice>
+        <cmis:defaultValue/>
+    </cmis:propertyStringDefinition>
 </cmis:type>

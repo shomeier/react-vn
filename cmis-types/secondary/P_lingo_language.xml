@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <cmis:type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/" xsi:type="cmis:cmisTypeSecondaryDefinitionType">
-    <cmis:id>P:lingo:example</cmis:id>
-    <cmis:localName>example</cmis:localName>
+    <cmis:id>P:lingo:language</cmis:id>
+    <cmis:localName>language</cmis:localName>
     <cmis:localNamespace>sho/model/lingo</cmis:localNamespace>
-    <cmis:displayName>Example</cmis:displayName>
-    <cmis:queryName>lingo:example</cmis:queryName>
-    <cmis:description>Example</cmis:description>
+    <cmis:displayName>Language</cmis:displayName>
+    <cmis:queryName>lingo:language</cmis:queryName>
+    <cmis:description>Language</cmis:description>
     <cmis:baseId>cmis:secondary</cmis:baseId>
     <cmis:parentId>P:lingo:secondary</cmis:parentId>
     <cmis:creatable>true</cmis:creatable>
@@ -22,12 +22,12 @@
         <cmis:delete>true</cmis:delete>
     </cmis:typeMutability>
     <cmis:propertyStringDefinition>
-        <cmis:id>lingo:example</cmis:id>
-        <cmis:localName>example</cmis:localName>
+        <cmis:id>lingo:language</cmis:id>
+        <cmis:localName>language</cmis:localName>
         <cmis:localNamespace>sho/model/lingo</cmis:localNamespace>
-        <cmis:displayName>Example</cmis:displayName>
-        <cmis:queryName>lingo:example</cmis:queryName>
-        <cmis:description>Example</cmis:description>
+        <cmis:displayName>Language</cmis:displayName>
+        <cmis:queryName>lingo:language</cmis:queryName>
+        <cmis:description>Language</cmis:description>
         <cmis:propertyType>string</cmis:propertyType>
         <cmis:cardinality>single</cmis:cardinality>
         <cmis:updatability>readwrite</cmis:updatability>
@@ -35,7 +35,15 @@
         <cmis:required>true</cmis:required>
         <cmis:queryable>true</cmis:queryable>
         <cmis:orderable>true</cmis:orderable>
-        <cmis:openChoice>true</cmis:openChoice>
-        <cmis:defaultValue/>
+        <cmis:openChoice>false</cmis:openChoice>
+        <cmis:defaultValue>
+            <cmis:value>en</cmis:value>
+        </cmis:defaultValue>
+        <cmis:choice displayName="en">
+            <cmis:value>en</cmis:value>
+        </cmis:choice>
+        <cmis:choice displayName="vn">
+            <cmis:value>vn</cmis:value>
+        </cmis:choice>
     </cmis:propertyStringDefinition>
 </cmis:type>

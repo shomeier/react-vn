@@ -6,7 +6,7 @@
     <cmis:localNamespace>sho/model/lingo</cmis:localNamespace>
     <cmis:displayName>Part Of Speech</cmis:displayName>
     <cmis:queryName>lingo:part_of_speech</cmis:queryName>
-    <cmis:description>P:lingo:part_of_speech</cmis:description>
+    <cmis:description>Part Of Speech</cmis:description>
     <cmis:baseId>cmis:secondary</cmis:baseId>
     <cmis:parentId>P:lingo:secondary</cmis:parentId>
     <cmis:creatable>true</cmis:creatable>
@@ -16,6 +16,11 @@
     <cmis:includedInSupertypeQuery>true</cmis:includedInSupertypeQuery>
     <cmis:controllablePolicy>false</cmis:controllablePolicy>
     <cmis:controllableACL>false</cmis:controllableACL>
+    <cmis:typeMutability>
+        <cmis:create>true</cmis:create>
+        <cmis:update>true</cmis:update>
+        <cmis:delete>true</cmis:delete>
+    </cmis:typeMutability>
     <cmis:propertyStringDefinition>
         <cmis:id>lingo:part_of_speech</cmis:id>
         <cmis:localName>part_of_speech</cmis:localName>

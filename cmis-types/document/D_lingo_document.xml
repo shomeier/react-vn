@@ -4,9 +4,9 @@
     <cmis:id>D:lingo:document</cmis:id>
     <cmis:localName>document</cmis:localName>
     <cmis:localNamespace>sho/model/lingo</cmis:localNamespace>
-    <cmis:displayName>D:lingo:document</cmis:displayName>
+    <cmis:displayName>Lingo Document</cmis:displayName>
     <cmis:queryName>lingo:document</cmis:queryName>
-    <cmis:description>D:lingo:document</cmis:description>
+    <cmis:description>Lingo Document</cmis:description>
     <cmis:baseId>cmis:document</cmis:baseId>
     <cmis:parentId>cmis:document</cmis:parentId>
     <cmis:creatable>true</cmis:creatable>
@@ -14,8 +14,13 @@
     <cmis:queryable>true</cmis:queryable>
     <cmis:fulltextIndexed>true</cmis:fulltextIndexed>
     <cmis:includedInSupertypeQuery>true</cmis:includedInSupertypeQuery>
-    <cmis:controllablePolicy>false</cmis:controllablePolicy>
+    <cmis:controllablePolicy>true</cmis:controllablePolicy>
     <cmis:controllableACL>true</cmis:controllableACL>
     <cmis:versionable>true</cmis:versionable>
     <cmis:contentStreamAllowed>allowed</cmis:contentStreamAllowed>
+    <cmis:typeMutability>
+        <cmis:create>true</cmis:create>
+        <cmis:update>true</cmis:update>
+        <cmis:delete>true</cmis:delete>
+    </cmis:typeMutability>
 </cmis:type>

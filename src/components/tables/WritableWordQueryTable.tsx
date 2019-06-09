@@ -19,7 +19,12 @@ interface Props {
 
 // const statement = "SELECT t.lingo:text, t.cmis:name FROM lingo:text AS t JOIN lingo:word AS w ON t.cmis:objectId = w.cmis:objectId  ORDER BY lingo:text";
 // const statement = "SELECT lingo:text, lingo:part_of_speech, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
-const statement = "SELECT lingo:text, P.lingo:part_of_speech, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text AS T JOIN lingo:part_of_speech AS P ON T.cmis:objectId = P.cmis:objectId WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
+const statement =
+"SELECT W.lingo:word, P.lingo:part_of_speech, T.cmis:name, T.cmis:secondaryObjectTypeIds " +
+"FROM lingo:document AS T " +
+"JOIN lingo:word AS W ON T.cmis:objectId = W.cmis:objectId " +
+"JOIN lingo:part_of_speech AS P ON T.cmis:objectId = P.cmis:objectId " +
+"WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY W.lingo:word"
 
 export function WritableWordQueryTable(props: Props) {
 
@@ -39,15 +44,15 @@ export function WritableWordQueryTable(props: Props) {
                 if (res === true) {
                     setShowAddWordForm(false)
                 }
-                setFilters({ "lingo:text": word })
+                setFilters({ "W.lingo:word": word })
             })
     }
 
     const columns = [
         {
             Header: "Word",
-            id: "lingo:text",
-            accessor: w => w.succinctProperties['lingo:text'],
+            id: "W.lingo:word",
+            accessor: w => w.succinctProperties['lingo:word'],
             minWidth: 200,
             maxWidth: 250,
             Filter: (header) => {

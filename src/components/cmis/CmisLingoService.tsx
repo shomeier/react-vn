@@ -11,7 +11,7 @@ export class CmisLingoService {
 
     private static readonly WORD_MARKER = "P:lingo:word";
     private static readonly POS_MARKER = "P:lingo:part_of_speech";
-    private static readonly LANGUAGE_MARKER_PREFIX = "P:lingo:language_";
+    private static readonly LANGUAGE_MARKER_PREFIX = "P:lingo:language";
 
     private sessionWrapper: CmisSessionWrapper
     private cmisSession: cmis.CmisSession
@@ -54,11 +54,12 @@ export class CmisLingoService {
     private async createWord(folder: string, cmisName: string, word: CmisWord): Promise<SuccinctCmisObject> {
         try {
             const doc_vn = await this.createDocument(folder, {
-                "cmis:objectTypeId": "D:lingo:text",
+                "cmis:objectTypeId": "D:lingo:document",
                 "cmis:name": cmisName,
-                "lingo:text": word.word,
+                "lingo:word": word.word,
                 "lingo:part_of_speech": word.partOfSpeech,
-                "cmis:secondaryObjectTypeIds": [CmisLingoService.WORD_MARKER, CmisLingoService.LANGUAGE_MARKER_PREFIX + word.language, CmisLingoService.POS_MARKER]
+                "lingo:language": word.language,
+                "cmis:secondaryObjectTypeIds": [CmisLingoService.WORD_MARKER, CmisLingoService.LANGUAGE_MARKER_PREFIX, CmisLingoService.POS_MARKER]
             });
             const doc_vn_id = doc_vn.succinctProperties['cmis:objectId']
             const doc_vn_changeToken = doc_vn.succinctProperties['cmis:changeToken']
