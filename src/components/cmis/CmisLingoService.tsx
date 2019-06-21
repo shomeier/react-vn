@@ -74,7 +74,7 @@ export class CmisLingoService {
         try {
             const folder = await this.cmisSession.getObjectByPath(folderPath);
             const folderId = folder.succinctProperties['cmis:objectId'];
-            const document = await this.cmisSession.createDocument(folderId, content, input);
+            const document = await this.cmisSession.createDocument(folderId, new Blob(), input);
             return document;
         }
         catch (e) {
