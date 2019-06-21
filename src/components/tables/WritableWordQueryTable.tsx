@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, ButtonGroup } from "react-bootstrap";
 import { useTableState, HeaderColumn, Cell } from "react-table";
 import { CmisLingoService } from "../cmis/CmisLingoService";
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
@@ -20,11 +20,11 @@ interface Props {
 // const statement = "SELECT t.lingo:text, t.cmis:name FROM lingo:text AS t JOIN lingo:word AS w ON t.cmis:objectId = w.cmis:objectId  ORDER BY lingo:text";
 // const statement = "SELECT lingo:text, lingo:part_of_speech, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
 const statement =
-"SELECT W.lingo:word, P.lingo:part_of_speech, T.cmis:name, T.cmis:secondaryObjectTypeIds " +
-"FROM lingo:document AS T " +
-"JOIN lingo:word AS W ON T.cmis:objectId = W.cmis:objectId " +
-"JOIN lingo:part_of_speech AS P ON T.cmis:objectId = P.cmis:objectId " +
-"WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY W.lingo:word"
+    "SELECT W.lingo:word, P.lingo:part_of_speech, T.cmis:name, T.cmis:secondaryObjectTypeIds " +
+    "FROM lingo:document AS T " +
+    "JOIN lingo:word AS W ON T.cmis:objectId = W.cmis:objectId " +
+    "JOIN lingo:part_of_speech AS P ON T.cmis:objectId = P.cmis:objectId " +
+    "WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY W.lingo:word"
 
 export function WritableWordQueryTable(props: Props) {
 
@@ -44,6 +44,8 @@ export function WritableWordQueryTable(props: Props) {
                 if (res === true) {
                     setShowAddWordForm(false)
                 }
+
+                // does not work !!!
                 setFilters({ "W.lingo:word": word })
             })
     }
@@ -87,12 +89,10 @@ export function WritableWordQueryTable(props: Props) {
             </ModalWrapper>
             {console.log("Instantiating writable word table ....")}
             <GenericCmisQueryTable statement={statement} filters={filters} onRowSelect={props.onRowSelect} columns={columns} />
-            <div className="alignRight">
-                <Button onClick={() => { setShowAddWordForm(true) }}>Add Word</Button>
-            </div>
-            <div className="alignRight">
-                <Button onClick={() => { setShowWordDetailsForm(true) }}>Details</Button>
-            </div>
+            <ButtonGroup>
+                    <Button onClick={() => { setShowAddWordForm(true) }}>Add Word</Button>
+                    <Button onClick={() => { setShowWordDetailsForm(true) }}>Details</Button>
+            </ButtonGroup>
         </div>
     )
 }
