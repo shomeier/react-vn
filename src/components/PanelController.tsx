@@ -39,7 +39,7 @@ export default function PanelController() {
             // centerPanel = <SplitPanel left={<WritableWordTable />} />
             centerPanel = <SplitPanel 
                 left={<WritableWordQueryTable language='vn' onRowSelect={handleSourceRowSelect} selectedWordCoid={sourceCoid}/>}
-                center={<WritableRelationshipsTable onRowSelect={handleRelationshipRowSelect} coid={sourceCoid} />} 
+                center={<WritableRelationshipsTable onRowSelect={handleRelationshipRowSelect} sourceId={sourceCoid} />} 
                 right={<GenericVerticalObjectTable coid={targetCoid} />}
                 />
             // centerPanel = <SplitPanel left={<BootstrapWordTable />} />
@@ -47,7 +47,7 @@ export default function PanelController() {
         default:
             centerPanel = <SplitPanel
                 left={<WritableWordQueryTable language='vn' onRowSelect={handleSourceRowSelect} selectedWordCoid={sourceCoid}/>}
-                center={<WritableRelationshipsTable onRowSelect={handleRelationshipRowSelect} coid={sourceCoid} />} 
+                center={<WritableRelationshipsTable onRowSelect={handleRelationshipRowSelect} sourceId={sourceCoid} />} 
                 right={<GenericVerticalObjectTable coid={targetCoid} />}
                 />
         // centerPanel = <SplitPanel left={<WritableWordTable />} />

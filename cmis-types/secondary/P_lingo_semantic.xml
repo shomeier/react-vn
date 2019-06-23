@@ -21,4 +21,21 @@
         <cmis:update>true</cmis:update>
         <cmis:delete>true</cmis:delete>
     </cmis:typeMutability>
+    <cmis:propertyStringDefinition>
+        <cmis:id>lingo:semantic</cmis:id>
+        <cmis:localName>semantic</cmis:localName>
+        <cmis:localNamespace>sho/model/lingo</cmis:localNamespace>
+        <cmis:displayName>Semantic</cmis:displayName>
+        <cmis:queryName>lingo:semantic</cmis:queryName>
+        <cmis:description>Semantic</cmis:description>
+        <cmis:propertyType>string</cmis:propertyType>
+        <cmis:cardinality>single</cmis:cardinality>
+        <cmis:updatability>readwrite</cmis:updatability>
+        <cmis:inherited>false</cmis:inherited>
+        <cmis:required>false</cmis:required>
+        <cmis:queryable>true</cmis:queryable>
+        <cmis:orderable>true</cmis:orderable>
+        <cmis:openChoice>true</cmis:openChoice>
+        <cmis:defaultValue/>
+    </cmis:propertyStringDefinition>
 </cmis:type>

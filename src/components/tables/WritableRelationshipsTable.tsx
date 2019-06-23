@@ -4,20 +4,26 @@ import { useTableState } from "react-table";
 import MyTable from "./generic/Table";
 import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
 import { splitBsPropsAndOmit } from "react-bootstrap/lib/utils/bootstrapUtils";
+import { ButtonGroup, Button, DropdownButton, Dropdown } from "react-bootstrap";
+import { ModalWrapper } from "../ModalWrapper";
+import { AddSemanticForm } from "../forms/AddSemanticForm";
 
 interface Props {
-    coid: string
+    sourceId: string
     onRowSelect?: any
 }
 
 
 export default function WritableRelationshipsTable(props: Props) {
+    const ADD_SEMANTIC = "add_semantic"
     const infinite = false;
     const [data, setData] = useState([]);;
     const [loading, setLoading] = useState(false);
+    const showAddSemanticFormState = useState(false)
+    const [showAddSemanticForm, setShowAddSemanticForm] = showAddSemanticFormState
     const currentRequestRef = useRef<number>(null);
     // const [{ sortBy, filters, pageIndex, pageSize }, setState] = useTableState({pageCount: 0 })
- 
+
     const fetchData = async () => {
         setLoading(true);
 
@@ -27,7 +33,7 @@ export default function WritableRelationshipsTable(props: Props) {
 
         // Call our server for the data
         let session = CmisSessionWrapper.getInstance().getWrappedSession();
-        let result = await session.getObjectRelationships(props.coid, false, 'source', null, {maxItems:250, skipCount:0, includeAllowableActions:true, filter:'*', succinct:true})
+        let result = await session.getObjectRelationships(props.sourceId, false, 'source', null, { maxItems: 250, skipCount: 0, includeAllowableActions: true, filter: '*', succinct: true })
         console.log("Result RELATIONSHIPS: " + JSON.stringify(result))
 
         // If this is an outdated request, disregard the results
@@ -47,10 +53,10 @@ export default function WritableRelationshipsTable(props: Props) {
 
     useEffect(
         () => {
-            console.log("Rerendering relationships table with id: " + props.coid)
+            console.log("Rerendering relationships table with id: " + props.sourceId)
             fetchData();
         },
-        [props.coid]
+        [props.sourceId]
     );
 
     const columns = [
@@ -98,7 +104,7 @@ export default function WritableRelationshipsTable(props: Props) {
         tableProps: {
             ...{
                 data,
-                columns:columns,
+                columns: columns,
                 disableGrouping: true, // Disable grouping
                 debug: false
             }
@@ -107,11 +113,21 @@ export default function WritableRelationshipsTable(props: Props) {
 
     return (
         <div>
+            <ModalWrapper showState={showAddSemanticFormState} title="Add a new semantic">
+                <AddSemanticForm sourceId={props.sourceId} setShow={setShowAddSemanticForm}/>
+                {/* <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={handleSubmit} /> */}
+            </ModalWrapper>
             <MyTable {...instance}
             />
+            <ButtonGroup>
+                <DropdownButton as={ButtonGroup} title="Add ..." id="bg-nested-dropdown">
+                    <Dropdown.Item onSelect={(e) => { if (e === ADD_SEMANTIC) setShowAddSemanticForm(true)}} eventKey={ADD_SEMANTIC}>Semantic</Dropdown.Item>
+                <Dropdown.Item eventKey="2">Dropdown link</Dropdown.Item>
+                </DropdownButton>
+            </ButtonGroup>
             {/* <br />
             <br />
             <JsonTree data={instance} /> */}
-        </div>
+        </div >
     )
 }

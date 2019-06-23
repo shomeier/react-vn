@@ -41,9 +41,9 @@ export function WritableWordQueryTable(props: Props) {
         let cmisLingoService = new CmisLingoService(CmisSessionWrapper.getInstance())
         cmisLingoService.saveWord({ partOfSpeech: partOfSpeech, word: word, language: props.language })
             .then((res) => {
-                if (res === true) {
+                // if (res === true) {
                     setShowAddWordForm(false)
-                }
+                // }
 
                 // does not work !!!
                 setFilters({ "W.lingo:word": word })
