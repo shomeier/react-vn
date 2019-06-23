@@ -3,12 +3,24 @@ import * as React from "react";
 import { IsOptional } from 'prop-types';
 
 interface Props {
-    left, center?, right?: any
+    top?, left, center?, right?: any
 }
 
 export function SplitPanel(props: Props) {
 
-    const retVal = [
+    let top: any
+    if (props.top) {
+        top =
+            <Row>
+                <div className="SplitPanel-top">
+                    {props.top}
+                </div>
+            </Row>
+    } else {
+        top = <div />
+    }
+
+    const cols = [
         <Col key="SplitPanel-left">
             <div className="SplitPanel-left">
                 {props.left}
@@ -16,7 +28,7 @@ export function SplitPanel(props: Props) {
         </Col>
     ]
     if (props.center) {
-        retVal.push(
+        cols.push(
             <Col key="SplitPanel-center">
                 <div className="SplitPanel-center">
                     {props.center}
@@ -24,7 +36,7 @@ export function SplitPanel(props: Props) {
             </Col>)
     }
     if (props.right) {
-        retVal.push(
+        cols.push(
             <Col key="SplitPanel-right">
                 <div className="SplitPanel-right">
                     {props.right}
@@ -35,8 +47,9 @@ export function SplitPanel(props: Props) {
     return (
         <div className="SplitPanel">
             <Container fluid={true}>
+                {top}
                 <Row>
-                    {retVal}
+                    {cols}
                 </Row>
             </Container>
         </div>

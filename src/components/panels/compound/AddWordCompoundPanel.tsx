@@ -25,33 +25,32 @@ export default function AddWordCompoundPanel() {
     }
 
     const handleLanguageSelect = (language) => {
-            setLanguage(language)
+        setLanguage(language)
     }
 
+    let top =
+        <DropdownButton
+            title="Source Language"
+            variant="primary"
+            id="source_language"
+            key="primary">
+            <Dropdown.Item
+                eventKey={CmisLingoService.LANGUAGE_VN}
+                onSelect={(e) => { handleLanguageSelect(e) }}>
+                Vietnamese
+            </Dropdown.Item>
+            <Dropdown.Item
+                eventKey={CmisLingoService.LANGUAGE_EN}
+                onSelect={(e) => { handleLanguageSelect(e) }}>
+                English
+            </Dropdown.Item>
+        </DropdownButton>
     return (
-        <div>
-            <DropdownButton
-                title="Source Language"
-                variant="primary"
-                id="source_language"
-                key="primary"
-            >
-                <Dropdown.Item
-                    eventKey={CmisLingoService.LANGUAGE_VN}
-                    onSelect={(e) => {handleLanguageSelect(e)}}>
-                        Vietnamese
-                </Dropdown.Item>
-                <Dropdown.Item
-                    eventKey={CmisLingoService.LANGUAGE_EN}
-                    onSelect={(e) => {handleLanguageSelect(e)}}>
-                        English
-                </Dropdown.Item>
-            </DropdownButton>
             <SplitPanel
+                top={top}
                 left={<WritableWordQueryTable language={language} onRowSelect={handleSourceRowSelect} selectedWordCoid={sourceCoid} />}
                 center={<WritableRelationshipsTable onRowSelect={handleRelationshipRowSelect} sourceId={sourceCoid} />}
                 right={<GenericVerticalObjectTable coid={targetCoid} />}
             />
-        </div>
     )
 }
