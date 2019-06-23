@@ -115,7 +115,6 @@ export default function WritableRelationshipsTable(props: Props) {
         <div>
             <ModalWrapper showState={showAddSemanticFormState} title="Add a new semantic">
                 <AddSemanticForm sourceId={props.sourceId} setShow={setShowAddSemanticForm}/>
-                {/* <AddWordForm setPartOfSpeech={setPartOfSpeech} setWord={setWord} onSubmit={handleSubmit} /> */}
             </ModalWrapper>
             <MyTable {...instance}
             />

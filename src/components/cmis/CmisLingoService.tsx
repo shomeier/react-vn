@@ -6,6 +6,8 @@ import * as shortid from 'shortid'
 
 export class CmisLingoService {
 
+    public static readonly LANGUAGE_VN = 'vn'
+    public static readonly LANGUAGE_EN = 'en'
     private static readonly BASE_FOLDER = '/lingo'
     private static readonly BASE_FOLDER_WORDS = CmisLingoService.BASE_FOLDER + '/words'
     private static readonly BASE_FOLDER_SEMANTICS = CmisLingoService.BASE_FOLDER + '/semantics'

@@ -19,14 +19,24 @@ interface Props {
 
 // const statement = "SELECT t.lingo:text, t.cmis:name FROM lingo:text AS t JOIN lingo:word AS w ON t.cmis:objectId = w.cmis:objectId  ORDER BY lingo:text";
 // const statement = "SELECT lingo:text, lingo:part_of_speech, cmis:name, cmis:secondaryObjectTypeIds FROM lingo:text WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY lingo:text";
-const statement =
-    "SELECT W.lingo:word, P.lingo:part_of_speech, T.cmis:name, T.cmis:secondaryObjectTypeIds " +
-    "FROM lingo:document AS T " +
-    "JOIN lingo:word AS W ON T.cmis:objectId = W.cmis:objectId " +
-    "JOIN lingo:part_of_speech AS P ON T.cmis:objectId = P.cmis:objectId " +
-    "WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY W.lingo:word"
+// const statement =
+//     "SELECT W.lingo:word, P.lingo:part_of_speech, T.cmis:name, T.cmis:secondaryObjectTypeIds " +
+//     "FROM lingo:document AS T " +
+//     "JOIN lingo:word AS W ON T.cmis:objectId = W.cmis:objectId " +
+//     "JOIN lingo:part_of_speech AS P ON T.cmis:objectId = P.cmis:objectId " +
+//     "WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY W.lingo:word"
 
 export function WritableWordQueryTable(props: Props) {
+
+    const statement =
+        "SELECT W.lingo:word, P.lingo:part_of_speech, T.cmis:name, T.cmis:secondaryObjectTypeIds " +
+        "FROM lingo:document AS T " +
+        "JOIN lingo:word AS W ON T.cmis:objectId = W.cmis:objectId " +
+        "JOIN lingo:part_of_speech AS P ON T.cmis:objectId = P.cmis:objectId " +
+        "JOIN lingo:language AS L ON T.cmis:objectId = L.cmis:objectId " +
+        "WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word', 'P:lingo:part_of_speech', 'P:lingo:language')" + 
+        "AND L.lingo:language = '" + props.language + "' ORDER BY W.lingo:word"
+        // "WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY W.lingo:word"
 
     const showAddWordState = useState(false)
     const [showAddWordForm, setShowAddWordForm] = showAddWordState
@@ -42,7 +52,7 @@ export function WritableWordQueryTable(props: Props) {
         cmisLingoService.saveWord({ partOfSpeech: partOfSpeech, word: word, language: props.language })
             .then((res) => {
                 // if (res === true) {
-                    setShowAddWordForm(false)
+                setShowAddWordForm(false)
                 // }
 
                 // does not work !!!
@@ -90,8 +100,8 @@ export function WritableWordQueryTable(props: Props) {
             {console.log("Instantiating writable word table ....")}
             <GenericCmisQueryTable statement={statement} filters={filters} onRowSelect={props.onRowSelect} columns={columns} />
             <ButtonGroup>
-                    <Button onClick={() => { setShowAddWordForm(true) }}>Add Word</Button>
-                    <Button onClick={() => { setShowWordDetailsForm(true) }}>Details</Button>
+                <Button onClick={() => { setShowAddWordForm(true) }}>Add Word</Button>
+                <Button onClick={() => { setShowWordDetailsForm(true) }}>Details</Button>
             </ButtonGroup>
         </div>
     )
