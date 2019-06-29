@@ -39,6 +39,7 @@ export function WritableWordQueryTable(props: Props) {
         // "WHERE ANY cmis:secondaryObjectTypeIds IN ('P:lingo:word') ORDER BY W.lingo:word"
 
     const showAddWordState = useState(false)
+    const [refresh, setRefresh] = useState(false)
     const [showAddWordForm, setShowAddWordForm] = showAddWordState
     const showWordDetailsState = useState(false)
     const [showWordDetailsForm, setShowWordDetailsForm] = showWordDetailsState
@@ -53,7 +54,7 @@ export function WritableWordQueryTable(props: Props) {
             .then((res) => {
                 // if (res === true) {
                 setShowAddWordForm(false)
-                
+                setRefresh(old => !old )
                 // }
 
                 // does not work !!!
@@ -99,7 +100,7 @@ export function WritableWordQueryTable(props: Props) {
                 <GenericVerticalObjectTable coid={props.selectedWordCoid} />
             </ModalWrapper>
             {console.log("Instantiating writable word table ....")}
-            <GenericCmisQueryTable statement={statement} filters={filters} onRowSelect={props.onRowSelect} columns={columns} />
+            <GenericCmisQueryTable statement={statement} filters={filters} onRowSelect={props.onRowSelect} columns={columns} refresh={refresh}/>
             <ButtonGroup>
                 <Button onClick={() => { setShowAddWordForm(true) }}>Add Word</Button>
                 <Button onClick={() => { setShowWordDetailsForm(true) }}>Details</Button>

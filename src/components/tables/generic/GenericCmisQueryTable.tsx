@@ -12,7 +12,8 @@ interface Props {
     columns:any
     statement: string
     filters?: any,
-    onRowSelect?:any
+    onRowSelect?:any,
+    refresh?:any
 }
 
 export function GenericCmisQueryTable(props: Props) {
@@ -66,7 +67,7 @@ export function GenericCmisQueryTable(props: Props) {
             console.log("Rerendering generic cmis table with statement: " + props.statement)
             fetchData();
         },
-        [props.statement, sortBy, filters, pageIndex, pageSize]
+        [props.statement, sortBy, filters, pageIndex, pageSize, props.refresh]
     );
 
 
