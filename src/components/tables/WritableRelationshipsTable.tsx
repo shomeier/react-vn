@@ -20,6 +20,7 @@ export default function WritableRelationshipsTable(props: Props) {
     const LINK_SEMANTIC = "link_semantic"
     const infinite = false;
     const [data, setData] = useState([]);;
+    const [refresh, setRefresh] = useState(false)
     const [loading, setLoading] = useState(false);
     const showAddSemanticFormState = useState(false)
     const showLinkSemanticFormState = useState(false)
@@ -60,7 +61,7 @@ export default function WritableRelationshipsTable(props: Props) {
             console.log("Rerendering relationships table with id: " + props.sourceId)
             fetchData();
         },
-        [props.sourceId]
+        [props.sourceId, refresh]
     );
 
     const columns = [
@@ -118,10 +119,10 @@ export default function WritableRelationshipsTable(props: Props) {
     return (
         <div>
             <ModalWrapper showState={showAddSemanticFormState} title="Add a new semantic">
-                <AddSemanticForm sourceId={props.sourceId} setShow={setShowAddSemanticForm}/>
+                <AddSemanticForm sourceId={props.sourceId} setShow={(show) => {setRefresh(old => !old ); setShowAddSemanticForm(show)}}/>
             </ModalWrapper>
             <ModalWrapper showState={showLinkSemanticFormState} title="Link an existing semantic">
-                <LinkSemanticForm sourceId={props.sourceId} setShow={setShowLinkSemanticForm}/>
+                <LinkSemanticForm sourceId={props.sourceId} setShow={(show) => {setRefresh(old => !old ); setShowLinkSemanticForm(show)}}/>
             </ModalWrapper>
             <MyTable {...instance}
             />
