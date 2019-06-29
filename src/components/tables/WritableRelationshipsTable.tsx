@@ -7,6 +7,7 @@ import { splitBsPropsAndOmit } from "react-bootstrap/lib/utils/bootstrapUtils";
 import { ButtonGroup, Button, DropdownButton, Dropdown } from "react-bootstrap";
 import { ModalWrapper } from "../ModalWrapper";
 import { AddSemanticForm } from "../forms/AddSemanticForm";
+import { LinkSemanticForm } from "../forms/LinkSemanticForm";
 
 interface Props {
     sourceId: string
@@ -16,11 +17,14 @@ interface Props {
 
 export default function WritableRelationshipsTable(props: Props) {
     const ADD_SEMANTIC = "add_semantic"
+    const LINK_SEMANTIC = "link_semantic"
     const infinite = false;
     const [data, setData] = useState([]);;
     const [loading, setLoading] = useState(false);
     const showAddSemanticFormState = useState(false)
+    const showLinkSemanticFormState = useState(false)
     const [showAddSemanticForm, setShowAddSemanticForm] = showAddSemanticFormState
+    const [showLinkSemanticForm, setShowLinkSemanticForm] = showLinkSemanticFormState
     const currentRequestRef = useRef<number>(null);
     // const [{ sortBy, filters, pageIndex, pageSize }, setState] = useTableState({pageCount: 0 })
 
@@ -116,12 +120,17 @@ export default function WritableRelationshipsTable(props: Props) {
             <ModalWrapper showState={showAddSemanticFormState} title="Add a new semantic">
                 <AddSemanticForm sourceId={props.sourceId} setShow={setShowAddSemanticForm}/>
             </ModalWrapper>
+            <ModalWrapper showState={showLinkSemanticFormState} title="Link an existing semantic">
+                <LinkSemanticForm sourceId={props.sourceId} setShow={setShowLinkSemanticForm}/>
+            </ModalWrapper>
             <MyTable {...instance}
             />
             <ButtonGroup>
-                <DropdownButton as={ButtonGroup} title="Add ..." id="bg-nested-dropdown">
+                <DropdownButton as={ButtonGroup} title="Add new ..." id="bg-nested-dropdown">
                     <Dropdown.Item onSelect={(e) => { if (e === ADD_SEMANTIC) setShowAddSemanticForm(true)}} eventKey={ADD_SEMANTIC}>Semantic</Dropdown.Item>
-                <Dropdown.Item eventKey="2">Dropdown link</Dropdown.Item>
+                </DropdownButton>
+                <DropdownButton as={ButtonGroup} title="Link existing ..." id="bg-nested-dropdown">
+                    <Dropdown.Item onSelect={(e) => { if (e === LINK_SEMANTIC) setShowLinkSemanticForm(true)}} eventKey={LINK_SEMANTIC}>Semantic</Dropdown.Item>
                 </DropdownButton>
             </ButtonGroup>
             {/* <br />

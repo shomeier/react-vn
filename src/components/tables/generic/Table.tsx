@@ -357,7 +357,8 @@ export default function MyTable(props:MyTableProps) {
         </Row>
         {pagination}
       </Table>
-      <JsonTree data={instance}/>
+      
+      {/* <JsonTree data={instance}/> */}
     </div>
   );
 }

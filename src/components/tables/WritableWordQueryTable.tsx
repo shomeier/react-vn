@@ -53,6 +53,7 @@ export function WritableWordQueryTable(props: Props) {
             .then((res) => {
                 // if (res === true) {
                 setShowAddWordForm(false)
+                
                 // }
 
                 // does not work !!!
