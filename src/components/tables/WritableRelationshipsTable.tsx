@@ -8,6 +8,7 @@ import { ButtonGroup, Button, DropdownButton, Dropdown } from "react-bootstrap";
 import { ModalWrapper } from "../ModalWrapper";
 import { AddSemanticForm } from "../forms/AddSemanticForm";
 import { LinkSemanticForm } from "../forms/LinkSemanticForm";
+import { AddExampleForm } from "../forms/AddExampleForm";
 
 interface Props {
     sourceId: string
@@ -17,14 +18,17 @@ interface Props {
 
 export default function WritableRelationshipsTable(props: Props) {
     const ADD_SEMANTIC = "add_semantic"
+    const ADD_EXAMPLE = "add_example"
     const LINK_SEMANTIC = "link_semantic"
     const infinite = false;
     const [data, setData] = useState([]);;
     const [refresh, setRefresh] = useState(false)
     const [loading, setLoading] = useState(false);
     const showAddSemanticFormState = useState(false)
+    const showAddExampleFormState = useState(false)
     const showLinkSemanticFormState = useState(false)
     const [showAddSemanticForm, setShowAddSemanticForm] = showAddSemanticFormState
+    const [showAddExampleForm, setShowAddExampleForm] = showAddExampleFormState
     const [showLinkSemanticForm, setShowLinkSemanticForm] = showLinkSemanticFormState
     const currentRequestRef = useRef<number>(null);
     // const [{ sortBy, filters, pageIndex, pageSize }, setState] = useTableState({pageCount: 0 })
@@ -121,6 +125,9 @@ export default function WritableRelationshipsTable(props: Props) {
             <ModalWrapper showState={showAddSemanticFormState} title="Add a new semantic">
                 <AddSemanticForm sourceId={props.sourceId} setShow={(show) => {setRefresh(old => !old ); setShowAddSemanticForm(show)}}/>
             </ModalWrapper>
+            <ModalWrapper showState={showAddExampleFormState} title="Add a new example">
+                <AddExampleForm sourceId={props.sourceId} setShow={(show) => {setRefresh(old => !old ); setShowAddExampleForm(show)}}/>
+            </ModalWrapper>
             <ModalWrapper showState={showLinkSemanticFormState} title="Link an existing semantic">
                 <LinkSemanticForm sourceId={props.sourceId} setShow={(show) => {setRefresh(old => !old ); setShowLinkSemanticForm(show)}}/>
             </ModalWrapper>
@@ -129,6 +136,7 @@ export default function WritableRelationshipsTable(props: Props) {
             <ButtonGroup>
                 <DropdownButton as={ButtonGroup} title="Add new ..." id="bg-nested-dropdown">
                     <Dropdown.Item onSelect={(e) => { if (e === ADD_SEMANTIC) setShowAddSemanticForm(true)}} eventKey={ADD_SEMANTIC}>Semantic</Dropdown.Item>
+                    <Dropdown.Item onSelect={(e) => { if (e === ADD_EXAMPLE) setShowAddExampleForm(true)}} eventKey={ADD_EXAMPLE}>Example</Dropdown.Item>
                 </DropdownButton>
                 <DropdownButton as={ButtonGroup} title="Link existing ..." id="bg-nested-dropdown">
                     <Dropdown.Item onSelect={(e) => { if (e === LINK_SEMANTIC) setShowLinkSemanticForm(true)}} eventKey={LINK_SEMANTIC}>Semantic</Dropdown.Item>

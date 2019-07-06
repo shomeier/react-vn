@@ -32,7 +32,7 @@
         <cmis:cardinality>single</cmis:cardinality>
         <cmis:updatability>readwrite</cmis:updatability>
         <cmis:inherited>false</cmis:inherited>
-        <cmis:required>true</cmis:required>
+        <cmis:required>false</cmis:required>
         <cmis:queryable>true</cmis:queryable>
         <cmis:orderable>true</cmis:orderable>
         <cmis:openChoice>true</cmis:openChoice>

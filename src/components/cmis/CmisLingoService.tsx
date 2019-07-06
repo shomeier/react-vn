@@ -3,6 +3,8 @@ import { CmisWord } from "./model/CmisLingoModel"
 import { cmis } from "../../lib/cmis";
 import { SuccinctCmisObject } from "./model/CmisSpecModel";
 import * as shortid from 'shortid'
+import { getBsProps } from "react-bootstrap/lib/utils/bootstrapUtils";
+import { runInThisContext } from "vm";
 
 export class CmisLingoService {
 
@@ -11,10 +13,12 @@ export class CmisLingoService {
     private static readonly BASE_FOLDER = '/lingo'
     private static readonly BASE_FOLDER_WORDS = CmisLingoService.BASE_FOLDER + '/words'
     private static readonly BASE_FOLDER_SEMANTICS = CmisLingoService.BASE_FOLDER + '/semantics'
+    private static readonly BASE_FOLDER_EXAMPLES = CmisLingoService.BASE_FOLDER + '/examples'
 
     private static readonly WORD_MARKER = "P:lingo:word";
     private static readonly POS_MARKER = "P:lingo:part_of_speech";
     public static readonly SEMANTIC_MARKER = "P:lingo:semantic";
+    public static readonly EXAMPLE_MARKER = "P:lingo:example";
     private static readonly LANGUAGE_MARKER_PREFIX = "P:lingo:language";
 
     private sessionWrapper: CmisSessionWrapper
@@ -56,14 +60,51 @@ export class CmisLingoService {
             "lingo:semantic": semantic,
             "cmis:secondaryObjectTypeIds": [CmisLingoService.SEMANTIC_MARKER] 
         });
+    }
+    
+    public async saveExample(example: string):Promise<any> {
+        console.log("Saving example: " + example)
+        const folder = CmisLingoService.BASE_FOLDER_EXAMPLES
+        
+        return this.createDocument(folder, {
+            "cmis:objectTypeId": "D:lingo:document",
+            "cmis:name": shortid.generate(),
+            "lingo:example": example,
+            "cmis:secondaryObjectTypeIds": [CmisLingoService.EXAMPLE_MARKER] 
+        });
+    }
 
-        // try {
-        //     // return new Promise<boolean>(resolve => { resolve(true) })
-        // } catch (e) {
-        //     console.log("Error while saving semantic: " + e)
-        //     return new Promise<boolean>(resolve => { resolve(false) })
-        // }
+    public async getSemantics(sourceId:string):Promise<any>  {
+        console.log("getSemantics for source id: " + sourceId)
+        let semanticRels = await this.cmisSession.getObjectRelationships(
+            sourceId,
+            false,
+            'source',
+            "R:lingo:relationship",
+            { maxItems: 250, skipCount: 0, includeAllowableActions: true, filter: '*', succinct: true }
+            ).then(
+                (res) => {
+                    let semantics = res.objects.map((elem) => {
+                        if (elem.succinctProperties["cmis:secondaryObjectTypeIds"].includes(CmisLingoService.SEMANTIC_MARKER)) {
+                            console.log("Includes: " + JSON.stringify(elem))
+                            return elem;
+                        }})
+                    console.log("Semantics Array: " +JSON.stringify(semantics))
+                    return Promise.resolve(semantics)
+                }
+            ).catch(
+                (err) => Promise.reject(err)
+            );
 
+        // Array of Promises
+        // see here: https://stackoverflow.com/questions/39452083/using-promise-function-inside-javascript-array-map
+        let semantics = semanticRels.map((semanticRel) => {
+            return this.cmisSession.getObject(semanticRel.succinctProperties["cmis:targetId"]).then(
+                (res) => Promise.resolve(res)
+            ).catch(
+                (err) => Promise.reject(err)
+            )})
+        return Promise.all(semantics)
     }
 
     public async createRelationship(sourceId:string, targetId:string, marker:Array<string>):Promise<any> {
