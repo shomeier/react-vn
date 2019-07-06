@@ -84,10 +84,12 @@ export class CmisLingoService {
             { maxItems: 250, skipCount: 0, includeAllowableActions: true, filter: '*', succinct: true }
             ).then(
                 (res) => {
-                    let semantics = res.objects.map((elem) => {
+                    let semantics = res.objects.filter((elem) => {
                         if (elem.succinctProperties["cmis:secondaryObjectTypeIds"].includes(CmisLingoService.SEMANTIC_MARKER)) {
                             console.log("Includes: " + JSON.stringify(elem))
-                            return elem;
+                            return true
+                        } else {
+                            return false
                         }})
                     console.log("Semantics Array: " +JSON.stringify(semantics))
                     return Promise.resolve(semantics)
@@ -102,7 +104,7 @@ export class CmisLingoService {
             return this.cmisSession.getObject(semanticRel.succinctProperties["cmis:targetId"]).then(
                 (res) => Promise.resolve(res)
             ).catch(
-                (err) => Promise.reject(err)
+                (err) => {Promise.reject(err)}
             )})
         return Promise.all(semantics)
     }

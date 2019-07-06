@@ -23,14 +23,14 @@ export default function WritableRelationshipsTable(props: Props) {
     const infinite = false;
     const [data, setData] = useState([]);;
     const [refresh, setRefresh] = useState(false)
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false)
     const showAddSemanticFormState = useState(false)
     const showAddExampleFormState = useState(false)
     const showLinkSemanticFormState = useState(false)
     const [showAddSemanticForm, setShowAddSemanticForm] = showAddSemanticFormState
     const [showAddExampleForm, setShowAddExampleForm] = showAddExampleFormState
     const [showLinkSemanticForm, setShowLinkSemanticForm] = showLinkSemanticFormState
-    const currentRequestRef = useRef<number>(null);
+    const currentRequestRef = useRef<number>(null)
     // const [{ sortBy, filters, pageIndex, pageSize }, setState] = useTableState({pageCount: 0 })
 
     const fetchData = async () => {

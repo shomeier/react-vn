@@ -53,7 +53,7 @@ export function AddExampleForm(props: Props) {
             if (props.sourceId) {
                 let targetId = res.succinctProperties['cmis:objectId']
                 cmisLingoService.createRelationship(props.sourceId, targetId, [CmisLingoService.EXAMPLE_MARKER]).then((res) => {
-                    console.log("In then createRelationship Example: " + JSON.stringify(res))
+                    console.log("Creating second relationship, sourceId: " + semanticId)
                     cmisLingoService.createRelationship(semanticId, targetId, [CmisLingoService.EXAMPLE_MARKER]).then((res) => {
                         setErrMsg(null)
                         props.setShow(false)
