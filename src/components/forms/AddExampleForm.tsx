@@ -6,7 +6,7 @@ import { CmisSessionWrapper } from "../cmis/CmisSessionWrapper";
 import '../css/generic.css';
 import { CmisPropertyDefinition } from "../cmis/model/CmisSpecModel";
 import { CmisLingoService } from "../cmis/CmisLingoService";
-import { inspect } from 'util' // or directly
+import { inspect, isNullOrUndefined } from 'util' // or directly
 
 interface Props {
     sourceId?: string
@@ -27,6 +27,11 @@ export function AddExampleForm(props: Props) {
         let semantics = await cmisLingoService.getSemantics(props.sourceId);
         console.log("Seeemantics: " + JSON.stringify(semantics));
         setSemantics(semantics)
+
+        // per default the first semantic in array is used
+        if (semantics) {
+            setSemanticId(semantics[0].succinctProperties["cmis:objectId"])
+        }
     }
 
     useEffect(
@@ -89,7 +94,10 @@ export function AddExampleForm(props: Props) {
                     <Row>
                         <Col>
                             <FormLabel>Semantic</FormLabel>
-                            <Form.Control onChange={(e: any) => setSemanticId((e.target as HTMLInputElement).value)} as="select">
+                            <Form.Control onChange={(e: any) => {
+                                setSemanticId((e.target as HTMLInputElement).value)
+                                console.log("Set semantic id: " + semanticId)
+                                }} as="select">
                             {semantics.map((semantic) =>
                                 <option value={semantic.succinctProperties["cmis:objectId"]} key={semantic.succinctProperties["cmis:objectId"]}>
                                     {semantic.succinctProperties["lingo:semantic"]}
