@@ -9,10 +9,12 @@ import { ModalWrapper } from "../ModalWrapper";
 import { AddSemanticForm } from "../forms/AddSemanticForm";
 import { LinkSemanticForm } from "../forms/LinkSemanticForm";
 import { AddExampleForm } from "../forms/AddExampleForm";
+import { CmisLingoService } from "../cmis/CmisLingoService";
 
 interface Props {
     sourceId: string
-    onRowSelect?: any
+    selectedRelationship?: any
+    setSelectedRelationship?: any
 }
 
 
@@ -106,9 +108,21 @@ export default function WritableRelationshipsTable(props: Props) {
         }
     ]
 
+    const handleRowSelect = (row) => {
+        const cmisRelationship = row.original
+        props.setSelectedRelationship(cmisRelationship)
+    }
+
+    const handleDeleteButtonClick = () => {
+        let cmisSession = CmisSessionWrapper.getInstance().getWrappedSession()
+        cmisSession.deleteObject(props.selectedRelationship.succinctProperties["cmis:objectId"]).then((res) => {
+            setRefresh(old => !old )
+        })
+    }
+
     const instance = {
         infinite: infinite,
-        onRowSelect: props.onRowSelect,
+        onRowSelect: handleRowSelect,
         loading: loading,
         tableProps: {
             ...{
@@ -141,6 +155,7 @@ export default function WritableRelationshipsTable(props: Props) {
                 <DropdownButton as={ButtonGroup} title="Link existing ..." id="bg-nested-dropdown">
                     <Dropdown.Item onSelect={(e) => { if (e === LINK_SEMANTIC) setShowLinkSemanticForm(true)}} eventKey={LINK_SEMANTIC}>Semantic</Dropdown.Item>
                 </DropdownButton>
+                <Button onClick={handleDeleteButtonClick}>Delete</Button>
             </ButtonGroup>
             {/* <br />
             <br />

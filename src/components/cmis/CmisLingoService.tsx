@@ -158,6 +158,10 @@ export class CmisLingoService {
         // }
     }
 
+    private async deleteObject(coid:string) {
+        return this.cmisSession.deleteObject(coid)
+    }
+
     private async createDocument(folderPath: string, input: { 'cmis:name': string, 'cmis:objectTypeId'?: string, [k: string]: string | string[] | number | number[] | Date | Date[] }, content?: string | Blob | Buffer) {
         const folder = await this.cmisSession.getObjectByPath(folderPath);
         const folderId = folder.succinctProperties['cmis:objectId'];

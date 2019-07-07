@@ -11,7 +11,8 @@ export default function AddWordCompoundPanel() {
 
     const [language, setLanguage] = useState('vn')
     const [sourceCoid, setSourceCoid] = useState()
-    const [targetCoid, setTargetCoid] = useState()
+    const [selectedRelationship, setSelectedRelationship] = useState()
+    // const [targetCoid, setTargetCoid] = useState()
 
     const handleSourceRowSelect = (row) => {
         let index = row.index
@@ -19,10 +20,10 @@ export default function AddWordCompoundPanel() {
         setSourceCoid(coid)
     }
 
-    const handleRelationshipRowSelect = (row) => {
-        let coid = row.original.succinctProperties["cmis:targetId"]
-        setTargetCoid(coid)
-    }
+    // const handleRelationshipRowSelect = (row) => {
+    //     let coid = row.original.succinctProperties["cmis:targetId"]
+    //     setTargetCoid(coid)
+    // }
 
     const handleLanguageSelect = (language) => {
         setLanguage(language)
@@ -49,8 +50,8 @@ export default function AddWordCompoundPanel() {
             <SplitPanel
                 top={top}
                 left={<WritableWordQueryTable language={language} onRowSelect={handleSourceRowSelect} selectedWordCoid={sourceCoid} />}
-                center={<WritableRelationshipsTable onRowSelect={handleRelationshipRowSelect} sourceId={sourceCoid} />}
-                right={<GenericVerticalObjectTable coid={targetCoid} />}
+                center={<WritableRelationshipsTable selectedRelationship={selectedRelationship} setSelectedRelationship={setSelectedRelationship} sourceId={sourceCoid} />}
+                right={<GenericVerticalObjectTable coid={(selectedRelationship) ? selectedRelationship.succinctProperties["cmis:targetId"] : null} />}
             />
     )
 }
